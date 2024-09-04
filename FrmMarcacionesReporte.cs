@@ -10,12 +10,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Formats.Asn1;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace MD
 {
@@ -173,7 +175,10 @@ namespace MD
 
         private void btnImportar_Click(object sender, EventArgs e)
         {
+            FrmGestionDatos frm = new FrmGestionDatos();
+            frm.ShowDialog();
 
+            return;
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -232,12 +237,14 @@ namespace MD
                             }
                         }
                     }
-                    if (listMarcacion.Count == 0 && listJustificaciones.Count == 0) {
+                    if (listMarcacion.Count == 0 && listJustificaciones.Count == 0)
+                    {
                         MessageBox.Show("No existen datos para importar", "Importacion de Datos");
                         return;
                     }
 
-                    if (MessageBox.Show($"Seguro que desea importar estos datos? {Environment.NewLine} Se importaran {listMarcacion.Count} Marcaciones y {listJustificaciones.Count} Justificaciones", "Importacion de datos", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+                    if (MessageBox.Show($"Seguro que desea importar estos datos? {Environment.NewLine} Se importaran {listMarcacion.Count} Marcaciones y {listJustificaciones.Count} Justificaciones", "Importacion de datos", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
                         if (listMarcacion.Count > 0)
                         {
 
@@ -255,6 +262,42 @@ namespace MD
                 }
             }
 
+
+        }
+
+        private void btnExportar_Click(object sender, EventArgs e)
+        {
+            CopyListBox(this.lswDatosMarcaciones);
+        }
+        public void CopyListBox(ListView list)
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (ColumnHeader columns in list.Columns)
+                {
+                    sb.Append(columns.Text + "\t");
+                }
+                sb.AppendLine();
+                foreach (var item in list.Items)
+                {
+
+
+                    ListViewItem l = item as ListViewItem;
+                    if (l != null)
+                        foreach (ListViewItem.ListViewSubItem sub in l.SubItems)
+                            sb.Append(sub.Text + "\t");
+                    sb.AppendLine();
+                }
+                Clipboard.SetDataObject(sb.ToString());
+                MessageBox.Show("Se copiaron los datos al portapapeles","Portapapeles de TH",MessageBoxButtons.OK);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+           
 
         }
     }

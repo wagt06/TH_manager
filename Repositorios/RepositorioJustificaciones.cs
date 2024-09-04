@@ -160,6 +160,13 @@ namespace MD.Repositorios
             }
         }
 
+        public List<Justificacion> JustificacionesPorFecha(DateTime fechaInicial, DateTime FechaFinal, int CodigoSucursal) {
+
+            return db.Justificaciones
+                .Include(x=>x.Empleado)
+                .Where(x=>x.Fecha >= fechaInicial && x.Fecha<= FechaFinal && x.Empleado.CodigoSucursal == CodigoSucursal).ToList();
+        }
+
         public List<TipoJustificacion> ListaTipoJustificaciones()
         {
             return db.TiposJustificaciones.Where(x=>x.IsActiva).ToList();

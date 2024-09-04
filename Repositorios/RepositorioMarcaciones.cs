@@ -80,6 +80,11 @@ namespace MD.Repositorios
             }
         }
 
+        public List<Marcacion> MarcacionesPorFecha(DateTime FechaInicial, DateTime FechaFinal, int CodigoSucursal) {
+            using (MdDbContext db = new MdDbContext()) {
+                return db.Marcaciones.Where(x => x.Fecha >= FechaInicial && x.Fecha <= FechaFinal && x.CodigoSucursal == CodigoSucursal).ToList();
+            }
+        }
 
     }
 
