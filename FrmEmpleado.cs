@@ -1,6 +1,5 @@
 ﻿using MD.Cto;
 using MD.Entidades;
-using MD.Migrations;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -33,70 +32,9 @@ namespace MD
             CargarSucursales();
             CargarEmpleados();
             CargarHorarios();
-        }
 
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            try
-            {
-
-                if (txtNombre.Text.Length == 0 || txtCedula.Text.Length == 0 || (int)this.cboSucursal.SelectedValue < 0 || (int)this.cboHorarios.SelectedValue < 0)
-                {
-                    MessageBox.Show("todos los campos son requeridos");
-                    return;
-                }
-
-                Empleado empleado = new Empleado
-                {
-                    CodigoEmpleado = this.TxtId.Text.Length > 0 ? int.Parse(this.TxtId.Text) : 0,
-                    NombreEmpleado = this.txtNombre.Text,
-                    Cedula = txtCedula.Text,
-                    IsActivo = chkActivo.Checked,
-
-                    CodigoSucursal = ((Cto.SelectCombo)this.cboSucursal.SelectedItem).Codigo,
-                    CodigoHorario = ((Cto.SelectCombo)this.cboHorarios.SelectedItem).Codigo,
-
-                    Usuario = this.txtUsuario.Text ?? "",
-                    Contraseña = this.txtContraseña.Text ?? "",
-                    IsUsuario = this.chkUsuario.Checked
-                };
-
-                if (this.TxtId.Text.Length == 0)
-                {
-                    empleado.CodigoUsuarioCreacion = 1;
-                    empleado.FechaCreacion = DateTime.Now;
-                }
-                else
-                {
-                    empleado.CodigoUsuarioMod = 1;
-                    empleado.FechaMod = DateTime.Now;
-                }
-
-                using (MdDbContext db = new MdDbContext())
-                {
-                    if (empleado.CodigoEmpleado == 0)
-                    {
-                        db.Empleados.Add(empleado);
-                    }
-                    else
-                    {
-                        db.Empleados.Update(empleado);
-                    }
-                    db.SaveChanges();
-                }
-
-
-                CargarEmpleados();
-                Limpiar();
-
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
-                throw;
-            }
+            gbUsuario.Enabled = false;
+            TxtId.Enabled = true;
         }
 
         private void CargarSucursales()
@@ -147,6 +85,7 @@ namespace MD
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             Limpiar();
+            this.TxtId.Enabled = true;
         }
 
 
@@ -188,6 +127,7 @@ namespace MD
                         this.txtContraseña.Text = empleado.Contraseña;
                         this.chkUsuario.Checked = empleado.IsUsuario;
                         this.chkActivo.Checked = empleado.Activo;
+                        this.TxtId.Enabled = false;
                     }
                 }
             }
@@ -195,6 +135,58 @@ namespace MD
             {
 
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                if (TxtId.Text.Length == 0 || txtNombre.Text.Length == 0 || txtCedula.Text.Length == 0 || (int)this.cboSucursal.SelectedValue < 0 || (int)this.cboHorarios.SelectedValue < 0)
+                {
+                    MessageBox.Show("todos los campos son requeridos");
+                    return;
+                }
+
+                Empleado empleado = new Empleado
+                {
+                    CodigoEmpleado = this.TxtId.Text.Length > 0 ? int.Parse(this.TxtId.Text) : 0,
+                    NombreEmpleado = this.txtNombre.Text,
+                    Cedula = txtCedula.Text,
+                    IsActivo = chkActivo.Checked,
+
+                    CodigoSucursal = ((Cto.SelectCombo)this.cboSucursal.SelectedItem).Codigo,
+                    CodigoHorario = ((Cto.SelectCombo)this.cboHorarios.SelectedItem).Codigo,
+
+                    Usuario = this.txtUsuario.Text ?? "",
+                    Contraseña = this.txtContraseña.Text ?? "",
+                    IsUsuario = this.chkUsuario.Checked
+                };
+
+                repositorioEmpleado.GuardarEmpleado(empleado);
+
+
+                CargarEmpleados();
+                Limpiar();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void chkUsuario_CheckedChanged(object sender, EventArgs e)
+        {
+            this.gbUsuario.Enabled = chkUsuario.Checked;
+        }
+
+        private void TxtId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
             }
         }
     }

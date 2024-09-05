@@ -24,6 +24,9 @@ namespace MD.Migrations
 
             modelBuilder.Entity("MD.Cto.CtoMarcacionesReporte", b =>
                 {
+                    b.Property<int>("CantidadHorasFinal")
+                        .HasColumnType("int");
+
                     b.Property<int>("CodigoEmpleado")
                         .HasColumnType("int");
 
@@ -36,6 +39,15 @@ namespace MD.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("HorasJustificadas")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HorasMarcadas")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HorasReglamentarias")
+                        .HasColumnType("int");
+
                     b.Property<string>("NombreEmpleado")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -47,16 +59,19 @@ namespace MD.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TiempoAFavor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TiempoEnContra")
+                        .HasColumnType("int");
+
                     b.ToTable("CtoMarcacionesReporte");
                 });
 
             modelBuilder.Entity("MD.Entidades.Empleado", b =>
                 {
                     b.Property<int>("CodigoEmpleado")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoEmpleado"));
 
                     b.Property<string>("Cedula")
                         .IsRequired()
@@ -123,32 +138,17 @@ namespace MD.Migrations
                         new
                         {
                             CodigoEmpleado = 1,
-                            Cedula = "0011810860021C",
+                            Cedula = "",
                             CodigoHorario = 1,
                             CodigoSucursal = 1,
                             CodigoUsuarioCreacion = 1,
                             Contraseña = "123",
-                            FechaCreacion = new DateTime(2024, 8, 28, 0, 46, 41, 118, DateTimeKind.Local).AddTicks(7434),
+                            FechaCreacion = new DateTime(2024, 9, 4, 23, 36, 33, 914, DateTimeKind.Local).AddTicks(5915),
                             IsActivo = true,
                             IsEliminado = false,
                             IsUsuario = true,
-                            NombreEmpleado = "William Gonzalez",
-                            Usuario = "wagt06"
-                        },
-                        new
-                        {
-                            CodigoEmpleado = 2,
-                            Cedula = "0011810860021C",
-                            CodigoHorario = 1,
-                            CodigoSucursal = 1,
-                            CodigoUsuarioCreacion = 1,
-                            Contraseña = "123",
-                            FechaCreacion = new DateTime(2024, 8, 28, 0, 46, 41, 118, DateTimeKind.Local).AddTicks(7439),
-                            IsActivo = true,
-                            IsEliminado = false,
-                            IsUsuario = false,
-                            NombreEmpleado = "Bayardo Gonzalez",
-                            Usuario = "bagt06"
+                            NombreEmpleado = "Admin",
+                            Usuario = "admin"
                         });
                 });
 
@@ -240,8 +240,8 @@ namespace MD.Migrations
                     b.Property<DateTime>("HoraInicial")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Horas")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Horas")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool?>("IsEliminado")
                         .HasColumnType("bit");
@@ -337,7 +337,7 @@ namespace MD.Migrations
                         {
                             CodigoSucursal = 1,
                             CodigoUsuarioCreacion = 1,
-                            FechaCreacion = new DateTime(2024, 8, 28, 0, 46, 41, 118, DateTimeKind.Local).AddTicks(7386),
+                            FechaCreacion = new DateTime(2024, 9, 4, 23, 36, 33, 914, DateTimeKind.Local).AddTicks(5866),
                             IsActivo = true,
                             IsEliminado = false,
                             Nombre = "Linda Vista"
@@ -346,7 +346,7 @@ namespace MD.Migrations
                         {
                             CodigoSucursal = 2,
                             CodigoUsuarioCreacion = 1,
-                            FechaCreacion = new DateTime(2024, 8, 28, 0, 46, 41, 118, DateTimeKind.Local).AddTicks(7396),
+                            FechaCreacion = new DateTime(2024, 9, 4, 23, 36, 33, 914, DateTimeKind.Local).AddTicks(5879),
                             IsActivo = true,
                             IsEliminado = false,
                             Nombre = "Metrocentro"
@@ -385,7 +385,7 @@ namespace MD.Migrations
                             Descripcion = "Dia Vacaciones",
                             IsActiva = true,
                             IsFeriado = false,
-                            IsSalida = false
+                            IsSalida = true
                         },
                         new
                         {
@@ -393,15 +393,15 @@ namespace MD.Migrations
                             Descripcion = "Horas Libre",
                             IsActiva = true,
                             IsFeriado = false,
-                            IsSalida = false
+                            IsSalida = true
                         },
                         new
                         {
                             CodigoTipoJustificacion = 3,
                             Descripcion = "Dia Feriado",
                             IsActiva = true,
-                            IsFeriado = true,
-                            IsSalida = false
+                            IsFeriado = false,
+                            IsSalida = true
                         },
                         new
                         {
@@ -409,7 +409,7 @@ namespace MD.Migrations
                             Descripcion = "Horas Extras",
                             IsActiva = true,
                             IsFeriado = false,
-                            IsSalida = true
+                            IsSalida = false
                         });
                 });
 

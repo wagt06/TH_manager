@@ -25,12 +25,12 @@ namespace MD.Cto
 
         public DateTime? Salida { get; set; }
 
-        public int HorasReglamentarias { get; set; }
-        public int HorasMarcadas { get; set; }
-        public int TiempoEnContra { get; set; }
-        public int TiempoAFavor { get; set; }
-        public int HorasJustificadas { get; set; }
-        public int CantidadHorasFinal { get; set; }
+        public decimal HorasReglamentarias { get; set; }
+        public decimal HorasMarcadas { get; set; }
+        public decimal TiempoEnContra { get; set; }
+        public decimal TiempoAFavor { get; set; }
+        public decimal HorasJustificadas { get; set; }
+        public decimal CantidadHorasFinal { get; set; }
 
 
     }

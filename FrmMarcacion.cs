@@ -65,19 +65,27 @@ namespace MD
 
         async Task<bool> Marcar()
         {
-
-            Empleado empleado  = repoMarcaciones.GuardarMarcacionesPorCedula(txtId.Text);
-            if (empleado != null) {
-                MostrarEmpleado(empleado);
-                return true;
+            try
+            {
+                Empleado empleado = repoMarcaciones.GuardarMarcacionesPorCedula(txtId.Text);
+                if (empleado != null)
+                {
+                    MostrarEmpleado(empleado);
+                    return true;
+                }
+                else
+                {
+                    this.txtId.Text = "";
+                    txtId.Focus();
+                    return false;
+                }
             }
-             else
+            catch (Exception)
             {
                 this.txtId.Text = "";
                 txtId.Focus();
                 return false;
             }
-       
         }
 
 
@@ -118,6 +126,11 @@ namespace MD
                 this.Dispose();
                 Application.Exit();
             }
+        }
+
+        private void txtId_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

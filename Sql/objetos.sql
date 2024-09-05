@@ -20,13 +20,13 @@ SELECT
    ,r.fecha Fecha
    ,Entrada
    ,Salida
-   ,DATEDIFF(HOUR,Inicia,Termina)  HorasReglamentarias
-   ,DATEDIFF(HOUR,Entrada,Salida)  HorasMarcadas
-   ,ABS(CASE WHEN DATEDIFF(HOUR,Inicia,Termina)  > DATEDIFF(HOUR,Entrada,Salida)  THEN  DATEDIFF(HOUR,Inicia,Termina)  - DATEDIFF(HOUR,Entrada,Salida)  ELSE 0 END)  TiempoEnContra
-   ,ABS(CASE WHEN DATEDIFF(HOUR,Inicia,Termina)  < DATEDIFF(HOUR,Entrada,Salida)  THEN  DATEDIFF(HOUR,Inicia,Termina)  - DATEDIFF(HOUR,Entrada,Salida)  ELSE 0 END)  TiempoAFavor
+   ,CONVERT(decimal(18,2),DATEDIFF(HOUR,Inicia,Termina))  HorasReglamentarias
+   ,CONVERT(decimal(18,2),DATEDIFF(HOUR,Entrada,Salida))  HorasMarcadas
+   ,CONVERT(decimal(18,2),ABS(CASE WHEN DATEDIFF(HOUR,Inicia,Termina)  > DATEDIFF(HOUR,Entrada,Salida)  THEN  (DATEDIFF(MINUTE,Inicia,Termina)  - DATEDIFF(MINUTE,Entrada,Salida))/60  ELSE 0 END))  TiempoEnContra
+   ,CONVERT(decimal(18,2),ABS(CASE WHEN DATEDIFF(HOUR,Inicia,Termina)  < DATEDIFF(HOUR,Entrada,Salida)  THEN  (DATEDIFF(MINUTE,Inicia,Termina)  - DATEDIFF(MINUTE,Entrada,Salida))/60  ELSE 0 END))  TiempoAFavor
    ,isNULL(j.Horas_Justificadas,0) HorasJustificadas
    ,isNULL(j.Horas_extras,0) Horas_extras
-   ,ABS(CASE WHEN DATEDIFF(HOUR,Inicia,Termina)  <= DATEDIFF(HOUR,Entrada,Salida)  THEN  DATEDIFF(HOUR,Inicia,Termina) ELSE DATEDIFF(HOUR,Entrada,Salida) END) + isNULL(j.Horas_Justificadas,0)  CantidadHorasFinal
+   ,ABS(CASE WHEN DATEDIFF(HOUR,Inicia,Termina)  <= DATEDIFF(HOUR,Entrada,Salida)  THEN  DATEDIFF(HOUR,Inicia,Termina) ELSE DATEDIFF(MINUTE,Entrada,Salida)/60 END) + isNULL(j.Horas_Justificadas,0)  CantidadHorasFinal
  FROM Date_range r
  LEFT JOIN ( SELECT 
 		m.CodigoEmpleado
@@ -72,13 +72,13 @@ SELECT
 	ON CONVERT(date,m.FechaMarca) = CONVERT(date,r.Fecha)
  INNER JOIN Horario h on h.CodigoHorario = m.CodigoHorario
   LEFT JOIN ( 
- SELECT  CodigoJustificacion,j.CodigoEmpleado,tj.IsSalida,j.Fecha 
+ SELECT  j.CodigoEmpleado,tj.IsSalida,j.Fecha 
 ,SUM(CASE WHEN tj.IsSalida = 1 THEN Horas ELSE 0 END) Horas_Justificadas  
 ,SUM(CASE WHEN tj.IsSalida = 1 THEN 0 ELSE Horas END) Horas_extras 
 from [dbo].[Justificacion] j 
- Inner JOIN TipoJustificacion tj ON j.CodigoJustificacion = tj.CodigoTipoJustificacion
+ Inner JOIN TipoJustificacion tj ON j.CodigoTipoJustificacion = tj.CodigoTipoJustificacion
  Where j.IsEliminado  = 0 AND j.CodigoEstado = 2
- GROUP BY CodigoJustificacion,j.CodigoEmpleado,tj.IsSalida,j.Fecha  
+ GROUP BY j.CodigoEmpleado,tj.IsSalida,j.Fecha  
 )  j ON j.CodigoEmpleado = m.CodigoEmpleado  AND CONVERT(date,j.Fecha)  = Convert(date,m.FechaMarca) 
 
 ORDER BY r.Fecha;

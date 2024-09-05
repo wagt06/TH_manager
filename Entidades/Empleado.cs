@@ -12,9 +12,8 @@ namespace MD.Entidades
     public class Empleado:BaseEntidad
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
         public int CodigoEmpleado { get; set; }
-
         public int CodigoSucursal { get; set; }
         public Sucursal Sucursal { get; set; }
 

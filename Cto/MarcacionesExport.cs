@@ -9,9 +9,10 @@ namespace MD.Cto
 {
     public class MarcacionesExport
     {
-        public int IdMarcacion { get; set; }
-        public DateTime Fecha { get; set; }
+
         public int CodigoEmpleado { get; set; }
+
+        public DateTime Fecha { get; set; }
         public int CodigoSucursal { get; set; }
     }
 }

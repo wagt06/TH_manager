@@ -16,6 +16,51 @@ namespace MD.Repositorios
             return db.Empleados.FirstOrDefault(x => x.CodigoEmpleado == codigo);
         }
 
+        public Empleado GuardarEmpleado(Empleado empleado) {
+
+            try
+            {
+
+                using (MdDbContext db = new MdDbContext())
+                {
+                    Empleado existeEmpleado = db.Empleados.Where(x=>x.CodigoEmpleado == empleado.CodigoEmpleado).FirstOrDefault();
+
+                    if (existeEmpleado == null)
+                    {
+
+                        existeEmpleado = db.Empleados.Where(x => x.Cedula == empleado.Cedula).FirstOrDefault();
+                        if (existeEmpleado != null)
+                            throw new Exception("No se puede agregar el empleado: " + empleado.NombreEmpleado + Environment.NewLine  + "Ya existe un empleado con ese numero de cedula" );
+
+                        if (empleado.CodigoEmpleado == 0) {
+                            int codigoEmpleado = db.Empleados.Count() + 1;
+                            empleado.CodigoEmpleado = codigoEmpleado;
+                        }
+
+                        empleado.CodigoUsuarioCreacion = 1;
+                        empleado.FechaCreacion = DateTime.Now;
+                        db.Empleados.Add(empleado);
+                    }
+                    else
+                    {
+                        empleado.CodigoUsuarioMod = 1;
+                        empleado.FechaMod = DateTime.Now;
+                        db.Empleados.Update(empleado);
+                    }
+                    db.SaveChanges();
+                }
+
+            return empleado;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
         public CtoEmpleados CtoEmpleadosPorCodigo(int codigo)
         {
             try

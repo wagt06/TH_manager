@@ -167,6 +167,8 @@
             lswDatosMarcaciones.TabIndex = 1;
             lswDatosMarcaciones.UseCompatibleStateImageBehavior = false;
             lswDatosMarcaciones.View = View.Details;
+            lswDatosMarcaciones.ColumnClick += lswDatosMarcaciones_ColumnClick;
+            lswDatosMarcaciones.SelectedIndexChanged += lswDatosMarcaciones_SelectedIndexChanged;
             // 
             // btnCerrar
             // 

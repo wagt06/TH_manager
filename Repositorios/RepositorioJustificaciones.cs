@@ -18,15 +18,15 @@ namespace MD.Repositorios
                 Justificacion justificacionExist;
                 if (justificacion.CodigoJustificacion == 0)
                 {
-                     justificacionExist = db.Justificaciones
-                        .Where(x => x.Fecha == justificacion.Fecha)
-                        .FirstOrDefault();
+                    // justificacionExist = db.Justificaciones
+                    //    .Where(x => x.Fecha == justificacion.Fecha)
+                    //    .FirstOrDefault();
 
-                    //Justificacion de salida solo una
-                    if (justificacionExist != null && justificacion.CodigoTipoJustificacion == 1)
-                    {
-                        throw new Exception($"Ya existe una justificacion para el dia {justificacionExist.Fecha.ToString("yyy/MM/dd")}");
-                    }
+                    ////Justificacion de salida solo una
+                    //if (justificacionExist != null && justificacion.CodigoTipoJustificacion == 1)
+                    //{
+                    //    throw new Exception($"Ya existe una justificacion para el dia {justificacionExist.Fecha.ToString("yyy/MM/dd")}");
+                    //}
 
                     //validadar si existe una justificacion
                     justificacionExist = db.Justificaciones
@@ -61,42 +61,46 @@ namespace MD.Repositorios
             }
         }
 
-        public bool ImportarJustificacion(List<Justificacion> justificaciones)
+        public int ImportarJustificacion(List<Justificacion> justificaciones)
         {
             try
             {
-
+                int cantidadImportadas =0;
                 foreach (Justificacion just in justificaciones) {
                     Justificacion justificacionExist;
 
-                    if (just.CodigoJustificacion == 0)
+                    Empleado empleado = db.Empleados.Where(x=>x.CodigoEmpleado == just.CodigoEmpleado).FirstOrDefault();
+                    if (empleado != null)
                     {
-                        justificacionExist = db.Justificaciones
-                           .Where(x => x.Fecha == just.Fecha)
-                           .FirstOrDefault();
-
-                        //Justificacion de salida solo una
-                        if (!(justificacionExist != null && just.CodigoTipoJustificacion == 1))
+                        if (just.CodigoJustificacion == 0)
                         {
-                            //validadar si existe una justificacion
                             justificacionExist = db.Justificaciones
-                                .Where(x => x.Fecha == just.Fecha
-                                && x.HoraInicial >= just.HoraInicial && x.HoraInicial <= just.HoraFinal
-                                && x.HoraFinal >= just.HoraInicial && x.HoraInicial <= just.HoraFinal
-                            )
-                            .FirstOrDefault();
-                        }
+                               .Where(x => x.Fecha == just.Fecha)
+                               .FirstOrDefault();
 
-                        if (justificacionExist == null)
-                        {
-                            db.Add(just);
-                            db.SaveChanges();
+                            //Justificacion de salida solo una
+                            if (!(justificacionExist != null && just.CodigoTipoJustificacion == 1))
+                            {
+                                //validadar si existe una justificacion
+                                justificacionExist = db.Justificaciones
+                                    .Where(x => x.Fecha == just.Fecha
+                                    && x.HoraInicial >= just.HoraInicial && x.HoraInicial <= just.HoraFinal
+                                    && x.HoraFinal >= just.HoraInicial && x.HoraInicial <= just.HoraFinal
+                                )
+                                .FirstOrDefault();
+                            }
+
+                            if (justificacionExist == null)
+                            {
+                                db.Add(just);
+                                cantidadImportadas += db.SaveChanges();
+                            }
                         }
                     }
                 }
                 
             
-                return true;
+                return cantidadImportadas;
             }
             catch (Exception ex)
             {

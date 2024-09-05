@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMarcacion));
             groupBox1 = new GroupBox();
             panel1 = new Panel();
             btnMarcar = new Button();
@@ -40,23 +41,25 @@
             PicEmpleado = new PictureBox();
             lblEmpleado = new Label();
             lblSucursalNombre = new Label();
+            pictureBox1 = new PictureBox();
             groupBox1.SuspendLayout();
             panel1.SuspendLayout();
             gbMarcacion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PicEmpleado).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // groupBox1
             // 
-            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox1.Anchor = AnchorStyles.Right;
             groupBox1.Controls.Add(panel1);
             groupBox1.Controls.Add(label1);
             groupBox1.Controls.Add(lblFecha);
             groupBox1.Controls.Add(lblHora);
             groupBox1.Controls.Add(gbMarcacion);
-            groupBox1.Location = new Point(102, 42);
+            groupBox1.Location = new Point(481, 46);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(744, 514);
+            groupBox1.Size = new Size(665, 532);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             // 
@@ -65,7 +68,7 @@
             panel1.Anchor = AnchorStyles.Top;
             panel1.Controls.Add(btnMarcar);
             panel1.Controls.Add(txtId);
-            panel1.Location = new Point(185, 212);
+            panel1.Location = new Point(145, 212);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
             panel1.Size = new Size(440, 52);
@@ -86,17 +89,19 @@
             // 
             txtId.Location = new Point(32, 15);
             txtId.Name = "txtId";
+            txtId.PasswordChar = 'o';
             txtId.Size = new Size(291, 23);
             txtId.TabIndex = 6;
+            txtId.TextChanged += txtId_TextChanged;
             txtId.KeyPress += txtId_KeyPress;
             // 
             // label1
             // 
             label1.Anchor = AnchorStyles.Top;
             label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(-46, 150);
+            label1.Location = new Point(40, 150);
             label1.Name = "label1";
-            label1.Size = new Size(836, 45);
+            label1.Size = new Size(575, 45);
             label1.TabIndex = 9;
             label1.Text = "Ingrese su codigo para marcar";
             label1.TextAlign = ContentAlignment.TopCenter;
@@ -105,9 +110,9 @@
             // 
             lblFecha.Anchor = AnchorStyles.Top;
             lblFecha.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point);
-            lblFecha.Location = new Point(-43, 19);
+            lblFecha.Location = new Point(52, 19);
             lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(836, 45);
+            lblFecha.Size = new Size(563, 45);
             lblFecha.TabIndex = 8;
             lblFecha.Text = "Fecha";
             lblFecha.TextAlign = ContentAlignment.TopCenter;
@@ -116,9 +121,9 @@
             // 
             lblHora.Anchor = AnchorStyles.Top;
             lblHora.Font = new Font("Segoe UI", 48F, FontStyle.Regular, GraphicsUnit.Point);
-            lblHora.Location = new Point(-43, 64);
+            lblHora.Location = new Point(40, 64);
             lblHora.Name = "lblHora";
-            lblHora.Size = new Size(836, 84);
+            lblHora.Size = new Size(575, 84);
             lblHora.TabIndex = 5;
             lblHora.Text = "12:33:60";
             lblHora.TextAlign = ContentAlignment.TopCenter;
@@ -130,7 +135,7 @@
             gbMarcacion.Controls.Add(PicEmpleado);
             gbMarcacion.Controls.Add(lblEmpleado);
             gbMarcacion.Controls.Add(lblSucursalNombre);
-            gbMarcacion.Location = new Point(135, 287);
+            gbMarcacion.Location = new Point(40, 290);
             gbMarcacion.Name = "gbMarcacion";
             gbMarcacion.Size = new Size(562, 157);
             gbMarcacion.TabIndex = 4;
@@ -175,11 +180,23 @@
             lblSucursalNombre.TabIndex = 1;
             lblSucursalNombre.Text = "Sucursal Asignada";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(12, 110);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(463, 408);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 5;
+            pictureBox1.TabStop = false;
+            // 
             // FrmMarcacion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(954, 592);
+            ClientSize = new Size(1171, 642);
+            Controls.Add(pictureBox1);
             Controls.Add(groupBox1);
             Name = "FrmMarcacion";
             StartPosition = FormStartPosition.CenterScreen;
@@ -192,6 +209,7 @@
             gbMarcacion.ResumeLayout(false);
             gbMarcacion.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)PicEmpleado).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -210,5 +228,6 @@
         private Label lblSucursalNombre;
         private Label label2;
         private Panel panel1;
+        private PictureBox pictureBox1;
     }
 }

@@ -39,10 +39,12 @@
             btnImportar = new Button();
             btnExportar = new Button();
             groupBox2 = new GroupBox();
+            chkEmpleados = new CheckBox();
             chkJustificaciones = new CheckBox();
             chkMarcaciones = new CheckBox();
             lvwDocumentos = new ListView();
             folderBrowserDialog1 = new FolderBrowserDialog();
+            btnCerrar = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             SuspendLayout();
@@ -135,35 +137,33 @@
             // btnImportar
             // 
             btnImportar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnImportar.Image = Properties.Resources.excel_48;
-            btnImportar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnImportar.Location = new Point(22, 433);
+            btnImportar.Image = Properties.Resources.import;
+            btnImportar.Location = new Point(22, 434);
             btnImportar.Name = "btnImportar";
-            btnImportar.Padding = new Padding(0, 0, 10, 0);
-            btnImportar.Size = new Size(107, 40);
+            btnImportar.Size = new Size(164, 63);
             btnImportar.TabIndex = 7;
             btnImportar.Text = "Importar";
-            btnImportar.TextAlign = ContentAlignment.MiddleRight;
+            btnImportar.TextImageRelation = TextImageRelation.ImageAboveText;
             btnImportar.UseVisualStyleBackColor = true;
             btnImportar.Click += btnImportar_Click;
             // 
             // btnExportar
             // 
             btnExportar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnExportar.Image = Properties.Resources.ftp_server_48;
-            btnExportar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnExportar.Location = new Point(269, 433);
+            btnExportar.Image = Properties.Resources.export;
+            btnExportar.Location = new Point(192, 434);
             btnExportar.Name = "btnExportar";
             btnExportar.Padding = new Padding(0, 0, 10, 0);
-            btnExportar.Size = new Size(104, 40);
+            btnExportar.Size = new Size(181, 63);
             btnExportar.TabIndex = 8;
             btnExportar.Text = "Exportar";
-            btnExportar.TextAlign = ContentAlignment.MiddleRight;
+            btnExportar.TextImageRelation = TextImageRelation.ImageAboveText;
             btnExportar.UseVisualStyleBackColor = true;
             btnExportar.Click += btnExportar_Click;
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(chkEmpleados);
             groupBox2.Controls.Add(chkJustificaciones);
             groupBox2.Controls.Add(chkMarcaciones);
             groupBox2.Location = new Point(22, 153);
@@ -172,6 +172,16 @@
             groupBox2.TabIndex = 9;
             groupBox2.TabStop = false;
             groupBox2.Text = "TipoDatos";
+            // 
+            // chkEmpleados
+            // 
+            chkEmpleados.AutoSize = true;
+            chkEmpleados.Location = new Point(237, 21);
+            chkEmpleados.Name = "chkEmpleados";
+            chkEmpleados.Size = new Size(102, 19);
+            chkEmpleados.TabIndex = 2;
+            chkEmpleados.Text = "Justificaciones";
+            chkEmpleados.UseVisualStyleBackColor = true;
             // 
             // chkJustificaciones
             // 
@@ -204,11 +214,25 @@
             lvwDocumentos.UseCompatibleStateImageBehavior = false;
             lvwDocumentos.View = View.Details;
             // 
+            // btnCerrar
+            // 
+            btnCerrar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnCerrar.Image = Properties.Resources.icons8_close_48;
+            btnCerrar.Location = new Point(268, 503);
+            btnCerrar.Name = "btnCerrar";
+            btnCerrar.Size = new Size(105, 40);
+            btnCerrar.TabIndex = 11;
+            btnCerrar.Text = "Cerrar";
+            btnCerrar.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCerrar.UseVisualStyleBackColor = true;
+            btnCerrar.Click += btnCerrar_Click;
+            // 
             // FrmGestionDatos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(385, 485);
+            ClientSize = new Size(385, 555);
+            Controls.Add(btnCerrar);
             Controls.Add(lvwDocumentos);
             Controls.Add(groupBox2);
             Controls.Add(btnExportar);
@@ -241,5 +265,7 @@
         private CheckBox chkMarcaciones;
         private ListView lvwDocumentos;
         private FolderBrowserDialog folderBrowserDialog1;
+        private Button btnCerrar;
+        private CheckBox chkEmpleados;
     }
 }

@@ -21,7 +21,7 @@ namespace MD.Entidades
         public DateTime Fecha { get; set; }
         public DateTime HoraInicial  { get; set; }
         public DateTime HoraFinal { get; set; }
-        public int Horas { get; set; }
+        public decimal Horas { get; set; }
         public bool IsPermiso { get; set; }
         public bool IsFeriado { get; set; }
         public int CodigoEstado { get; set; }

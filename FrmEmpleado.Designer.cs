@@ -33,13 +33,14 @@
             btnCerrar = new Button();
             btnNuevo = new Button();
             gbEmpleado = new GroupBox();
+            gbUsuario = new GroupBox();
+            txtContraseña = new TextBox();
+            txtUsuario = new TextBox();
+            label5 = new Label();
+            label6 = new Label();
             label7 = new Label();
             cboHorarios = new ComboBox();
             chkUsuario = new CheckBox();
-            label6 = new Label();
-            txtContraseña = new TextBox();
-            label5 = new Label();
-            txtUsuario = new TextBox();
             pictureBox1 = new PictureBox();
             chkActivo = new CheckBox();
             btnGuardar = new Button();
@@ -52,6 +53,7 @@
             txtNombre = new TextBox();
             txtCedula = new TextBox();
             gbEmpleado.SuspendLayout();
+            gbUsuario.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -89,7 +91,7 @@
             btnNuevo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnNuevo.Image = Properties.Resources.icons8_add_48;
             btnNuevo.ImageAlign = ContentAlignment.MiddleLeft;
-            btnNuevo.Location = new Point(384, 21);
+            btnNuevo.Location = new Point(360, 21);
             btnNuevo.Name = "btnNuevo";
             btnNuevo.Padding = new Padding(0, 0, 10, 0);
             btnNuevo.Size = new Size(105, 29);
@@ -102,13 +104,10 @@
             // gbEmpleado
             // 
             gbEmpleado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            gbEmpleado.Controls.Add(gbUsuario);
             gbEmpleado.Controls.Add(label7);
             gbEmpleado.Controls.Add(cboHorarios);
             gbEmpleado.Controls.Add(chkUsuario);
-            gbEmpleado.Controls.Add(label6);
-            gbEmpleado.Controls.Add(txtContraseña);
-            gbEmpleado.Controls.Add(label5);
-            gbEmpleado.Controls.Add(txtUsuario);
             gbEmpleado.Controls.Add(pictureBox1);
             gbEmpleado.Controls.Add(chkActivo);
             gbEmpleado.Controls.Add(btnGuardar);
@@ -126,6 +125,54 @@
             gbEmpleado.TabIndex = 1;
             gbEmpleado.TabStop = false;
             gbEmpleado.Text = "Datos del Empleado";
+            // 
+            // gbUsuario
+            // 
+            gbUsuario.Controls.Add(txtContraseña);
+            gbUsuario.Controls.Add(txtUsuario);
+            gbUsuario.Controls.Add(label5);
+            gbUsuario.Controls.Add(label6);
+            gbUsuario.Location = new Point(25, 360);
+            gbUsuario.Name = "gbUsuario";
+            gbUsuario.Size = new Size(269, 145);
+            gbUsuario.TabIndex = 28;
+            gbUsuario.TabStop = false;
+            gbUsuario.Text = "Datos del Sistema";
+            // 
+            // txtContraseña
+            // 
+            txtContraseña.Location = new Point(19, 99);
+            txtContraseña.MaxLength = 20;
+            txtContraseña.Name = "txtContraseña";
+            txtContraseña.PasswordChar = '*';
+            txtContraseña.Size = new Size(203, 23);
+            txtContraseña.TabIndex = 7;
+            // 
+            // txtUsuario
+            // 
+            txtUsuario.Location = new Point(19, 50);
+            txtUsuario.MaxLength = 20;
+            txtUsuario.Name = "txtUsuario";
+            txtUsuario.Size = new Size(203, 23);
+            txtUsuario.TabIndex = 6;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(19, 32);
+            label5.Name = "label5";
+            label5.Size = new Size(50, 15);
+            label5.TabIndex = 22;
+            label5.Text = "Usuario:";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(17, 81);
+            label6.Name = "label6";
+            label6.Size = new Size(75, 15);
+            label6.TabIndex = 24;
+            label6.Text = "Constraseña:";
             // 
             // label7
             // 
@@ -149,47 +196,13 @@
             // chkUsuario
             // 
             chkUsuario.AutoSize = true;
-            chkUsuario.Location = new Point(182, 423);
+            chkUsuario.Location = new Point(27, 335);
             chkUsuario.Name = "chkUsuario";
             chkUsuario.Size = new Size(110, 19);
             chkUsuario.TabIndex = 25;
             chkUsuario.Text = "Usuario Sistema";
             chkUsuario.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(23, 376);
-            label6.Name = "label6";
-            label6.Size = new Size(75, 15);
-            label6.TabIndex = 24;
-            label6.Text = "Constraseña:";
-            // 
-            // txtContraseña
-            // 
-            txtContraseña.Location = new Point(25, 394);
-            txtContraseña.MaxLength = 20;
-            txtContraseña.Name = "txtContraseña";
-            txtContraseña.PasswordChar = '*';
-            txtContraseña.Size = new Size(269, 23);
-            txtContraseña.TabIndex = 7;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(25, 327);
-            label5.Name = "label5";
-            label5.Size = new Size(50, 15);
-            label5.TabIndex = 22;
-            label5.Text = "Usuario:";
-            // 
-            // txtUsuario
-            // 
-            txtUsuario.Location = new Point(25, 345);
-            txtUsuario.MaxLength = 20;
-            txtUsuario.Name = "txtUsuario";
-            txtUsuario.Size = new Size(269, 23);
-            txtUsuario.TabIndex = 6;
+            chkUsuario.CheckedChanged += chkUsuario_CheckedChanged;
             // 
             // pictureBox1
             // 
@@ -204,7 +217,7 @@
             // chkActivo
             // 
             chkActivo.AutoSize = true;
-            chkActivo.Location = new Point(25, 473);
+            chkActivo.Location = new Point(27, 534);
             chkActivo.Name = "chkActivo";
             chkActivo.Size = new Size(60, 19);
             chkActivo.TabIndex = 8;
@@ -224,7 +237,7 @@
             btnGuardar.Text = "Guardar";
             btnGuardar.TextAlign = ContentAlignment.MiddleRight;
             btnGuardar.UseVisualStyleBackColor = true;
-            btnGuardar.Click += button3_Click;
+            btnGuardar.Click += btnGuardar_Click;
             // 
             // label4
             // 
@@ -247,12 +260,13 @@
             // 
             // TxtId
             // 
-            TxtId.BackColor = SystemColors.Info;
+            TxtId.BackColor = SystemColors.Window;
             TxtId.Enabled = false;
             TxtId.Location = new Point(25, 59);
             TxtId.Name = "TxtId";
             TxtId.Size = new Size(103, 23);
             TxtId.TabIndex = 2;
+            TxtId.KeyPress += TxtId_KeyPress;
             // 
             // label1
             // 
@@ -268,9 +282,9 @@
             label3.AutoSize = true;
             label3.Location = new Point(25, 41);
             label3.Name = "label3";
-            label3.Size = new Size(20, 15);
+            label3.Size = new Size(49, 15);
             label3.TabIndex = 15;
-            label3.Text = "Id:";
+            label3.Text = "Codigo:";
             // 
             // label2
             // 
@@ -311,6 +325,8 @@
             Text = "Empleado";
             gbEmpleado.ResumeLayout(false);
             gbEmpleado.PerformLayout();
+            gbUsuario.ResumeLayout(false);
+            gbUsuario.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
@@ -338,5 +354,6 @@
         private CheckBox chkUsuario;
         private Label label7;
         private ComboBox cboHorarios;
+        private GroupBox gbUsuario;
     }
 }

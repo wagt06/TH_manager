@@ -88,9 +88,9 @@ namespace MD
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            //optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Marcaciones;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TM-Manager;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
-            optionsBuilder.UseSqlServer(@"Data Source=DELL\SOFIAMSSQ;Initial Catalog=TM-Manager;User Id=Sa;Password=1027061986 ;TrustServerCertificate=true;MultipleActiveResultSets=true");
+            //optionsBuilder.UseSqlServer(@"Data Source=DELL\SOFIAMSSQ;Initial Catalog=TM-Manager;User Id=Sa;Password=1027061986 ;TrustServerCertificate=true;MultipleActiveResultSets=true");
 
             //optionsBuilder.UseSqlServer(@"Server=.\\SQLExpress;AttachDbFilename=|DataDirectory|mydbfile.mdf;Database=DbMarcaciones;Trusted_Connection=Yes;");
 
@@ -112,10 +112,10 @@ namespace MD
         public void Seed()
         {
             modelBuilder.Entity<TipoJustificacion>().HasData(
-                   new TipoJustificacion() { CodigoTipoJustificacion = 1, Descripcion = "Dia Vacaciones", IsActiva = true, IsSalida = false, IsFeriado = false },
-                   new TipoJustificacion() { CodigoTipoJustificacion = 2, Descripcion = "Horas Libre", IsActiva = true, IsSalida = false, IsFeriado = false },
-                   new TipoJustificacion() { CodigoTipoJustificacion = 3, Descripcion = "Dia Feriado", IsActiva = true, IsSalida = false, IsFeriado = true },
-                   new TipoJustificacion() { CodigoTipoJustificacion = 4, Descripcion = "Horas Extras", IsActiva = true, IsSalida = true, IsFeriado = false }
+                   new TipoJustificacion() { CodigoTipoJustificacion = 1, Descripcion = "Dia Vacaciones", IsActiva = true, IsSalida = true, IsFeriado = false },
+                   new TipoJustificacion() { CodigoTipoJustificacion = 2, Descripcion = "Horas Libre", IsActiva = true, IsSalida = true, IsFeriado = false },
+                   new TipoJustificacion() { CodigoTipoJustificacion = 3, Descripcion = "Dia Feriado", IsActiva = true, IsSalida = true, IsFeriado = false },
+                   new TipoJustificacion() { CodigoTipoJustificacion = 4, Descripcion = "Horas Extras", IsActiva = true, IsSalida = false, IsFeriado = false }
             );
 
             modelBuilder.Entity<Sucursal>().HasData(
@@ -129,12 +129,8 @@ namespace MD
            );
 
             modelBuilder.Entity<Empleado>().HasData(
-             new Empleado() { CodigoEmpleado = 1,NombreEmpleado = "William Gonzalez", Cedula = "0011810860021C", CodigoHorario = 1,CodigoSucursal =  1
-             ,Usuario = "wagt06", Contraseña = "123", IsActivo = true,IsEliminado = false,CodigoUsuarioCreacion =1, FechaCreacion= DateTime.Now,IsUsuario = true },
-
-              new Empleado() {
-                  CodigoEmpleado = 2,NombreEmpleado = "Bayardo Gonzalez", Cedula = "0011810860021C", CodigoHorario = 1, CodigoSucursal = 1,
-                  Usuario = "bagt06", Contraseña = "123", IsActivo = true, IsEliminado = false, CodigoUsuarioCreacion = 1, FechaCreacion = DateTime.Now, IsUsuario = false}
+             new Empleado() { CodigoEmpleado = 1,NombreEmpleado = "Admin", Cedula = "", CodigoHorario = 1,CodigoSucursal =  1
+             ,Usuario = "admin", Contraseña = "123", IsActivo = true,IsEliminado = false,CodigoUsuarioCreacion =1, FechaCreacion= DateTime.Now,IsUsuario = true }
          );
 
         }

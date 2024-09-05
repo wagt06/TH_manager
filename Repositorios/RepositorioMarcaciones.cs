@@ -57,16 +57,18 @@ namespace MD.Repositorios
                                             .Include(x => x.Sucursal)
                                             .Where(x => x.CodigoEmpleado == m.CodigoEmpleado).FirstOrDefault();
 
-                        if (empleado == null)
-                            throw new Exception("No Existe el empleado");
+                        if (empleado != null) {
 
-                        Marcacion marcacionExistente = bd.Marcaciones.Where(x => x.CodigoEmpleado == m.CodigoEmpleado && x.Fecha == m.Fecha).FirstOrDefault();
-                        if (marcacionExistente == null)
-                        {
-                            bd.Marcaciones.Add(m);
-                            bd.SaveChanges();
-                            cantidadGuardadas += 1;
+                            Marcacion marcacionExistente = bd.Marcaciones.Where(x => x.CodigoEmpleado == m.CodigoEmpleado && x.Fecha == m.Fecha).FirstOrDefault();
+                            if (marcacionExistente == null)
+                            {
+                                bd.Marcaciones.Add(m);
+                                bd.SaveChanges();
+                                cantidadGuardadas += 1;
+                            }
                         }
+                            
+
                     }
                     
                     return cantidadGuardadas;

@@ -112,7 +112,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(28, 71);
+            label3.Location = new Point(78, 73);
             label3.Name = "label3";
             label3.Size = new Size(242, 50);
             label3.TabIndex = 26;
@@ -121,7 +121,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.time_card_48;
-            pictureBox1.Location = new Point(182, 121);
+            pictureBox1.Location = new Point(94, 120);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(20, 20);
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -132,11 +132,11 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(43, 121);
+            label4.Location = new Point(117, 123);
             label4.Name = "label4";
-            label4.Size = new Size(133, 17);
+            label4.Size = new Size(163, 17);
             label4.TabIndex = 28;
-            label4.Text = "Marcando a Tiempo!";
+            label4.Text = "Gestion de colaboradores";
             // 
             // btnAbrirMarcaciones
             // 
@@ -155,9 +155,9 @@
             // 
             lblMensaje.Dock = DockStyle.Bottom;
             lblMensaje.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            lblMensaje.Location = new Point(0, 439);
+            lblMensaje.Location = new Point(0, 452);
             lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(391, 51);
+            lblMensaje.Size = new Size(391, 38);
             lblMensaje.TabIndex = 30;
             lblMensaje.TextAlign = ContentAlignment.MiddleCenter;
             // 

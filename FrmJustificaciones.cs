@@ -97,8 +97,9 @@ namespace MD
             //    MessageBox.Show("revise que las fechas sean validas ");
             //    return;
             //}
-
-            this.txtHoras.Text = (dtpFin.Value - dtpInicio.Value).Hours.ToString();
+            decimal horas = (dtpFin.Value - dtpInicio.Value).Hours;
+            decimal minutos = (dtpFin.Value - dtpInicio.Value).Minutes;
+            this.txtHoras.Text = (minutos > 0 ? horas + (minutos / 60): horas).ToString();
         }
         private void DtpInicio_ValueChanged(object sender, EventArgs e)
         {
@@ -120,7 +121,7 @@ namespace MD
                 Fecha = fecha,
                 HoraInicial = dtpInicio.Value,
                 HoraFinal = dtpFin.Value,
-                Horas = int.Parse(txtHoras.Text),
+                Horas = decimal.Parse(txtHoras.Text),
                 Observacion = txtObservaciones.Text,
                 CodigoUsuarioCreacion = 1,
                 FechaCreacion = DateTime.Now,
@@ -203,7 +204,35 @@ namespace MD
         {
             try
             {
+
+
+
                 DateTime fecha = CalendarDias.SelectionStart;
+
+                if (this.cboTipoJustificaciones.Items.Count == 0) {
+                    MessageBox.Show("selecciona el tipo de justificacion");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(TxtIdEmpleado.Text))
+                {
+                    MessageBox.Show("La observacion es importante.");
+                    return;
+                }
+
+
+                if (string.IsNullOrEmpty(txtObservaciones.Text))
+                {
+                    MessageBox.Show("La observacion es importante.");
+                    return;
+                }
+
+
+                if (string.IsNullOrEmpty(txtHoras.Text))
+                {
+                    MessageBox.Show("Ingresa el rango de tiempo de la justificacion");
+                    return;
+                }
 
                 while (fecha <= CalendarDias.SelectionEnd)
                 {

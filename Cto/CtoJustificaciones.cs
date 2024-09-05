@@ -27,7 +27,7 @@ namespace MD.Cto
         public DateTime Fecha { get; set; }
         public DateTime HoraInicio { get; set; }
         public DateTime HoraFin { get; set; }
-        public int Horas{ get; set; }
+        public decimal Horas{ get; set; }
 
     }
 }

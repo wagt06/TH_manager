@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MD.Migrations
 {
     [DbContext(typeof(MdDbContext))]
-    [Migration("20240821053332_modif_Just_add_isPermiso")]
-    partial class modif_Just_add_isPermiso
+    [Migration("20240905053634_initialmigration")]
+    partial class initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,18 +25,64 @@ namespace MD.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("MD.Cto.CtoMarcacionesReporte", b =>
+                {
+                    b.Property<int>("CantidadHorasFinal")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodigoEmpleado")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodigoSucursal")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Entrada")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HorasJustificadas")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HorasMarcadas")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HorasReglamentarias")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NombreEmpleado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Salida")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Sucursal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TiempoAFavor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TiempoEnContra")
+                        .HasColumnType("int");
+
+                    b.ToTable("CtoMarcacionesReporte");
+                });
+
             modelBuilder.Entity("MD.Entidades.Empleado", b =>
                 {
                     b.Property<int>("CodigoEmpleado")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoEmpleado"));
 
                     b.Property<string>("Cedula")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("CodigoHorario")
+                        .HasColumnType("int");
 
                     b.Property<int>("CodigoSucursal")
                         .HasColumnType("int");
@@ -85,9 +131,72 @@ namespace MD.Migrations
 
                     b.HasKey("CodigoEmpleado");
 
+                    b.HasIndex("CodigoHorario");
+
                     b.HasIndex("CodigoSucursal");
 
                     b.ToTable("Empleado");
+
+                    b.HasData(
+                        new
+                        {
+                            CodigoEmpleado = 1,
+                            Cedula = "",
+                            CodigoHorario = 1,
+                            CodigoSucursal = 1,
+                            CodigoUsuarioCreacion = 1,
+                            Contraseña = "123",
+                            FechaCreacion = new DateTime(2024, 9, 4, 23, 36, 33, 914, DateTimeKind.Local).AddTicks(5915),
+                            IsActivo = true,
+                            IsEliminado = false,
+                            IsUsuario = true,
+                            NombreEmpleado = "Admin",
+                            Usuario = "admin"
+                        });
+                });
+
+            modelBuilder.Entity("MD.Entidades.Horario", b =>
+                {
+                    b.Property<int>("CodigoHorario")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoHorario"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Inicia")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActivo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Termina")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CodigoHorario");
+
+                    b.ToTable("Horario");
+
+                    b.HasData(
+                        new
+                        {
+                            CodigoHorario = 1,
+                            Descripcion = "Manana",
+                            Inicia = new DateTime(1, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActivo = true,
+                            Termina = new DateTime(1, 1, 1, 17, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            CodigoHorario = 2,
+                            Descripcion = "Tarde",
+                            Inicia = new DateTime(1, 1, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActivo = true,
+                            Termina = new DateTime(1, 1, 1, 19, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("MD.Entidades.Justificacion", b =>
@@ -134,8 +243,8 @@ namespace MD.Migrations
                     b.Property<DateTime>("HoraInicial")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Horas")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Horas")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool?>("IsEliminado")
                         .HasColumnType("bit");
@@ -225,6 +334,26 @@ namespace MD.Migrations
                     b.HasKey("CodigoSucursal");
 
                     b.ToTable("Sucursal");
+
+                    b.HasData(
+                        new
+                        {
+                            CodigoSucursal = 1,
+                            CodigoUsuarioCreacion = 1,
+                            FechaCreacion = new DateTime(2024, 9, 4, 23, 36, 33, 914, DateTimeKind.Local).AddTicks(5866),
+                            IsActivo = true,
+                            IsEliminado = false,
+                            Nombre = "Linda Vista"
+                        },
+                        new
+                        {
+                            CodigoSucursal = 2,
+                            CodigoUsuarioCreacion = 1,
+                            FechaCreacion = new DateTime(2024, 9, 4, 23, 36, 33, 914, DateTimeKind.Local).AddTicks(5879),
+                            IsActivo = true,
+                            IsEliminado = false,
+                            Nombre = "Metrocentro"
+                        });
                 });
 
             modelBuilder.Entity("MD.Entidades.TipoJustificacion", b =>
@@ -245,21 +374,63 @@ namespace MD.Migrations
                     b.Property<bool>("IsFeriado")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsTiempoExtra")
+                    b.Property<bool>("IsSalida")
                         .HasColumnType("bit");
 
                     b.HasKey("CodigoTipoJustificacion");
 
                     b.ToTable("TipoJustificacion");
+
+                    b.HasData(
+                        new
+                        {
+                            CodigoTipoJustificacion = 1,
+                            Descripcion = "Dia Vacaciones",
+                            IsActiva = true,
+                            IsFeriado = false,
+                            IsSalida = true
+                        },
+                        new
+                        {
+                            CodigoTipoJustificacion = 2,
+                            Descripcion = "Horas Libre",
+                            IsActiva = true,
+                            IsFeriado = false,
+                            IsSalida = true
+                        },
+                        new
+                        {
+                            CodigoTipoJustificacion = 3,
+                            Descripcion = "Dia Feriado",
+                            IsActiva = true,
+                            IsFeriado = false,
+                            IsSalida = true
+                        },
+                        new
+                        {
+                            CodigoTipoJustificacion = 4,
+                            Descripcion = "Horas Extras",
+                            IsActiva = true,
+                            IsFeriado = false,
+                            IsSalida = false
+                        });
                 });
 
             modelBuilder.Entity("MD.Entidades.Empleado", b =>
                 {
+                    b.HasOne("MD.Entidades.Horario", "Horario")
+                        .WithMany("Empleados")
+                        .HasForeignKey("CodigoHorario")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("MD.Entidades.Sucursal", "Sucursal")
                         .WithMany("Empleados")
                         .HasForeignKey("CodigoSucursal")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Horario");
 
                     b.Navigation("Sucursal");
                 });
@@ -307,6 +478,11 @@ namespace MD.Migrations
                     b.Navigation("Justificaciones");
 
                     b.Navigation("Marcaciones");
+                });
+
+            modelBuilder.Entity("MD.Entidades.Horario", b =>
+                {
+                    b.Navigation("Empleados");
                 });
 
             modelBuilder.Entity("MD.Entidades.Sucursal", b =>
