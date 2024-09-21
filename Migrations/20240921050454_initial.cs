@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MD.Migrations
 {
     /// <inheritdoc />
-    public partial class initialmigration : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,12 +24,12 @@ namespace MD.Migrations
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Entrada = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Salida = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    HorasReglamentarias = table.Column<int>(type: "int", nullable: false),
-                    HorasMarcadas = table.Column<int>(type: "int", nullable: false),
-                    TiempoEnContra = table.Column<int>(type: "int", nullable: false),
-                    TiempoAFavor = table.Column<int>(type: "int", nullable: false),
-                    HorasJustificadas = table.Column<int>(type: "int", nullable: false),
-                    CantidadHorasFinal = table.Column<int>(type: "int", nullable: false)
+                    HorasReglamentarias = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    HorasMarcadas = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TiempoEnContra = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TiempoAFavor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    HorasJustificadas = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CantidadHorasFinal = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,6 +49,34 @@ namespace MD.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Horario", x => x.CodigoHorario);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Menu",
+                columns: table => new
+                {
+                    MenuId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Modulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NombreMenu = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Menu", x => x.MenuId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rol",
+                columns: table => new
+                {
+                    RolId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreRol = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActivo = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rol", x => x.RolId);
                 });
 
             migrationBuilder.CreateTable(
@@ -89,6 +117,75 @@ namespace MD.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MenusOpciones",
+                columns: table => new
+                {
+                    MenuOpcionesId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MenuId = table.Column<int>(type: "int", nullable: false),
+                    NombreOpcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenusOpciones", x => x.MenuOpcionesId);
+                    table.ForeignKey(
+                        name: "FK_MenusOpciones_Menu_MenuId",
+                        column: x => x.MenuId,
+                        principalTable: "Menu",
+                        principalColumn: "MenuId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RolMenu",
+                columns: table => new
+                {
+                    RolMenuId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RolId = table.Column<int>(type: "int", nullable: false),
+                    MenuId = table.Column<int>(type: "int", nullable: false),
+                    IsActivo = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RolMenu", x => x.RolMenuId);
+                    table.ForeignKey(
+                        name: "FK_RolMenu_Rol_RolId",
+                        column: x => x.RolId,
+                        principalTable: "Rol",
+                        principalColumn: "RolId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Usuario",
+                columns: table => new
+                {
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CorreoElectronico = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Contrasena = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RollId = table.Column<int>(type: "int", nullable: false),
+                    IsEliminado = table.Column<bool>(type: "bit", nullable: true),
+                    CodigoUsuarioCreacion = table.Column<int>(type: "int", nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CodigoUsuarioMod = table.Column<int>(type: "int", nullable: true),
+                    FechaMod = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CodigoUsuarioElimina = table.Column<int>(type: "int", nullable: true),
+                    FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuario", x => x.UsuarioId);
+                    table.ForeignKey(
+                        name: "FK_Usuario_Rol_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Rol",
+                        principalColumn: "RolId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Empleado",
                 columns: table => new
                 {
@@ -123,6 +220,26 @@ namespace MD.Migrations
                         column: x => x.CodigoSucursal,
                         principalTable: "Sucursal",
                         principalColumn: "CodigoSucursal",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RolMenuOpciones",
+                columns: table => new
+                {
+                    RolMenuOpcionesid = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RolMenuId = table.Column<int>(type: "int", nullable: false),
+                    IsActivo = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RolMenuOpciones", x => x.RolMenuOpcionesid);
+                    table.ForeignKey(
+                        name: "FK_RolMenuOpciones_RolMenu_RolMenuId",
+                        column: x => x.RolMenuId,
+                        principalTable: "RolMenu",
+                        principalColumn: "RolMenuId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -204,12 +321,28 @@ namespace MD.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Menu",
+                columns: new[] { "MenuId", "Modulo", "NombreMenu" },
+                values: new object[,]
+                {
+                    { 1, "Empleados", "Empleado" },
+                    { 2, "Empleados", "Justificaciones" },
+                    { 3, "Empleados", "Reportes" },
+                    { 4, "Seguridad", "Roles" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Rol",
+                columns: new[] { "RolId", "IsActivo", "NombreRol" },
+                values: new object[] { 1, true, "Admin" });
+
+            migrationBuilder.InsertData(
                 table: "Sucursal",
                 columns: new[] { "CodigoSucursal", "CodigoUsuarioCreacion", "CodigoUsuarioElimina", "CodigoUsuarioMod", "FechaCreacion", "FechaEliminacion", "FechaMod", "IsActivo", "IsEliminado", "Nombre" },
                 values: new object[,]
                 {
-                    { 1, 1, null, null, new DateTime(2024, 9, 4, 23, 36, 33, 914, DateTimeKind.Local).AddTicks(5866), null, null, true, false, "Linda Vista" },
-                    { 2, 1, null, null, new DateTime(2024, 9, 4, 23, 36, 33, 914, DateTimeKind.Local).AddTicks(5879), null, null, true, false, "Metrocentro" }
+                    { 1, 1, null, null, new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3360), null, null, true, false, "Linda Vista" },
+                    { 2, 1, null, null, new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3378), null, null, true, false, "Metrocentro" }
                 });
 
             migrationBuilder.InsertData(
@@ -226,7 +359,38 @@ namespace MD.Migrations
             migrationBuilder.InsertData(
                 table: "Empleado",
                 columns: new[] { "CodigoEmpleado", "Cedula", "CodigoHorario", "CodigoSucursal", "CodigoUsuarioCreacion", "CodigoUsuarioElimina", "CodigoUsuarioMod", "Contraseña", "FechaCreacion", "FechaEliminacion", "FechaMod", "IsActivo", "IsEliminado", "IsUsuario", "NombreEmpleado", "Usuario" },
-                values: new object[] { 1, "", 1, 1, 1, null, null, "123", new DateTime(2024, 9, 4, 23, 36, 33, 914, DateTimeKind.Local).AddTicks(5915), null, null, true, false, true, "Admin", "admin" });
+                values: new object[] { 1, "", 1, 1, 1, null, null, "123", new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3419), null, null, true, false, true, "Admin", "admin" });
+
+            migrationBuilder.InsertData(
+                table: "MenusOpciones",
+                columns: new[] { "MenuOpcionesId", "MenuId", "NombreOpcion" },
+                values: new object[,]
+                {
+                    { 1, 1, "Agregar" },
+                    { 2, 1, "Modificar" },
+                    { 3, 1, "Eliminar" },
+                    { 4, 2, "Agregar" },
+                    { 5, 2, "Modificar" },
+                    { 6, 2, "Eliminar" },
+                    { 7, 2, "Aprobar" },
+                    { 8, 2, "Rechazar" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RolMenu",
+                columns: new[] { "RolMenuId", "IsActivo", "MenuId", "RolId" },
+                values: new object[,]
+                {
+                    { 1, true, 1, 1 },
+                    { 2, true, 2, 1 },
+                    { 3, true, 3, 1 },
+                    { 4, true, 4, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Usuario",
+                columns: new[] { "UsuarioId", "CodigoUsuarioCreacion", "CodigoUsuarioElimina", "CodigoUsuarioMod", "Contrasena", "CorreoElectronico", "FechaCreacion", "FechaEliminacion", "FechaMod", "IsEliminado", "Nombre", "RollId" },
+                values: new object[] { 1, 1, null, null, "123", "wagt06@gmail.com", new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3502), null, null, false, "wagt06", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Empleado_CodigoHorario",
@@ -257,6 +421,21 @@ namespace MD.Migrations
                 name: "IX_Marcacion_CodigoSucursal",
                 table: "Marcacion",
                 column: "CodigoSucursal");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MenusOpciones_MenuId",
+                table: "MenusOpciones",
+                column: "MenuId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RolMenu_RolId",
+                table: "RolMenu",
+                column: "RolId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RolMenuOpciones_RolMenuId",
+                table: "RolMenuOpciones",
+                column: "RolMenuId");
         }
 
         /// <inheritdoc />
@@ -272,16 +451,34 @@ namespace MD.Migrations
                 name: "Marcacion");
 
             migrationBuilder.DropTable(
+                name: "MenusOpciones");
+
+            migrationBuilder.DropTable(
+                name: "RolMenuOpciones");
+
+            migrationBuilder.DropTable(
+                name: "Usuario");
+
+            migrationBuilder.DropTable(
                 name: "TipoJustificacion");
 
             migrationBuilder.DropTable(
                 name: "Empleado");
 
             migrationBuilder.DropTable(
+                name: "Menu");
+
+            migrationBuilder.DropTable(
+                name: "RolMenu");
+
+            migrationBuilder.DropTable(
                 name: "Horario");
 
             migrationBuilder.DropTable(
                 name: "Sucursal");
+
+            migrationBuilder.DropTable(
+                name: "Rol");
         }
     }
 }

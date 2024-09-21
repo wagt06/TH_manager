@@ -40,7 +40,7 @@ namespace MD
         private void CargarSucursales()
         {
             List<Cto.SelectCombo> sucursales;
-            using (MdDbContext db = new MdDbContext())
+            using (DbContext db = new DbContext())
             {
                 sucursales = db.Sucursales.Where(x => x.IsActivo).Select(x => new Cto.SelectCombo { Codigo = x.CodigoSucursal, Descripcion = x.Nombre }).ToList();
             }
@@ -50,7 +50,7 @@ namespace MD
         private void CargarHorarios()
         {
             List<SelectCombo> horarios;
-            using (MdDbContext db = new MdDbContext())
+            using (DbContext db = new DbContext())
             {
                 horarios = db.Horarios.Where(x => x.IsActivo).Select(x => new Cto.SelectCombo { Codigo = x.CodigoHorario, Descripcion = x.Descripcion }).ToList();
             }

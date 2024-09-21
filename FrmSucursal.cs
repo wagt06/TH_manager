@@ -51,7 +51,7 @@ namespace MD
                 sucursal.FechaMod = DateTime.Now;
             }
 
-            using (MdDbContext db = new MdDbContext())
+            using (DbContext db = new DbContext())
             {
                 if (sucursal.CodigoSucursal == 0)
                 {
@@ -76,7 +76,7 @@ namespace MD
                 this.lwsSucursales.Items.Clear();
 
 
-                using (MdDbContext db = new MdDbContext())
+                using (DbContext db = new DbContext())
                 {
 
                     sucursales = db.Sucursales.ToList();

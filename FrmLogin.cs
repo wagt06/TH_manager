@@ -47,7 +47,7 @@ namespace MD
                 bool resultado = false;
                 string mensaje = "";
                 Empleado empleado;
-                using (MdDbContext db = new MdDbContext())
+                using (DbContext db = new DbContext())
                 {
                     empleado = db.Empleados
                         .Where(x => x.IsUsuario && x.Usuario == this.textBox1.Text && x.Contraseña == this.textBox2.Text)

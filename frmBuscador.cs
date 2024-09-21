@@ -52,7 +52,7 @@ namespace MD
 
             IEnumerable<CtoEmpleados> ctoEmpleados;
             this.lwsDatos.Items.Clear();
-            using (MdDbContext db = new MdDbContext())
+            using (DbContext db = new DbContext())
             {
 
                 ctoEmpleados = (from e in db.Empleados

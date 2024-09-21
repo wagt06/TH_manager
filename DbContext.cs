@@ -13,8 +13,9 @@ using System.Threading.Tasks;
 
 namespace MD
 {
-    public class MdDbContext:DbContext
+    public class DbContext: Microsoft.EntityFrameworkCore.DbContext
     {
+        public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<Empleado> Empleados { get; set; }
         public virtual DbSet<Sucursal> Sucursales { get; set; }
         public virtual DbSet<Marcacion> Marcaciones { get; set; }
@@ -22,6 +23,16 @@ namespace MD
         public virtual DbSet<Justificacion> Justificaciones { get; set; }
         public virtual DbSet<TipoJustificacion> TiposJustificaciones { get; set; }
         public virtual DbSet<Horario> Horarios { get; set; }
+
+        /*Seguridad*/
+        public virtual DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<MenusOpciones> MenuOpciones { get; set; }
+
+        public virtual DbSet<Rol> Roll { get; set; }
+        public virtual DbSet<RolMenu> RollMenus { get; set; }
+        public virtual DbSet<RolMenuOpciones> RollMenuOpciones { get; set; }
+
+
 
 
 
@@ -47,6 +58,7 @@ namespace MD
                     .ToList()
                     .ForEach(fk => fk.DeleteBehavior = DeleteBehavior.Restrict);
             }
+
 
             modelBuilder.Entity<Empleado>()
            .HasOne<Sucursal>(s => s.Sucursal)
@@ -79,6 +91,28 @@ namespace MD
               .WithMany(e => e.Empleados)
               .HasForeignKey(s => s.CodigoHorario);
 
+            //Seguridad
+            modelBuilder.Entity<Usuario>()
+           .HasOne<Rol>(s => s.Roll)
+           .WithMany(e => e.Usuarios)
+           .HasForeignKey(s => s.UsuarioId);
+
+            modelBuilder.Entity<Rol>()
+              .HasMany<RolMenu>(s => s.RolMenus)
+              .WithOne(e => e.Rol)
+              .HasForeignKey(s => s.RolId);
+
+
+            modelBuilder.Entity<RolMenu>()
+            .HasMany<RolMenuOpciones>(s => s.RolMenuOpciones)
+            .WithOne(e => e.RolMenu)
+            .HasForeignKey(s => s.RolMenuId);
+
+            modelBuilder.Entity<Menu>()
+           .HasMany<MenusOpciones>(s => s.Opciones)
+           .WithOne(e => e.Menu)
+           .HasForeignKey(s => s.MenuId);
+
 
             base.OnModelCreating(modelBuilder);
 
@@ -88,14 +122,12 @@ namespace MD
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TM-Manager;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            //optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TM-Manager;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
-            //optionsBuilder.UseSqlServer(@"Data Source=DELL\SOFIAMSSQ;Initial Catalog=TM-Manager;User Id=Sa;Password=1027061986 ;TrustServerCertificate=true;MultipleActiveResultSets=true");
-
-            //optionsBuilder.UseSqlServer(@"Server=.\\SQLExpress;AttachDbFilename=|DataDirectory|mydbfile.mdf;Database=DbMarcaciones;Trusted_Connection=Yes;");
+            optionsBuilder.UseSqlServer(@"Data Source=DELL\SOFIAMSSQ;Initial Catalog=TM-Manager;User Id=Sa;Password=1027061986 ;TrustServerCertificate=true;MultipleActiveResultSets=true");
 
             base.OnConfiguring(optionsBuilder);
-            //optionsBuilder.UseSqlServer(@"Server=DVT-CHANGEMENOW\SQLEXPRESS;Database=CodingWiki;TrustServerCertificate=True;Trusted_Connection=True;");
+
         }
 
     }
@@ -129,9 +161,73 @@ namespace MD
            );
 
             modelBuilder.Entity<Empleado>().HasData(
-             new Empleado() { CodigoEmpleado = 1,NombreEmpleado = "Admin", Cedula = "", CodigoHorario = 1,CodigoSucursal =  1
-             ,Usuario = "admin", Contraseña = "123", IsActivo = true,IsEliminado = false,CodigoUsuarioCreacion =1, FechaCreacion= DateTime.Now,IsUsuario = true }
-         );
+             new Empleado()
+             {
+                 CodigoEmpleado = 1,
+                 NombreEmpleado = "Admin",
+                 Cedula = "",
+                 CodigoHorario = 1,
+                 CodigoSucursal = 1
+             ,
+                 Usuario = "admin",
+                 Contraseña = "123",
+                 IsActivo = true,
+                 IsEliminado = false,
+                 CodigoUsuarioCreacion = 1,
+                 FechaCreacion = DateTime.Now,
+                 IsUsuario = true
+             });
+
+
+            modelBuilder.Entity<Menu>().HasData(
+            new Menu() { MenuId = 1, Modulo = "Empleados", NombreMenu = "Empleado" },
+            new Menu() { MenuId = 2, Modulo = "Empleados", NombreMenu = "Justificaciones" },
+            new Menu() { MenuId = 3, Modulo = "Empleados", NombreMenu = "Reportes" },
+            new Menu() { MenuId = 4, Modulo = "Seguridad", NombreMenu = "Roles" }
+            );
+
+            modelBuilder.Entity<MenusOpciones>().HasData(
+            new MenusOpciones() { MenuId = 2, MenuOpcionesId = 4, NombreOpcion = "Agregar" },
+            new MenusOpciones() { MenuId = 2, MenuOpcionesId = 5, NombreOpcion = "Modificar" },
+            new MenusOpciones() { MenuId = 2, MenuOpcionesId = 6, NombreOpcion = "Eliminar" },
+            new MenusOpciones() { MenuId = 2, MenuOpcionesId = 7, NombreOpcion = "Aprobar" },
+            new MenusOpciones() { MenuId = 2, MenuOpcionesId = 8, NombreOpcion = "Rechazar" },
+            new MenusOpciones() { MenuId = 1, MenuOpcionesId = 1, NombreOpcion = "Agregar" },
+            new MenusOpciones() { MenuId = 1, MenuOpcionesId = 2, NombreOpcion = "Modificar" },
+            new MenusOpciones() { MenuId = 1, MenuOpcionesId = 3, NombreOpcion = "Eliminar" }
+            );
+
+
+            modelBuilder.Entity<Rol>().HasData(
+                new Rol()
+                {
+                    IsActivo = true,
+                    RolId = 1,
+                    NombreRol = "Admin",
+                });
+
+
+            modelBuilder.Entity<RolMenu>().HasData(
+             new RolMenu() { MenuId = 1, RolId = 1, IsActivo = true, RolMenuId = 1 },
+             new RolMenu() { MenuId = 2, RolId = 1, IsActivo = true, RolMenuId = 2 },
+             new RolMenu() { MenuId = 3, RolId = 1, IsActivo = true, RolMenuId = 3 },
+             new RolMenu() { MenuId = 4, RolId = 1, IsActivo = true, RolMenuId = 4 }
+             );
+
+
+            modelBuilder.Entity<Usuario>().HasData(
+            new Usuario()
+            {
+                UsuarioId = 1,
+                Nombre = "wagt06",
+                Contrasena = "123",
+                CorreoElectronico = "wagt06@gmail.com",
+                IsEliminado = false,
+                RollId = 1,
+                FechaCreacion = DateTime.Now,
+                CodigoUsuarioCreacion = 1
+            });
+
 
         }
     }

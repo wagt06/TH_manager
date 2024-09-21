@@ -35,7 +35,7 @@ namespace MD
         private void FrmGestionDatos_Load(object sender, EventArgs e)
         {
             List<Sucursal> sucursales;
-            using (MdDbContext db = new MdDbContext())
+            using (DbContext db = new DbContext())
             {
 
                 sucursales = db.Sucursales.Where(x => x.IsActivo).ToList();

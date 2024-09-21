@@ -39,8 +39,12 @@
             btnNuevaMarcacion = new Button();
             lblError = new Label();
             panel1 = new Panel();
+            cmdSeguridad = new Button();
+            tabControl1 = new TabControl();
+            tabPage1 = new TabPage();
             statusStrip.SuspendLayout();
             panel1.SuspendLayout();
+            tabControl1.SuspendLayout();
             SuspendLayout();
             // 
             // statusStrip
@@ -62,7 +66,6 @@
             // 
             // cmdJustificaciones
             // 
-            cmdJustificaciones.FlatStyle = FlatStyle.Flat;
             cmdJustificaciones.Image = Properties.Resources.icons8_discord_staff_badge_96;
             cmdJustificaciones.ImageAlign = ContentAlignment.TopCenter;
             cmdJustificaciones.Location = new Point(12, 122);
@@ -76,7 +79,6 @@
             // 
             // btnMarcaciones
             // 
-            btnMarcaciones.FlatStyle = FlatStyle.Flat;
             btnMarcaciones.Image = Properties.Resources.icons8_checked_identification_documents_96;
             btnMarcaciones.ImageAlign = ContentAlignment.TopCenter;
             btnMarcaciones.Location = new Point(12, 230);
@@ -90,7 +92,6 @@
             // 
             // btnEmpleado
             // 
-            btnEmpleado.FlatStyle = FlatStyle.Flat;
             btnEmpleado.Image = Properties.Resources.icons8_manager_96;
             btnEmpleado.ImageAlign = ContentAlignment.TopCenter;
             btnEmpleado.Location = new Point(13, 69);
@@ -104,7 +105,6 @@
             // 
             // btnSucursales
             // 
-            btnSucursales.FlatStyle = FlatStyle.Flat;
             btnSucursales.Image = Properties.Resources.icons8_permanent_job_96;
             btnSucursales.ImageAlign = ContentAlignment.TopCenter;
             btnSucursales.Location = new Point(13, 16);
@@ -118,7 +118,6 @@
             // 
             // btnNuevaMarcacion
             // 
-            btnNuevaMarcacion.FlatStyle = FlatStyle.Flat;
             btnNuevaMarcacion.Image = Properties.Resources.icons8_security_pass_96;
             btnNuevaMarcacion.ImageAlign = ContentAlignment.TopCenter;
             btnNuevaMarcacion.Location = new Point(13, 177);
@@ -143,6 +142,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(cmdSeguridad);
             panel1.Controls.Add(btnSucursales);
             panel1.Controls.Add(btnNuevaMarcacion);
             panel1.Controls.Add(cmdJustificaciones);
@@ -154,12 +154,49 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(131, 514);
             panel1.TabIndex = 14;
+            panel1.Paint += panel1_Paint;
+            // 
+            // cmdSeguridad
+            // 
+            cmdSeguridad.Image = Properties.Resources.icons8_checked_identification_documents_96;
+            cmdSeguridad.ImageAlign = ContentAlignment.TopCenter;
+            cmdSeguridad.Location = new Point(10, 284);
+            cmdSeguridad.Name = "cmdSeguridad";
+            cmdSeguridad.Size = new Size(110, 48);
+            cmdSeguridad.TabIndex = 11;
+            cmdSeguridad.Text = "Seguridad";
+            cmdSeguridad.TextAlign = ContentAlignment.BottomCenter;
+            cmdSeguridad.UseVisualStyleBackColor = true;
+            cmdSeguridad.Click += cmdSeguridad_Click;
+            // 
+            // tabControl1
+            // 
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            tabControl1.Location = new Point(854, 379);
+            tabControl1.Multiline = true;
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(37, 29);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
+            tabControl1.TabIndex = 16;
+            // 
+            // tabPage1
+            // 
+            tabPage1.Location = new Point(4, 26);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(29, 0);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "tabPage1";
+            tabPage1.UseVisualStyleBackColor = true;
             // 
             // FormPrincipalMdi
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(913, 571);
+            Controls.Add(tabControl1);
             Controls.Add(panel1);
             Controls.Add(lblError);
             Controls.Add(statusStrip);
@@ -173,6 +210,7 @@
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
             panel1.ResumeLayout(false);
+            tabControl1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -188,6 +226,9 @@
         private Button btnNuevaMarcacion;
         private Label lblError;
         private Panel panel1;
+        private Button cmdSeguridad;
+        private TabControl tabControl1;
+        private TabPage tabPage1;
     }
 }
 

@@ -59,7 +59,6 @@ namespace MD
             {
                 this.txtId.Focus();
             }
-
         }
 
 

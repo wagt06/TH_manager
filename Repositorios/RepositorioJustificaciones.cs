@@ -11,7 +11,7 @@ namespace MD.Repositorios
 {
     public class RepositorioJustificaciones
     {
-        MdDbContext db = new MdDbContext();
+        DbContext db = new DbContext();
         public bool GuardarJustificacion(Justificacion justificacion) { 
             try 
             {

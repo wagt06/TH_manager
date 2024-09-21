@@ -14,7 +14,7 @@ namespace MD.Repositorios
         public Empleado GuardarMarcacionesPorCedula(string Cedula) {
 			try
 			{
-                using (MdDbContext bd = new MdDbContext())
+                using (DbContext bd = new DbContext())
                 {
                     Empleado empleado = bd.Empleados
                                         .Include(x => x.Sucursal)
@@ -50,7 +50,7 @@ namespace MD.Repositorios
             try
             {
                 int cantidadGuardadas = 0;
-                using (MdDbContext bd = new MdDbContext())
+                using (DbContext bd = new DbContext())
                 {
                     foreach (Marcacion m in marcaciones) {
                         Empleado empleado = bd.Empleados
@@ -83,7 +83,7 @@ namespace MD.Repositorios
         }
 
         public List<Marcacion> MarcacionesPorFecha(DateTime FechaInicial, DateTime FechaFinal, int CodigoSucursal) {
-            using (MdDbContext db = new MdDbContext()) {
+            using (DbContext db = new DbContext()) {
                 return db.Marcaciones.Where(x => x.Fecha >= FechaInicial && x.Fecha <= FechaFinal && x.CodigoSucursal == CodigoSucursal).ToList();
             }
         }

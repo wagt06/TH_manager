@@ -14,7 +14,7 @@ namespace MD
 
             string sql = CargarArchivoText.LeerArchivo(directorio + "\\Sql\\objetos.sql");
 
-            using (MdDbContext db = new MdDbContext())
+            using (DbContext db = new DbContext())
             {
                 db.Database.Migrate();
 

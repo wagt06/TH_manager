@@ -112,6 +112,51 @@ namespace MD
         {
             RevisarConfiguracion();
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void cmdSeguridad_Click(object sender, EventArgs e)
+        {
+            FrmSeguridad just = new FrmSeguridad { MdiParent = this };
+            just.Show();
+
+            //AddTab(just);
+
+        }
+
+        private void AddTab(Form childForm)
+        {
+            // Crear una nueva pestaña
+            TabPage tabPage = new TabPage(childForm.Text);
+            tabPage.Controls.Add(childForm);
+            childForm.TopLevel = false;
+            childForm.Dock = DockStyle.Fill;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+
+            //Button btnCerrar = new Button();
+            //btnCerrar.Text = "Cerrar Pestaña";
+            //btnCerrar.Dock = DockStyle.Top;
+            //btnCerrar.Click += new EventHandler((sender, e) => CerrarPestaña(tabPage));
+            //tabPage.
+            //tabPage.Controls.Add(btnCerrar);
+
+
+            childForm.Show();
+
+            // Agregar la pestaña al TabControl
+            tabControl1.TabPages.Add(tabPage);
+        }
+
+
+        private void CerrarPestaña(TabPage pestaña)
+        {
+            tabControl1.TabPages.Remove(pestaña);
+        }
+
+
     }
 
     public class State

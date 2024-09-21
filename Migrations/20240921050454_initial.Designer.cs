@@ -4,16 +4,19 @@ using MD;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace MD.Migrations
 {
-    [DbContext(typeof(MdDbContext))]
-    partial class MdDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DbContext))]
+    [Migration("20240921050454_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,8 +27,8 @@ namespace MD.Migrations
 
             modelBuilder.Entity("MD.Cto.CtoMarcacionesReporte", b =>
                 {
-                    b.Property<int>("CantidadHorasFinal")
-                        .HasColumnType("int");
+                    b.Property<decimal>("CantidadHorasFinal")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("CodigoEmpleado")
                         .HasColumnType("int");
@@ -39,14 +42,14 @@ namespace MD.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("HorasJustificadas")
-                        .HasColumnType("int");
+                    b.Property<decimal>("HorasJustificadas")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("HorasMarcadas")
-                        .HasColumnType("int");
+                    b.Property<decimal>("HorasMarcadas")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("HorasReglamentarias")
-                        .HasColumnType("int");
+                    b.Property<decimal>("HorasReglamentarias")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("NombreEmpleado")
                         .IsRequired()
@@ -59,11 +62,11 @@ namespace MD.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TiempoAFavor")
-                        .HasColumnType("int");
+                    b.Property<decimal>("TiempoAFavor")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("TiempoEnContra")
-                        .HasColumnType("int");
+                    b.Property<decimal>("TiempoEnContra")
+                        .HasColumnType("decimal(18,2)");
 
                     b.ToTable("CtoMarcacionesReporte");
                 });
@@ -143,7 +146,7 @@ namespace MD.Migrations
                             CodigoSucursal = 1,
                             CodigoUsuarioCreacion = 1,
                             Contraseña = "123",
-                            FechaCreacion = new DateTime(2024, 9, 4, 23, 36, 33, 914, DateTimeKind.Local).AddTicks(5915),
+                            FechaCreacion = new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3419),
                             IsActivo = true,
                             IsEliminado = false,
                             IsUsuario = true,
@@ -291,6 +294,228 @@ namespace MD.Migrations
                     b.ToTable("Marcacion");
                 });
 
+            modelBuilder.Entity("MD.Entidades.Menu", b =>
+                {
+                    b.Property<int>("MenuId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MenuId"));
+
+                    b.Property<string>("Modulo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombreMenu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MenuId");
+
+                    b.ToTable("Menu");
+
+                    b.HasData(
+                        new
+                        {
+                            MenuId = 1,
+                            Modulo = "Empleados",
+                            NombreMenu = "Empleado"
+                        },
+                        new
+                        {
+                            MenuId = 2,
+                            Modulo = "Empleados",
+                            NombreMenu = "Justificaciones"
+                        },
+                        new
+                        {
+                            MenuId = 3,
+                            Modulo = "Empleados",
+                            NombreMenu = "Reportes"
+                        },
+                        new
+                        {
+                            MenuId = 4,
+                            Modulo = "Seguridad",
+                            NombreMenu = "Roles"
+                        });
+                });
+
+            modelBuilder.Entity("MD.Entidades.MenusOpciones", b =>
+                {
+                    b.Property<int>("MenuOpcionesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MenuOpcionesId"));
+
+                    b.Property<int>("MenuId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NombreOpcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MenuOpcionesId");
+
+                    b.HasIndex("MenuId");
+
+                    b.ToTable("MenusOpciones");
+
+                    b.HasData(
+                        new
+                        {
+                            MenuOpcionesId = 4,
+                            MenuId = 2,
+                            NombreOpcion = "Agregar"
+                        },
+                        new
+                        {
+                            MenuOpcionesId = 5,
+                            MenuId = 2,
+                            NombreOpcion = "Modificar"
+                        },
+                        new
+                        {
+                            MenuOpcionesId = 6,
+                            MenuId = 2,
+                            NombreOpcion = "Eliminar"
+                        },
+                        new
+                        {
+                            MenuOpcionesId = 7,
+                            MenuId = 2,
+                            NombreOpcion = "Aprobar"
+                        },
+                        new
+                        {
+                            MenuOpcionesId = 8,
+                            MenuId = 2,
+                            NombreOpcion = "Rechazar"
+                        },
+                        new
+                        {
+                            MenuOpcionesId = 1,
+                            MenuId = 1,
+                            NombreOpcion = "Agregar"
+                        },
+                        new
+                        {
+                            MenuOpcionesId = 2,
+                            MenuId = 1,
+                            NombreOpcion = "Modificar"
+                        },
+                        new
+                        {
+                            MenuOpcionesId = 3,
+                            MenuId = 1,
+                            NombreOpcion = "Eliminar"
+                        });
+                });
+
+            modelBuilder.Entity("MD.Entidades.Rol", b =>
+                {
+                    b.Property<int>("RolId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RolId"));
+
+                    b.Property<bool>("IsActivo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("NombreRol")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RolId");
+
+                    b.ToTable("Rol");
+
+                    b.HasData(
+                        new
+                        {
+                            RolId = 1,
+                            IsActivo = true,
+                            NombreRol = "Admin"
+                        });
+                });
+
+            modelBuilder.Entity("MD.Entidades.RolMenu", b =>
+                {
+                    b.Property<int>("RolMenuId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RolMenuId"));
+
+                    b.Property<bool>("IsActivo")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MenuId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RolId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RolMenuId");
+
+                    b.HasIndex("RolId");
+
+                    b.ToTable("RolMenu");
+
+                    b.HasData(
+                        new
+                        {
+                            RolMenuId = 1,
+                            IsActivo = true,
+                            MenuId = 1,
+                            RolId = 1
+                        },
+                        new
+                        {
+                            RolMenuId = 2,
+                            IsActivo = true,
+                            MenuId = 2,
+                            RolId = 1
+                        },
+                        new
+                        {
+                            RolMenuId = 3,
+                            IsActivo = true,
+                            MenuId = 3,
+                            RolId = 1
+                        },
+                        new
+                        {
+                            RolMenuId = 4,
+                            IsActivo = true,
+                            MenuId = 4,
+                            RolId = 1
+                        });
+                });
+
+            modelBuilder.Entity("MD.Entidades.RolMenuOpciones", b =>
+                {
+                    b.Property<int>("RolMenuOpcionesid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RolMenuOpcionesid"));
+
+                    b.Property<bool>("IsActivo")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RolMenuId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RolMenuOpcionesid");
+
+                    b.HasIndex("RolMenuId");
+
+                    b.ToTable("RolMenuOpciones");
+                });
+
             modelBuilder.Entity("MD.Entidades.Sucursal", b =>
                 {
                     b.Property<int>("CodigoSucursal")
@@ -337,7 +562,7 @@ namespace MD.Migrations
                         {
                             CodigoSucursal = 1,
                             CodigoUsuarioCreacion = 1,
-                            FechaCreacion = new DateTime(2024, 9, 4, 23, 36, 33, 914, DateTimeKind.Local).AddTicks(5866),
+                            FechaCreacion = new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3360),
                             IsActivo = true,
                             IsEliminado = false,
                             Nombre = "Linda Vista"
@@ -346,7 +571,7 @@ namespace MD.Migrations
                         {
                             CodigoSucursal = 2,
                             CodigoUsuarioCreacion = 1,
-                            FechaCreacion = new DateTime(2024, 9, 4, 23, 36, 33, 914, DateTimeKind.Local).AddTicks(5879),
+                            FechaCreacion = new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3378),
                             IsActivo = true,
                             IsEliminado = false,
                             Nombre = "Metrocentro"
@@ -413,6 +638,66 @@ namespace MD.Migrations
                         });
                 });
 
+            modelBuilder.Entity("MD.Entidades.Usuario", b =>
+                {
+                    b.Property<int>("UsuarioId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodigoUsuarioCreacion")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CodigoUsuarioElimina")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CodigoUsuarioMod")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Contrasena")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CorreoElectronico")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaEliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaMod")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsEliminado")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RollId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UsuarioId");
+
+                    b.ToTable("Usuario");
+
+                    b.HasData(
+                        new
+                        {
+                            UsuarioId = 1,
+                            CodigoUsuarioCreacion = 1,
+                            Contrasena = "123",
+                            CorreoElectronico = "wagt06@gmail.com",
+                            FechaCreacion = new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3502),
+                            IsEliminado = false,
+                            Nombre = "wagt06",
+                            RollId = 1
+                        });
+                });
+
             modelBuilder.Entity("MD.Entidades.Empleado", b =>
                 {
                     b.HasOne("MD.Entidades.Horario", "Horario")
@@ -470,6 +755,50 @@ namespace MD.Migrations
                     b.Navigation("Sucursal");
                 });
 
+            modelBuilder.Entity("MD.Entidades.MenusOpciones", b =>
+                {
+                    b.HasOne("MD.Entidades.Menu", "Menu")
+                        .WithMany("Opciones")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+                });
+
+            modelBuilder.Entity("MD.Entidades.RolMenu", b =>
+                {
+                    b.HasOne("MD.Entidades.Rol", "Rol")
+                        .WithMany("RolMenus")
+                        .HasForeignKey("RolId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Rol");
+                });
+
+            modelBuilder.Entity("MD.Entidades.RolMenuOpciones", b =>
+                {
+                    b.HasOne("MD.Entidades.RolMenu", "RolMenu")
+                        .WithMany("RolMenuOpciones")
+                        .HasForeignKey("RolMenuId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("RolMenu");
+                });
+
+            modelBuilder.Entity("MD.Entidades.Usuario", b =>
+                {
+                    b.HasOne("MD.Entidades.Rol", "Roll")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Roll");
+                });
+
             modelBuilder.Entity("MD.Entidades.Empleado", b =>
                 {
                     b.Navigation("Justificaciones");
@@ -480,6 +809,23 @@ namespace MD.Migrations
             modelBuilder.Entity("MD.Entidades.Horario", b =>
                 {
                     b.Navigation("Empleados");
+                });
+
+            modelBuilder.Entity("MD.Entidades.Menu", b =>
+                {
+                    b.Navigation("Opciones");
+                });
+
+            modelBuilder.Entity("MD.Entidades.Rol", b =>
+                {
+                    b.Navigation("RolMenus");
+
+                    b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("MD.Entidades.RolMenu", b =>
+                {
+                    b.Navigation("RolMenuOpciones");
                 });
 
             modelBuilder.Entity("MD.Entidades.Sucursal", b =>

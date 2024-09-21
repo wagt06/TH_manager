@@ -45,7 +45,7 @@ namespace MD
         private void CargarSucursales()
         {
             List<Sucursal> sucursales;
-            using (MdDbContext db = new MdDbContext())
+            using (DbContext db = new DbContext())
             {
 
                 sucursales = db.Sucursales.Where(x => x.IsActivo).ToList();
@@ -90,7 +90,7 @@ namespace MD
                 SqlParameter codigoSucursal = new SqlParameter("@codigoSucursal", ((Sucursal)this.cboSucursales.SelectedItem).CodigoSucursal);
 
 
-                using (MdDbContext db = new MdDbContext())
+                using (DbContext db = new DbContext())
                 {
                     marcaciones = db.CtoMarcacionesReporte.FromSqlRaw<CtoMarcacionesReporte>(@"EXEC SP_Marcaciones @FechaIni,@FechaFin,@sLike,@CodigoSucursal", fechaInicial, fechaFinal, slike, codigoSucursal)
                         .ToList();
@@ -132,7 +132,7 @@ namespace MD
                 this.lswDatosMarcaciones.Items.Clear();
 
                 IEnumerable<Marcacion> marcaciones;
-                using (MdDbContext db = new MdDbContext())
+                using (DbContext db = new DbContext())
                 {
                     marcaciones = db.Marcaciones
                         .Include(x => x.Sucursal)

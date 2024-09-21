@@ -10,7 +10,7 @@ namespace MD.Repositorios
 {
     public class RepositorioEmpleados
     {
-        private MdDbContext db = new MdDbContext();
+        private DbContext db = new DbContext();
 
         public Empleado BuscarEmpleadoPorCodigo(int codigo ) {
             return db.Empleados.FirstOrDefault(x => x.CodigoEmpleado == codigo);
@@ -21,7 +21,7 @@ namespace MD.Repositorios
             try
             {
 
-                using (MdDbContext db = new MdDbContext())
+                using (DbContext db = new DbContext())
                 {
                     Empleado existeEmpleado = db.Empleados.Where(x=>x.CodigoEmpleado == empleado.CodigoEmpleado).FirstOrDefault();
 
