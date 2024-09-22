@@ -32,8 +32,6 @@ namespace MD
             CargarSucursales();
             CargarEmpleados();
             CargarHorarios();
-
-            gbUsuario.Enabled = false;
             TxtId.Enabled = true;
         }
 
@@ -44,7 +42,7 @@ namespace MD
             {
                 sucursales = db.Sucursales.Where(x => x.IsActivo).Select(x => new Cto.SelectCombo { Codigo = x.CodigoSucursal, Descripcion = x.Nombre }).ToList();
             }
-            Tools.LlenarControles.LlenarCombo(this.cboSucursal, sucursales);
+            Tools.Tool.LlenarCombo(this.cboSucursal, sucursales);
         }
 
         private void CargarHorarios()
@@ -55,7 +53,7 @@ namespace MD
                 horarios = db.Horarios.Where(x => x.IsActivo).Select(x => new Cto.SelectCombo { Codigo = x.CodigoHorario, Descripcion = x.Descripcion }).ToList();
             }
 
-            Tools.LlenarControles.LlenarCombo(this.cboHorarios, horarios);
+            Tools.Tool.LlenarCombo(this.cboHorarios, horarios);
         }
 
         private void CargarEmpleados()
@@ -97,8 +95,7 @@ namespace MD
             this.txtCedula.Text = "";
             this.chkActivo.Checked = true;
             this.cboHorarios.SelectedValue = -1;
-            this.cboSucursal.SelectedValue = -1;
-            this.txtUsuario.Text = "";
+            this.cboSucursal.SelectedValue = -1; ;
             this.txtContraseña.Text = "";
         }
 
@@ -123,9 +120,7 @@ namespace MD
                         txtCedula.Text = empleado.Cedula;
                         cboSucursal.SelectedValue = empleado.CodigoSucursal;
                         cboHorarios.SelectedValue = empleado.CodigoHorario;
-                        this.txtUsuario.Text = empleado.Usuario;
                         this.txtContraseña.Text = empleado.Contraseña;
-                        this.chkUsuario.Checked = empleado.IsUsuario;
                         this.chkActivo.Checked = empleado.Activo;
                         this.TxtId.Enabled = false;
                     }
@@ -158,10 +153,7 @@ namespace MD
 
                     CodigoSucursal = ((Cto.SelectCombo)this.cboSucursal.SelectedItem).Codigo,
                     CodigoHorario = ((Cto.SelectCombo)this.cboHorarios.SelectedItem).Codigo,
-
-                    Usuario = this.txtUsuario.Text ?? "",
-                    Contraseña = this.txtContraseña.Text ?? "",
-                    IsUsuario = this.chkUsuario.Checked
+                    Contraseña = this.txtContraseña.Text ?? ""
                 };
 
                 repositorioEmpleado.GuardarEmpleado(empleado);
@@ -175,11 +167,6 @@ namespace MD
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        private void chkUsuario_CheckedChanged(object sender, EventArgs e)
-        {
-            this.gbUsuario.Enabled = chkUsuario.Checked;
         }
 
         private void TxtId_KeyPress(object sender, KeyPressEventArgs e)

@@ -165,7 +165,7 @@ namespace MD.Migrations
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CorreoElectronico = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Contrasena = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RollId = table.Column<int>(type: "int", nullable: false),
+                    RolId = table.Column<int>(type: "int", nullable: false),
                     IsEliminado = table.Column<bool>(type: "bit", nullable: true),
                     CodigoUsuarioCreacion = table.Column<int>(type: "int", nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -194,9 +194,7 @@ namespace MD.Migrations
                     CodigoHorario = table.Column<int>(type: "int", nullable: false),
                     NombreEmpleado = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Cedula = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Usuario = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Contraseña = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    IsUsuario = table.Column<bool>(type: "bit", nullable: false),
                     IsActivo = table.Column<bool>(type: "bit", nullable: false),
                     IsEliminado = table.Column<bool>(type: "bit", nullable: true),
                     CodigoUsuarioCreacion = table.Column<int>(type: "int", nullable: false),
@@ -229,6 +227,8 @@ namespace MD.Migrations
                 {
                     RolMenuOpcionesid = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    MenuOpcionesId = table.Column<int>(type: "int", nullable: false),
+                    RolId = table.Column<int>(type: "int", nullable: false),
                     RolMenuId = table.Column<int>(type: "int", nullable: false),
                     IsActivo = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -328,7 +328,8 @@ namespace MD.Migrations
                     { 1, "Empleados", "Empleado" },
                     { 2, "Empleados", "Justificaciones" },
                     { 3, "Empleados", "Reportes" },
-                    { 4, "Seguridad", "Roles" }
+                    { 4, "Seguridad", "Roles" },
+                    { 5, "Emmpresa", "Sucursales" }
                 });
 
             migrationBuilder.InsertData(
@@ -341,8 +342,8 @@ namespace MD.Migrations
                 columns: new[] { "CodigoSucursal", "CodigoUsuarioCreacion", "CodigoUsuarioElimina", "CodigoUsuarioMod", "FechaCreacion", "FechaEliminacion", "FechaMod", "IsActivo", "IsEliminado", "Nombre" },
                 values: new object[,]
                 {
-                    { 1, 1, null, null, new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3360), null, null, true, false, "Linda Vista" },
-                    { 2, 1, null, null, new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3378), null, null, true, false, "Metrocentro" }
+                    { 1, 1, null, null, new DateTime(2024, 9, 21, 15, 7, 52, 557, DateTimeKind.Local).AddTicks(528), null, null, true, false, "Linda Vista" },
+                    { 2, 1, null, null, new DateTime(2024, 9, 21, 15, 7, 52, 557, DateTimeKind.Local).AddTicks(541), null, null, true, false, "Metrocentro" }
                 });
 
             migrationBuilder.InsertData(
@@ -355,11 +356,6 @@ namespace MD.Migrations
                     { 3, "Dia Feriado", true, false, true },
                     { 4, "Horas Extras", true, false, false }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Empleado",
-                columns: new[] { "CodigoEmpleado", "Cedula", "CodigoHorario", "CodigoSucursal", "CodigoUsuarioCreacion", "CodigoUsuarioElimina", "CodigoUsuarioMod", "Contraseña", "FechaCreacion", "FechaEliminacion", "FechaMod", "IsActivo", "IsEliminado", "IsUsuario", "NombreEmpleado", "Usuario" },
-                values: new object[] { 1, "", 1, 1, 1, null, null, "123", new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3419), null, null, true, false, true, "Admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "MenusOpciones",
@@ -384,13 +380,14 @@ namespace MD.Migrations
                     { 1, true, 1, 1 },
                     { 2, true, 2, 1 },
                     { 3, true, 3, 1 },
-                    { 4, true, 4, 1 }
+                    { 4, true, 4, 1 },
+                    { 5, true, 5, 1 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Usuario",
-                columns: new[] { "UsuarioId", "CodigoUsuarioCreacion", "CodigoUsuarioElimina", "CodigoUsuarioMod", "Contrasena", "CorreoElectronico", "FechaCreacion", "FechaEliminacion", "FechaMod", "IsEliminado", "Nombre", "RollId" },
-                values: new object[] { 1, 1, null, null, "123", "wagt06@gmail.com", new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3502), null, null, false, "wagt06", 1 });
+                columns: new[] { "UsuarioId", "CodigoUsuarioCreacion", "CodigoUsuarioElimina", "CodigoUsuarioMod", "Contrasena", "CorreoElectronico", "FechaCreacion", "FechaEliminacion", "FechaMod", "IsEliminado", "Nombre", "RolId" },
+                values: new object[] { 1, 1, null, null, "123", "", new DateTime(2024, 9, 21, 15, 7, 52, 557, DateTimeKind.Local).AddTicks(653), null, null, false, "admin", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Empleado_CodigoHorario",

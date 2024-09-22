@@ -12,7 +12,55 @@ namespace MD.Repositorios
     public class RepositorioJustificaciones
     {
         DbContext db = new DbContext();
-        public bool GuardarJustificacion(Justificacion justificacion) { 
+
+        public Justificacion JustificacionPorFechaTipo(Justificacion justificacion) {
+            try
+            {
+                Justificacion justificacionExist = db.Justificaciones
+                .Where(x => x.Fecha == justificacion.Fecha && x.IsPermiso == justificacion.IsPermiso && x.CodigoEmpleado == justificacion.CodigoEmpleado && (x.CodigoEstado ==2 || x.CodigoEstado == 1) && x.Fecha.Date == justificacion.Fecha.Date)
+                .FirstOrDefault();
+                return justificacionExist;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public Justificacion JustificacionPorId(int codigoJustificacion)
+        {
+            try
+            {
+                Justificacion justificacionExist = db.Justificaciones
+                .Where(x => x.CodigoJustificacion  == codigoJustificacion)
+                .FirstOrDefault();
+                return justificacionExist;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public Justificacion UpdateEstado(int CodigoJustificacion, int Estado)
+        {
+            try
+            {
+                Justificacion justificacion = db.Justificaciones.FirstOrDefault(x => x.CodigoJustificacion == CodigoJustificacion);
+                if (justificacion == null)
+                    throw new Exception("No existe esta justificacion");
+                justificacion.CodigoEstado = Estado;
+                db.Justificaciones.Update(justificacion);
+                db.SaveChanges();
+                return justificacion;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public Justificacion GuardarJustificacion(Justificacion justificacion) { 
             try 
             {
                 Justificacion justificacionExist;
@@ -30,15 +78,16 @@ namespace MD.Repositorios
 
                     //validadar si existe una justificacion
                     justificacionExist = db.Justificaciones
-                        .Where(x => x.Fecha == justificacion.Fecha
-                            && x.HoraInicial >= justificacion.HoraInicial && x.HoraInicial <= justificacion.HoraFinal
-                            && x.HoraFinal >= justificacion.HoraInicial && x.HoraInicial <= justificacion.HoraFinal
+                        .Where(x => x.Fecha.Date == justificacion.Fecha.Date
+                            && x.HoraInicial.Hour >= justificacion.HoraInicial.Hour && x.HoraInicial.Hour <= justificacion.HoraFinal.Hour
+                            && x.HoraFinal.Hour >= justificacion.HoraInicial.Hour && x.HoraInicial.Hour <= justificacion.HoraFinal.Hour
+                            && (x.CodigoEstado == 1 || x.CodigoEstado == 2)
                             )
                         .FirstOrDefault();
 
                     if (justificacionExist != null)
                     {
-                        throw new Exception($"Ya existe una justificacion para el dia {justificacionExist.Fecha.ToString("yyy/MM/dd")} de {justificacion.HoraInicial.ToString("hh:mm:ss")} a las {justificacion.HoraFinal.ToString("hh:mm:ss")}");
+                        throw new Exception($"Ya existe una justificacion para el dia {justificacionExist.Fecha.ToString("yyy/MM/dd")} de {justificacionExist.HoraInicial.ToString("hh:mm:ss")} a las {justificacionExist.HoraFinal.ToString("hh:mm:ss")}");
                     }
 
                     db.Add(justificacion);
@@ -53,14 +102,13 @@ namespace MD.Repositorios
                     justificacionExist.CodigoUsuarioMod = justificacion.CodigoUsuarioMod;
                 }
                 db.SaveChanges();
-                return true;
+                return justificacion;
             } 
             catch(Exception ex) 
             {
                 throw ex;
             }
         }
-
         public int ImportarJustificacion(List<Justificacion> justificaciones)
         {
             try
@@ -107,7 +155,6 @@ namespace MD.Repositorios
                 throw ex;
             }
         }
-
         public IEnumerable<CtoJustificacion> CtoJustificacionLista(FiltroBusqueda filtro)
         {
             try
@@ -164,13 +211,53 @@ namespace MD.Repositorios
             }
         }
 
+        public CtoJustificacion CtoJustificacionById(int justificacionId)
+        {
+            try
+            {
+   
+                List<Justificacion> justificacion = db.Justificaciones
+                                   .Include(x => x.Empleado)
+                                   .Include(t => t.TipoJustificacion)
+                                   .Where(x => x.CodigoJustificacion == justificacionId)
+                                   .ToList();
+  
+
+                CtoJustificacion justificaciones = (from j in justificacion
+                                                    join t in ListaEstadoJustificaciones()
+                                                                 on j.CodigoEstado equals t.CodigoEstadoJustificacion
+                                                                 select new CtoJustificacion
+                                                                 {
+                                                                     CodigoJustificacion = j.CodigoJustificacion,
+                                                                     CodigoEmpleado = j.CodigoEmpleado,
+                                                                     CodigoEstado = j.CodigoEstado,
+                                                                     Estado = t.Descripcion,
+                                                                     CodigoTipoJustificacion = j.CodigoTipoJustificacion,
+                                                                     TipoJustificacion = j.TipoJustificacion.Descripcion,
+                                                                     HoraInicio = j.HoraInicial,
+                                                                     HoraFin = j.HoraFinal,
+                                                                     Fecha = j.Fecha,
+                                                                     Horas = j.Horas,
+                                                                     NombreEmpleado = j.Empleado.NombreEmpleado,
+                                                                     Observaciones = j.Observacion,
+                                                                     IsPermiso = j.TipoJustificacion.IsSalida,
+
+                                                                 }).FirstOrDefault();
+                return justificaciones;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public List<Justificacion> JustificacionesPorFecha(DateTime fechaInicial, DateTime FechaFinal, int CodigoSucursal) {
 
             return db.Justificaciones
                 .Include(x=>x.Empleado)
                 .Where(x=>x.Fecha >= fechaInicial && x.Fecha<= FechaFinal && x.Empleado.CodigoSucursal == CodigoSucursal).ToList();
         }
-
         public List<TipoJustificacion> ListaTipoJustificaciones()
         {
             return db.TiposJustificaciones.Where(x=>x.IsActiva).ToList();

@@ -14,9 +14,11 @@ namespace MD
 {
     public partial class FormPrincipalMdi : Form
     {
+        Ribbon r;
         public FormPrincipalMdi()
         {
             InitializeComponent();
+            r = new Ribbon();
         }
 
         private void OpenFile(object sender, EventArgs e)
@@ -52,27 +54,50 @@ namespace MD
 
         private void btnNuevaMarcacion_Click(object sender, EventArgs e)
         {
-            Form m = new FrmMarcacion();
+            //AbrirForm(new FrmMarcacion());
+            FrmMarcacion m = new FrmMarcacion();
             m.Show();
         }
 
         private void btnEmpleado_Click(object sender, EventArgs e)
         {
-            Form empleado = new FrmEmpleado { MdiParent = this };
-            empleado.Show();
+            if (!TienPermisoParaElMenu(1))
+            {
+                return;
+            }
+
+            AbrirForm(new FrmEmpleado());
         }
 
         private void btnSucursales_Click(object sender, EventArgs e)
         {
-            Form s = new FrmSucursal { MdiParent = this };
-            s.Show();
+            if (!TienPermisoParaElMenu(5))
+            {
+                return;
+            }
+
+            AbrirForm(new FrmSucursal());
         }
 
 
         private void btnMarcaciones_Click(object sender, EventArgs e)
         {
-            FrmMarcacionesReporte r = new FrmMarcacionesReporte { MdiParent = this };
-            r.Show();
+            if (!TienPermisoParaElMenu(3))
+            {
+                return;
+            }
+
+            AbrirForm(new FrmMarcacionesReporte());
+        }
+
+        private void AbrirForm(Form form)
+        {
+
+
+            form.MdiParent = this;
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
+
         }
 
         private void RevisarConfiguracion()
@@ -98,8 +123,14 @@ namespace MD
 
         private void cmdJustificaciones_Click(object sender, EventArgs e)
         {
-            FrmJustificaciones just = new FrmJustificaciones { MdiParent = this };
-            just.Show();
+            if (!TienPermisoParaElMenu(2))
+            {
+                return;
+            }
+
+
+            AbrirForm(new FrmJustificaciones());
+
         }
 
         private void FormPrincipalMdi_FormClosing(object sender, FormClosingEventArgs e)
@@ -111,7 +142,78 @@ namespace MD
         private void FormPrincipalMdi_Load(object sender, EventArgs e)
         {
             RevisarConfiguracion();
+
+
+            r.Dock = DockStyle.Top;
+            r.OrbImage = Properties.Resources.time_card_48;
+            r.Theme.Style = RibbonOrbStyle.Office_2013;
+            r.Height = 150;
+
+            /*Empleados*/
+            RibbonTab tbEmpleados = new RibbonTab { Text = "Empleados" };
+            RibbonPanel panel = new RibbonPanel { Text = "Mantenimiento" };
+
+            RibbonButton btnFichaEmpleado = new RibbonButton { Text = "Ficha Empleado", Image = Properties.Resources.icons8_manager_96 };
+            RibbonButton btnMarcacion = new RibbonButton { Text = "Marcaciones", Image = Properties.Resources.icons8_checked_identification_documents_96 };
+            RibbonButton btnJustificaciones = new RibbonButton { Text = "Justificaciones", Image = Properties.Resources.time_card_48 };
+
+            btnFichaEmpleado.Click += btnEmpleado_Click;
+            btnMarcacion.Click += btnNuevaMarcacion_Click;
+            btnJustificaciones.Click += cmdJustificaciones_Click;
+
+            panel.Items.Add(btnFichaEmpleado);
+            panel.Items.Add(btnMarcacion);
+            panel.Items.Add(btnJustificaciones);
+
+            tbEmpleados.Panels.Add(panel);
+
+            /*Empresa*/
+            RibbonTab tbEmpresa = new RibbonTab { Text = "Empresa" };
+            RibbonPanel panelEmpresa = new RibbonPanel { Text = "Mantenimiento" };
+
+            RibbonButton btnFichaSucursales = new RibbonButton { Text = "Ficha Sucursales", Image = Properties.Resources.icons8_permanent_job_96 };
+            btnFichaSucursales.Click += btnSucursales_Click;
+
+            panelEmpresa.Items.Add(btnFichaSucursales);
+            tbEmpresa.Panels.Add(panelEmpresa);
+
+            /*Reportes*/
+            RibbonTab tbSeguridad = new RibbonTab { Text = "Seguridad" };
+            RibbonPanel panelSeguridad = new RibbonPanel { Text = "Mantenimiento" };
+
+            RibbonButton btnPermisos = new RibbonButton { Text = "Roles", Image = Properties.Resources.icons8_permanent_job_96 };
+            btnPermisos.Click += cmdSeguridad_Click;
+
+            panelSeguridad.Items.Add(btnPermisos);
+            tbSeguridad.Panels.Add(panelSeguridad);
+
+
+            /*Seguridad*/
+            RibbonTab tbReportes = new RibbonTab { Text = "Reportes" };
+            RibbonPanel panelReportes = new RibbonPanel { Text = "Mantenimiento" };
+
+            RibbonButton btnMarcaciones = new RibbonButton { Text = "Marcaciones", Image = Properties.Resources.icons8_checked_identification_documents_96 };
+            btnMarcaciones.Click += btnMarcaciones_Click;
+
+            panelReportes.Items.Add(btnMarcaciones);
+            tbReportes.Panels.Add(panelReportes);
+
+
+            r.Tabs.Add(tbEmpleados);
+            r.Tabs.Add(tbEmpresa);
+            r.Tabs.Add(tbSeguridad);
+            r.Tabs.Add(tbReportes);
+
+
+            this.Controls.Add(r);
+
+
         }
+
+        //private void LoadformEmpleado()
+        //{
+        //   return this.btnEmpleado_Click(null, null);
+        //}
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -120,11 +222,26 @@ namespace MD
 
         private void cmdSeguridad_Click(object sender, EventArgs e)
         {
-            FrmSeguridad just = new FrmSeguridad { MdiParent = this };
-            just.Show();
 
+            if (!TienPermisoParaElMenu(4))
+            {
+                return;
+            }
+
+
+            AbrirForm(new FrmSeguridad());
             //AddTab(just);
+        }
 
+        private bool TienPermisoParaElMenu(int menuId)
+        {
+
+            if (!Configuraciones.Usuario.TienePermisoMenu(new Entidades.Menu { MenuId = menuId }))
+            {
+                MessageBox.Show("No tiene Permiso para este modulo", "Seguridad del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
         }
 
         private void AddTab(Form childForm)

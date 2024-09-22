@@ -77,8 +77,6 @@ namespace MD.Repositorios
                                     CodigoSucursal = e.CodigoSucursal,
                                     Sucursal = s.Nombre,
                                     Activo = e.IsActivo,
-                                    IsUsuario = e.IsUsuario,
-                                    Usuario = e.Usuario,
                                     Contraseña = e.Contraseña,
                                     CodigoHorario = e.CodigoHorario,
                                 }).FirstOrDefault();
@@ -105,8 +103,6 @@ namespace MD.Repositorios
                                             CodigoSucursal = e.CodigoSucursal,
                                             Sucursal = s.Nombre,
                                             Activo = e.IsActivo,
-                                            IsUsuario = e.IsUsuario,
-                                            Usuario = e.Usuario,
                                             Contraseña = e.Contraseña,
                                             CodigoHorario = e.CodigoHorario,
                                         }).ToList();

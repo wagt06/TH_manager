@@ -46,10 +46,10 @@
             // 
             btnGuardar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnGuardar.BackgroundImageLayout = ImageLayout.Stretch;
-            btnGuardar.Location = new Point(242, 451);
+            btnGuardar.Location = new Point(21, 384);
             btnGuardar.Margin = new Padding(3, 4, 3, 4);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(166, 53);
+            btnGuardar.Size = new Size(365, 47);
             btnGuardar.TabIndex = 21;
             btnGuardar.Text = "Entrar";
             btnGuardar.UseVisualStyleBackColor = true;
@@ -58,13 +58,15 @@
             // btnCerrar
             // 
             btnCerrar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnCerrar.FlatAppearance.BorderSize = 0;
+            btnCerrar.FlatStyle = FlatStyle.Flat;
+            btnCerrar.Image = Properties.Resources.icons8_close_48;
             btnCerrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCerrar.Location = new Point(42, 451);
+            btnCerrar.Location = new Point(360, 4);
             btnCerrar.Margin = new Padding(3, 4, 3, 4);
             btnCerrar.Name = "btnCerrar";
-            btnCerrar.Size = new Size(159, 53);
+            btnCerrar.Size = new Size(37, 31);
             btnCerrar.TabIndex = 20;
-            btnCerrar.Text = "Cancelar";
             btnCerrar.UseVisualStyleBackColor = true;
             btnCerrar.Click += btnCerrar_Click;
             // 
@@ -72,7 +74,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(42, 241);
+            label1.Location = new Point(21, 226);
             label1.Name = "label1";
             label1.Size = new Size(73, 23);
             label1.TabIndex = 22;
@@ -81,7 +83,7 @@
             // textBox1
             // 
             textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Location = new Point(42, 277);
+            textBox1.Location = new Point(22, 253);
             textBox1.Margin = new Padding(3, 4, 3, 4);
             textBox1.MaxLength = 50;
             textBox1.Name = "textBox1";
@@ -93,7 +95,7 @@
             // textBox2
             // 
             textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Location = new Point(42, 376);
+            textBox2.Location = new Point(22, 328);
             textBox2.Margin = new Padding(3, 4, 3, 4);
             textBox2.MaxLength = 50;
             textBox2.Name = "textBox2";
@@ -106,7 +108,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(42, 337);
+            label2.Location = new Point(21, 301);
             label2.Name = "label2";
             label2.Size = new Size(97, 23);
             label2.TabIndex = 24;
@@ -116,7 +118,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(89, 97);
+            label3.Location = new Point(46, 87);
             label3.Name = "label3";
             label3.Size = new Size(306, 62);
             label3.TabIndex = 26;
@@ -125,7 +127,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.time_card_48;
-            pictureBox1.Location = new Point(107, 160);
+            pictureBox1.Location = new Point(65, 153);
             pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(20, 20);
@@ -137,7 +139,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(134, 164);
+            label4.Location = new Point(91, 150);
             label4.Name = "label4";
             label4.Size = new Size(205, 23);
             label4.TabIndex = 28;
@@ -147,7 +149,7 @@
             // 
             btnAbrirMarcaciones.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnAbrirMarcaciones.Image = Properties.Resources.icons8_badge_96;
-            btnAbrirMarcaciones.Location = new Point(42, 528);
+            btnAbrirMarcaciones.Location = new Point(21, 439);
             btnAbrirMarcaciones.Margin = new Padding(3, 4, 3, 4);
             btnAbrirMarcaciones.Name = "btnAbrirMarcaciones";
             btnAbrirMarcaciones.Size = new Size(366, 53);
@@ -161,9 +163,9 @@
             // 
             lblMensaje.Dock = DockStyle.Bottom;
             lblMensaje.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            lblMensaje.Location = new Point(0, 602);
+            lblMensaje.Location = new Point(0, 500);
             lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(447, 51);
+            lblMensaje.Size = new Size(409, 49);
             lblMensaje.TabIndex = 30;
             lblMensaje.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -172,7 +174,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(447, 653);
+            ClientSize = new Size(409, 549);
             ControlBox = false;
             Controls.Add(lblMensaje);
             Controls.Add(btnAbrirMarcaciones);
@@ -185,7 +187,7 @@
             Controls.Add(label1);
             Controls.Add(btnGuardar);
             Controls.Add(btnCerrar);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Margin = new Padding(3, 4, 3, 4);
             Name = "FrmLogin";
             ShowInTaskbar = false;

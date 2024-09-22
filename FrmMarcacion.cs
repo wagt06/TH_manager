@@ -66,7 +66,7 @@ namespace MD
         {
             try
             {
-                Empleado empleado = repoMarcaciones.GuardarMarcacionesPorCedula(txtId.Text);
+                Empleado empleado = repoMarcaciones.GuardarMarcacionesPorConstrasena(txtId.Text);
                 if (empleado != null)
                 {
                     MostrarEmpleado(empleado);
@@ -90,6 +90,8 @@ namespace MD
 
         async private void txtId_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (string.IsNullOrEmpty(txtId.Text))
+                return;
 
             if (e.KeyChar == (char)Keys.Enter)
             {

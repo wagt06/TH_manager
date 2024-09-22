@@ -113,18 +113,10 @@ namespace MD.Migrations
                     b.Property<bool?>("IsEliminado")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsUsuario")
-                        .HasColumnType("bit");
-
                     b.Property<string>("NombreEmpleado")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Usuario")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("CodigoEmpleado");
 
@@ -133,23 +125,6 @@ namespace MD.Migrations
                     b.HasIndex("CodigoSucursal");
 
                     b.ToTable("Empleado");
-
-                    b.HasData(
-                        new
-                        {
-                            CodigoEmpleado = 1,
-                            Cedula = "",
-                            CodigoHorario = 1,
-                            CodigoSucursal = 1,
-                            CodigoUsuarioCreacion = 1,
-                            Contraseña = "123",
-                            FechaCreacion = new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3419),
-                            IsActivo = true,
-                            IsEliminado = false,
-                            IsUsuario = true,
-                            NombreEmpleado = "Admin",
-                            Usuario = "admin"
-                        });
                 });
 
             modelBuilder.Entity("MD.Entidades.Horario", b =>
@@ -335,6 +310,12 @@ namespace MD.Migrations
                             MenuId = 4,
                             Modulo = "Seguridad",
                             NombreMenu = "Roles"
+                        },
+                        new
+                        {
+                            MenuId = 5,
+                            Modulo = "Emmpresa",
+                            NombreMenu = "Sucursales"
                         });
                 });
 
@@ -489,6 +470,13 @@ namespace MD.Migrations
                             IsActivo = true,
                             MenuId = 4,
                             RolId = 1
+                        },
+                        new
+                        {
+                            RolMenuId = 5,
+                            IsActivo = true,
+                            MenuId = 5,
+                            RolId = 1
                         });
                 });
 
@@ -502,6 +490,12 @@ namespace MD.Migrations
 
                     b.Property<bool>("IsActivo")
                         .HasColumnType("bit");
+
+                    b.Property<int>("MenuOpcionesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RolId")
+                        .HasColumnType("int");
 
                     b.Property<int>("RolMenuId")
                         .HasColumnType("int");
@@ -559,7 +553,7 @@ namespace MD.Migrations
                         {
                             CodigoSucursal = 1,
                             CodigoUsuarioCreacion = 1,
-                            FechaCreacion = new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3360),
+                            FechaCreacion = new DateTime(2024, 9, 21, 15, 7, 52, 557, DateTimeKind.Local).AddTicks(528),
                             IsActivo = true,
                             IsEliminado = false,
                             Nombre = "Linda Vista"
@@ -568,7 +562,7 @@ namespace MD.Migrations
                         {
                             CodigoSucursal = 2,
                             CodigoUsuarioCreacion = 1,
-                            FechaCreacion = new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3378),
+                            FechaCreacion = new DateTime(2024, 9, 21, 15, 7, 52, 557, DateTimeKind.Local).AddTicks(541),
                             IsActivo = true,
                             IsEliminado = false,
                             Nombre = "Metrocentro"
@@ -674,7 +668,7 @@ namespace MD.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RollId")
+                    b.Property<int>("RolId")
                         .HasColumnType("int");
 
                     b.HasKey("UsuarioId");
@@ -687,11 +681,11 @@ namespace MD.Migrations
                             UsuarioId = 1,
                             CodigoUsuarioCreacion = 1,
                             Contrasena = "123",
-                            CorreoElectronico = "wagt06@gmail.com",
-                            FechaCreacion = new DateTime(2024, 9, 20, 23, 4, 54, 273, DateTimeKind.Local).AddTicks(3502),
+                            CorreoElectronico = "",
+                            FechaCreacion = new DateTime(2024, 9, 21, 15, 7, 52, 557, DateTimeKind.Local).AddTicks(653),
                             IsEliminado = false,
-                            Nombre = "wagt06",
-                            RollId = 1
+                            Nombre = "admin",
+                            RolId = 1
                         });
                 });
 
@@ -787,13 +781,13 @@ namespace MD.Migrations
 
             modelBuilder.Entity("MD.Entidades.Usuario", b =>
                 {
-                    b.HasOne("MD.Entidades.Rol", "Roll")
+                    b.HasOne("MD.Entidades.Rol", "Rol")
                         .WithMany("Usuarios")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Roll");
+                    b.Navigation("Rol");
                 });
 
             modelBuilder.Entity("MD.Entidades.Empleado", b =>

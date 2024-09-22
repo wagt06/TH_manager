@@ -1,4 +1,6 @@
 ﻿using MD.Entidades;
+using MD.Repositorios;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -15,9 +17,12 @@ namespace MD
 {
     public partial class FrmLogin : Form
     {
+
+        RepositorioSeguridad rSeguridad;
         public FrmLogin()
         {
             InitializeComponent();
+            rSeguridad = new RepositorioSeguridad();
         }
 
 
@@ -46,16 +51,21 @@ namespace MD
             {
                 bool resultado = false;
                 string mensaje = "";
-                Empleado empleado;
+                Usuario empleado;
                 using (DbContext db = new DbContext())
                 {
-                    empleado = db.Empleados
-                        .Where(x => x.IsUsuario && x.Usuario == this.textBox1.Text && x.Contraseña == this.textBox2.Text)
+                    //empleado = db.Empleados
+                    //    .Where(x => x.IsUsuario && x.Usuario == this.textBox1.Text && x.Contraseña == this.textBox2.Text)
+                    //    .FirstOrDefault();
+
+                    empleado = db.Usuarios
+                        .Include(x => x.Rol)
+                        .Where(x => x.Nombre == this.textBox1.Text && x.Contrasena == this.textBox2.Text)
                         .FirstOrDefault();
+
                 }
 
-                mensaje = empleado != null ? $"Bienvenido {empleado.NombreEmpleado}" : "Usuario o la contraseña invalidos";
-                resultado = empleado != null;
+                mensaje = empleado != null ? $"Bienvenido {empleado.Nombre}" : "Usuario o la contraseña invalidos";
 
 
                 this.lblMensaje.BackColor = empleado != null ? Color.Green : Color.Red;
@@ -63,13 +73,21 @@ namespace MD
                 this.lblMensaje.Visible = true;
                 this.lblMensaje.Text = mensaje;
 
+                resultado = empleado != null;
+                if (empleado != null)
+                {
+
+                    Usuario usuarioLogiado = rSeguridad.UsuarioById(empleado.UsuarioId);
+
+                    if (usuarioLogiado == null)
+                        throw new Exception("No se encontraron permisos de seguridad para este usuario");
+
+                    Configuraciones.Usuario = usuarioLogiado;
+                }
+
                 await Task.Delay(2000);
                 this.lblMensaje.Visible = false;
-
-
-
                 return resultado;
-
             }
             catch (Exception ex)
             {

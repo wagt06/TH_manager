@@ -27,12 +27,7 @@ namespace MD.Entidades
         public string Cedula { get; set; }
 
         [MaxLength(20)]
-        public string Usuario { get; set; }
-
-        [MaxLength(20)]
         public string Contraseña { get; set; }
-
-        public bool IsUsuario { get; set; }
         public bool IsActivo { get; set; }
 
         public IEnumerable<Marcacion> Marcaciones { get; set; }

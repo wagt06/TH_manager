@@ -19,6 +19,7 @@ namespace MD
         Repositorios.RepositorioEmpleados repositorioEmpleados = new Repositorios.RepositorioEmpleados();
         Repositorios.RepositorioJustificaciones repositorioJustificaciones = new Repositorios.RepositorioJustificaciones();
         IEnumerable<CtoJustificacion> JustificacionesLista;
+        bool tienePermisoParaAprobar = false;
         public FrmJustificaciones()
         {
             InitializeComponent();
@@ -41,6 +42,20 @@ namespace MD
             this.CalendarDias.MaxSelectionCount = 31;
             this.dtpFechaInicial.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             this.dtpFechaFinal.Value = DateTime.Now.AddDays(10);
+            this.lblTipoJustificacion.Visible = false;
+            gbEstado.Enabled = false;
+
+            dtpFechaInicial.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+            dtpFechaFinal.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, 1, 0, 0, 0).AddDays(-1);
+
+            dtpInicio.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
+            dtpFin.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
+
+            tienePermisoParaAprobar = Configuraciones.Usuario.TienePermisoOpcion(new MenusOpciones { MenuId = 2, MenuOpcionesId = 7 });
+
+            this.gbEstado.Enabled = false;
+            this.btnAprobarMasivo.Enabled = false;
+            this.btnRechazarMasivo.Enabled = false;
         }
         private void CargarJustificaciones()
         {
@@ -48,18 +63,16 @@ namespace MD
 
             FiltroBusqueda filtro = new FiltroBusqueda
             {
-                FechaInicial = dtpFechaInicial.Value
-                ,
-                FechaFinal = dtpFechaFinal.Value
-                ,
+                FechaInicial = dtpFechaInicial.Value,
+                FechaFinal = dtpFechaFinal.Value,
                 IsPendiente = ChkPendientes.Checked
             };
 
             JustificacionesLista = repositorioJustificaciones.CtoJustificacionLista(filtro);
 
-            if (chkSoloEmpleado.Checked && !string.IsNullOrEmpty(TxtIdEmpleado.Text))
+            if (!string.IsNullOrEmpty(TxtIdEmpleado.Text))
             {
-                JustificacionesLista = JustificacionesLista.Where(x => x.CodigoEmpleado == int.Parse(TxtIdEmpleado.Text));
+                JustificacionesLista = JustificacionesLista.Where(x => x.CodigoEmpleado == int.Parse(TxtIdEmpleado.Text)).OrderBy(x => x.Fecha);
             }
 
             foreach (CtoJustificacion item in JustificacionesLista)
@@ -81,53 +94,90 @@ namespace MD
         {
             cboTipoJustificaciones.ValueMember = "CodigoTipoJustificacion";
             cboTipoJustificaciones.DisplayMember = "Descripcion";
-
-            cboEstadoJustificaciones.ValueMember = "CodigoEstadoJustificacion";
-            cboEstadoJustificaciones.DisplayMember = "Descripcion";
-
-
-            this.cboEstadoJustificaciones.DataSource = repositorioJustificaciones.ListaEstadoJustificaciones();
         }
         private void CalcularHorasJustificadas()
         {
-
-            //validar que los inicial no sea mayor a la final.
-            //if (dtpInicio.Value > dtpFin.Value)
-            //{
-            //    MessageBox.Show("revise que las fechas sean validas ");
-            //    return;
-            //}
             decimal horas = (dtpFin.Value - dtpInicio.Value).Hours;
             decimal minutos = (dtpFin.Value - dtpInicio.Value).Minutes;
-            this.txtHoras.Text = (minutos > 0 ? horas + (minutos / 60): horas).ToString();
+            this.txtHoras.Text = (minutos > 0 ? horas + (minutos / 60) : horas).ToString();
         }
-        private void DtpInicio_ValueChanged(object sender, EventArgs e)
+        private void dtpInicio_KeyUp(object sender, KeyEventArgs e)
         {
             CalcularHorasJustificadas();
         }
-        private void DtpFin_ValueChanged(object sender, EventArgs e)
-        {
-            CalcularHorasJustificadas();
 
-        }
-        private void GuardaJustficaciones(DateTime fecha)
+        private void dtpFin_KeyUp(object sender, KeyEventArgs e)
         {
-            repositorioJustificaciones.GuardarJustificacion(new Justificacion
+            CalcularHorasJustificadas();
+        }
+
+        private void dtpInicio_ValueChanged(object sender, EventArgs e)
+        {
+            CalcularHorasJustificadas();
+        }
+
+        private void dtpInicio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            CalcularHorasJustificadas();
+        }
+
+        private void dtpFin_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            CalcularHorasJustificadas();
+        }
+
+        private void dtpFin_ValueChanged(object sender, EventArgs e)
+        {
+            CalcularHorasJustificadas();
+        }
+
+
+
+
+        private bool GuardarJustficaciones(DateTime fecha)
+        {
+            try
             {
-                CodigoJustificacion = int.Parse(string.IsNullOrEmpty(this.txtCodigoJustificacion.Text)?"0": this.txtCodigoJustificacion.Text),
-                CodigoEmpleado = int.Parse(TxtIdEmpleado.Text),
-                CodigoTipoJustificacion = ((TipoJustificacion)cboTipoJustificaciones.SelectedItem).CodigoTipoJustificacion,
-                CodigoEstado = ((Estados)cboEstadoJustificaciones.SelectedItem).CodigoEstadoJustificacion,
-                Fecha = fecha,
-                HoraInicial = dtpInicio.Value,
-                HoraFinal = dtpFin.Value,
-                Horas = decimal.Parse(txtHoras.Text),
-                Observacion = txtObservaciones.Text,
-                CodigoUsuarioCreacion = 1,
-                FechaCreacion = DateTime.Now,
-                IsEliminado = false,
-                IsFeriado = false
-            });
+                TipoJustificacion tipo = (TipoJustificacion)cboTipoJustificaciones.SelectedItem;
+                Justificacion justificacion;
+                Justificacion nuevaJustificacion = new Justificacion
+                {
+                    CodigoJustificacion = int.Parse(string.IsNullOrEmpty(this.txtCodigoJustificacion.Text) ? "0" : this.txtCodigoJustificacion.Text),
+                    CodigoEmpleado = int.Parse(TxtIdEmpleado.Text),
+                    CodigoTipoJustificacion = tipo.CodigoTipoJustificacion,
+                    Fecha = fecha,
+                    HoraInicial = new DateTime(fecha.Year, fecha.Month, fecha.Day, dtpInicio.Value.Hour, dtpInicio.Value.Minute, 0),
+                    HoraFinal = new DateTime(fecha.Year, fecha.Month, fecha.Day, dtpFin.Value.Hour, dtpFin.Value.Minute, 0),
+                    Horas = decimal.Parse(txtHoras.Text),
+                    Observacion = txtObservaciones.Text,
+                    CodigoUsuarioCreacion = 1,
+                    FechaCreacion = DateTime.Now,
+                    IsEliminado = false,
+                    IsFeriado = false,
+                    CodigoEstado = 1,
+                    IsPermiso = tipo.IsSalida
+                };
+
+                Justificacion existeJustificacion = repositorioJustificaciones.JustificacionPorFechaTipo(nuevaJustificacion);
+
+
+                if (existeJustificacion != null)
+                {
+                    MessageBox.Show($"ya existe justificacion de salida para {existeJustificacion.Fecha.ToString("yyy/mm/dd")} de {existeJustificacion.HoraInicial.ToString("hh:mm:ss")} a {existeJustificacion.HoraFinal.ToString("hh:mm:ss")}");
+                    return false;
+                }
+                else
+                {
+                    justificacion = repositorioJustificaciones.GuardarJustificacion(nuevaJustificacion);
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
         private void Limpiar()
         {
@@ -137,17 +187,15 @@ namespace MD
             txtObservaciones.Text = "";
             txtHoras.Text = "";
             cboTipoJustificaciones.SelectedIndex = -1;
-            cboEstadoJustificaciones.SelectedIndex = -1;
+            gbEstado.Enabled = false;
+            lblTipoJustificacion.Visible = false;
+            this.CalendarDias.TodayDate = DateTime.Now;
+            this.CalendarDias.SelectionEnd = DateTime.Now;
+            this.CalendarDias.SelectionStart = DateTime.Now;
 
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            //if (TxtIdEmpleado.Text.Length == 0)
-            //{
-            //    MessageBox.Show("busque un Empleado para ver las justificaciones");
-            //    return;
-            //}
-
             CargarJustificaciones();
         }
         private void LwsJustificaciones_DoubleClick(object sender, EventArgs e)
@@ -157,59 +205,97 @@ namespace MD
 
                 if (this.lwsJustificaciones.SelectedItems.Count > 0)
                 {
-                    CtoJustificacion justificacion = JustificacionesLista.FirstOrDefault(x => x.CodigoJustificacion == int.Parse(this.lwsJustificaciones.SelectedItems[0].Text));
-                    if (justificacion != null)
-                    {
+                    MostrarJustificacion(int.Parse(this.lwsJustificaciones.SelectedItems[0].Text));
+                }
+            }
+        }
+        private void MostrarJustificacion(int codigoJustificacion)
+        {
 
-                        if (justificacion.IsPermiso)
-                            this.RdPermiso_CheckedChanged(null, null);
-                        else
-                            this.RdHoraExtra_CheckedChanged(null, null);
+            CtoJustificacion justificacion = repositorioJustificaciones.CtoJustificacionById(codigoJustificacion);
 
+            if (justificacion != null)
+            {
+                this.rdPermiso.Checked = justificacion.IsPermiso;
+                this.txtCodigoJustificacion.Text = justificacion.CodigoJustificacion.ToString();
+                this.TxtIdEmpleado.Text = justificacion.CodigoEmpleado.ToString();
+                this.txtNombre.Text = justificacion.NombreEmpleado;
+                this.txtObservaciones.Text = justificacion.Observaciones;
+                this.txtHoras.Text = justificacion.Horas.ToString();
+                cboTipoJustificaciones.SelectedValue = justificacion.CodigoTipoJustificacion;
+                CalendarDias.SetDate(justificacion.Fecha);
+                dtpInicio.Value = justificacion.HoraInicio;
+                dtpFin.Value = justificacion.HoraFin;
 
-                        this.txtCodigoJustificacion.Text = justificacion.CodigoJustificacion.ToString();
-                        this.TxtIdEmpleado.Text = justificacion.CodigoEmpleado.ToString();
-                        this.txtNombre.Text = justificacion.NombreEmpleado;
-                        this.txtObservaciones.Text = justificacion.Observaciones;
-                        this.txtHoras.Text = justificacion.Horas.ToString();
-                        cboEstadoJustificaciones.SelectedValue = justificacion.CodigoEstado;
-                        cboTipoJustificaciones.SelectedValue = justificacion.CodigoTipoJustificacion;
-                        CalendarDias.SetDate(justificacion.Fecha);
-                        dtpInicio.Value = justificacion.HoraInicio;
-                        dtpFin.Value = justificacion.HoraFin;
+                this.gbEstado.Enabled = justificacion.CodigoEstado == 1 && this.tienePermisoParaAprobar;
 
-
-
+                if (!this.gbEstado.Enabled)
+                {
+                    cmdRechazar.Enabled = false;
+                    cmdAprobar.Enabled = false;
+                    cmdAprobar.Visible = justificacion.CodigoEstado == 2;
+                    cmdRechazar.Visible = justificacion.CodigoEstado == 3;
+                    btnGuardarJust.Enabled = false;
+                    if (justificacion.CodigoEstado == 1) {
+                        cmdAprobar.Visible = true;
+                        cmdRechazar.Visible = true;
                     }
                 }
-
+                else
+                {
+                    cmdAprobar.Enabled = true;
+                    cmdRechazar.Enabled = true;
+                    cmdAprobar.Visible = true;
+                    cmdRechazar.Visible = true;
+                  
+                }
+                btnGuardarJust.Enabled = justificacion.CodigoEstado == 1;
             }
         }
         private void BtnNuevo_Click(object sender, EventArgs e)
         {
             Limpiar();
+            btnGuardarJust.Enabled = true;
 
         }
         private void RdPermiso_CheckedChanged(object sender, EventArgs e)
         {
-            IEnumerable<TipoJustificacion> tipos = repositorioJustificaciones.ListaTipoJustificaciones().Where(x => x.IsSalida).ToList();
-            this.cboTipoJustificaciones.DataSource = tipos;
+            if (this.rdPermiso.Checked)
+            {
+                IEnumerable<TipoJustificacion> tipos = repositorioJustificaciones.ListaTipoJustificaciones().Where(x => x.IsSalida).ToList();
+                this.cboTipoJustificaciones.DataSource = tipos;
+                this.lblTipoJustificacion.BackColor = Color.LightCoral;
+                this.lblTipoJustificacion.Text = "Justificacion de Ausencia";
+
+            }
+            else
+            {
+                IEnumerable<TipoJustificacion> tipos = repositorioJustificaciones.ListaTipoJustificaciones().Where(x => !x.IsSalida).ToList();
+                this.cboTipoJustificaciones.DataSource = tipos;
+                this.lblTipoJustificacion.BackColor = Color.OliveDrab;
+                this.lblTipoJustificacion.Text = "Justificacion de horas extras";
+            }
+            this.lblTipoJustificacion.Visible = true;
         }
         private void RdHoraExtra_CheckedChanged(object sender, EventArgs e)
         {
-            IEnumerable<TipoJustificacion> tipos = repositorioJustificaciones.ListaTipoJustificaciones().Where(x => !x.IsSalida).ToList();
-            this.cboTipoJustificaciones.DataSource = tipos;
+
         }
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
             try
             {
-
-
-
                 DateTime fecha = CalendarDias.SelectionStart;
 
-                if (this.cboTipoJustificaciones.Items.Count == 0) {
+                if (this.cboTipoJustificaciones.Items.Count == 0)
+                {
+                    MessageBox.Show("selecciona el tipo de justificacion");
+                    return;
+                }
+
+
+                if (this.cboTipoJustificaciones.SelectedIndex < 0)
+                {
                     MessageBox.Show("selecciona el tipo de justificacion");
                     return;
                 }
@@ -234,21 +320,32 @@ namespace MD
                     return;
                 }
 
+
+                int dias = 0;
                 while (fecha <= CalendarDias.SelectionEnd)
                 {
-                    GuardaJustficaciones(fecha);
+                    if (GuardarJustficaciones(fecha)) {
+                        dias += 1;
+                    }
                     fecha = fecha.Date.AddDays(1);
                 }
 
-                Limpiar();
+                
+                if (dias == 1)
+                    MessageBox.Show($"Las Justificaciones se guardaron correctamente");
+                if (dias > 1)
+                    MessageBox.Show($"Las Justificaciones se guardaron correctamente");
+                if(dias>=1)
+                    Limpiar();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                return;
             }
-            finally {
-                CargarJustificaciones();
-            }
+
+            Limpiar();
+            CargarJustificaciones();
         }
         private void BtnBuscarEmpleado_Click(object sender, EventArgs e)
         {
@@ -267,6 +364,101 @@ namespace MD
             {
                 MessageBox.Show("Empleado no encontrado", "Justificaciones");
             }
+        }
+
+        private void cmdAprobar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(txtCodigoJustificacion.Text))
+                    return;
+
+                Justificacion justificacion = repositorioJustificaciones.UpdateEstado(int.Parse(txtCodigoJustificacion.Text), 2);
+                MostrarJustificacion(int.Parse(txtCodigoJustificacion.Text));
+                MessageBox.Show("La informacion se proceso correctamente");
+            }
+            catch (Exception err)
+            {
+
+                MessageBox.Show(err.Message);
+            }
+        }
+        private void cmdRechazar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(txtCodigoJustificacion.Text))
+                    return;
+                Justificacion justificacion = repositorioJustificaciones.UpdateEstado(int.Parse(txtCodigoJustificacion.Text), 3);
+                MostrarJustificacion(int.Parse(txtCodigoJustificacion.Text));
+                MessageBox.Show("La informacion se proceso correctamente");
+            }
+            catch (Exception err)
+            {
+
+                MessageBox.Show(err.Message);
+            }
+
+        }
+
+        private void btnBuscarEmpleados_Click(object sender, EventArgs e)
+        {
+            frmBuscador b = new frmBuscador();
+            b.tipoBusqueda = "Empleado";
+            b.ShowDialog();
+
+
+            Empleado empleado = repositorioEmpleados.BuscarEmpleadoPorCodigo(int.Parse(b.codigoBusqueda));
+            if (empleado != null)
+            {
+                this.txtCodigoEmpleadoFiltro.Text = empleado.CodigoEmpleado.ToString();
+                this.txtEmpleadoFiltro.Text = empleado.NombreEmpleado;
+            }
+            else
+            {
+                MessageBox.Show("Empleado no encontrado", "Justificaciones");
+            }
+        }
+
+        private void lwsJustificaciones_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            this.btnAprobarMasivo.Enabled = this.lwsJustificaciones.CheckedItems.Count > 0 && tienePermisoParaAprobar;
+            this.btnRechazarMasivo.Enabled = this.lwsJustificaciones.CheckedItems.Count > 0 && tienePermisoParaAprobar;
+
+            if (e.Item.Checked && e.Item.SubItems[3].Text != "Pendiente")
+            {
+                e.Item.Checked = !e.Item.Checked;
+            }
+
+        }
+
+        private void btnAprobarMasivo_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Segura que dese aprobar masivamente todas las justificaciones seleccionadas", "Justificaciones", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+            foreach (ListViewItem item in this.lwsJustificaciones.CheckedItems)
+            {
+                Justificacion justificacion = repositorioJustificaciones.UpdateEstado(int.Parse(item.Text), 2);
+                item.SubItems[3].Text = "Aprobado";
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Segura que dese rechazar masivamente todas las justificaciones seleccionadas", "Justificaciones", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+            foreach (ListViewItem item in this.lwsJustificaciones.CheckedItems)
+            {
+                Justificacion justificacion = repositorioJustificaciones.UpdateEstado(int.Parse(item.Text), 3);
+                item.SubItems[3].Text = "Rechazado";
+            }
+        }
+
+        private void btnExportar_Click(object sender, EventArgs e)
+        {
+            Tools.Tool.CopyListBox(this.lwsJustificaciones);
         }
     }
 }

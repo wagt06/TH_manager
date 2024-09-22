@@ -11,14 +11,14 @@ namespace MD.Repositorios
     public class RepositorioMarcaciones
     {
 
-        public Empleado GuardarMarcacionesPorCedula(string Cedula) {
+        public Empleado GuardarMarcacionesPorConstrasena(string contrasena) {
 			try
 			{
                 using (DbContext bd = new DbContext())
                 {
                     Empleado empleado = bd.Empleados
                                         .Include(x => x.Sucursal)
-                                        .Where(x => x.Cedula == Cedula).FirstOrDefault();
+                                        .Where(x => x.Contraseña == contrasena).FirstOrDefault();
 
                     if (empleado == null)
                         throw new Exception("No Existe el empleado");

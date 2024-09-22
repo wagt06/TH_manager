@@ -93,7 +93,7 @@ namespace MD
 
             //Seguridad
             modelBuilder.Entity<Usuario>()
-           .HasOne<Rol>(s => s.Roll)
+           .HasOne<Rol>(s => s.Rol)
            .WithMany(e => e.Usuarios)
            .HasForeignKey(s => s.UsuarioId);
 
@@ -160,30 +160,29 @@ namespace MD
                new Horario() { CodigoHorario = 2, Descripcion = "Tarde", Inicia = new DateTime().AddHours(12), Termina = new DateTime().AddHours(19), IsActivo = true }
            );
 
-            modelBuilder.Entity<Empleado>().HasData(
-             new Empleado()
-             {
-                 CodigoEmpleado = 1,
-                 NombreEmpleado = "Admin",
-                 Cedula = "",
-                 CodigoHorario = 1,
-                 CodigoSucursal = 1
-             ,
-                 Usuario = "admin",
-                 Contraseña = "123",
-                 IsActivo = true,
-                 IsEliminado = false,
-                 CodigoUsuarioCreacion = 1,
-                 FechaCreacion = DateTime.Now,
-                 IsUsuario = true
-             });
+            //modelBuilder.Entity<Empleado>().HasData(
+            // new Empleado()
+            // {
+            //     CodigoEmpleado = 1,
+            //     NombreEmpleado = "Admin",
+            //     Cedula = "",
+            //     CodigoHorario = 1,
+            //     CodigoSucursal = 1,
+            //     Contraseña = "123",
+            //     IsActivo = true,
+            //     IsEliminado = false,
+            //     CodigoUsuarioCreacion = 1,
+            //     FechaCreacion = DateTime.Now,
+            //     IsUsuario = true
+            // });
 
 
             modelBuilder.Entity<Menu>().HasData(
             new Menu() { MenuId = 1, Modulo = "Empleados", NombreMenu = "Empleado" },
             new Menu() { MenuId = 2, Modulo = "Empleados", NombreMenu = "Justificaciones" },
             new Menu() { MenuId = 3, Modulo = "Empleados", NombreMenu = "Reportes" },
-            new Menu() { MenuId = 4, Modulo = "Seguridad", NombreMenu = "Roles" }
+            new Menu() { MenuId = 4, Modulo = "Seguridad", NombreMenu = "Roles" },
+            new Menu() { MenuId = 5, Modulo = "Emmpresa", NombreMenu = "Sucursales" }
             );
 
             modelBuilder.Entity<MenusOpciones>().HasData(
@@ -211,7 +210,8 @@ namespace MD
              new RolMenu() { MenuId = 1, RolId = 1, IsActivo = true, RolMenuId = 1 },
              new RolMenu() { MenuId = 2, RolId = 1, IsActivo = true, RolMenuId = 2 },
              new RolMenu() { MenuId = 3, RolId = 1, IsActivo = true, RolMenuId = 3 },
-             new RolMenu() { MenuId = 4, RolId = 1, IsActivo = true, RolMenuId = 4 }
+             new RolMenu() { MenuId = 4, RolId = 1, IsActivo = true, RolMenuId = 4 },
+             new RolMenu() { MenuId = 5, RolId = 1, IsActivo = true, RolMenuId = 5 }
              );
 
 
@@ -219,11 +219,11 @@ namespace MD
             new Usuario()
             {
                 UsuarioId = 1,
-                Nombre = "wagt06",
+                Nombre = "admin",
                 Contrasena = "123",
-                CorreoElectronico = "wagt06@gmail.com",
+                CorreoElectronico = "",
                 IsEliminado = false,
-                RollId = 1,
+                RolId = 1,
                 FechaCreacion = DateTime.Now,
                 CodigoUsuarioCreacion = 1
             });

@@ -56,6 +56,7 @@ namespace MD
             foreach (Rol role in roles)
             {
                 ListViewItem lvi = new ListViewItem();
+                lvi.ImageIndex = 0;
                 lvi.Tag = role;
                 lvi.Text = role.RolId.ToString();
                 lvi.SubItems.Add(role.NombreRol);
@@ -68,14 +69,14 @@ namespace MD
 
             trwMenus.ShowLines = true;
             trwMenus.BeforeCheck += TrwMenus_BeforeCheck;
-            
+
             foreach (Menu menu in menus)
             {
-                TreeNode n = new TreeNode { Name = menu.MenuId.ToString(), Text = menu.NombreMenu,Tag =  menu,ToolTipText = "Menu" };
-                
+                TreeNode n = new TreeNode { Name = menu.MenuId.ToString(), Text = menu.NombreMenu, Tag = menu, ToolTipText = "Menu" };
+
                 foreach (MenusOpciones o in menu.Opciones)
                 {
-                    n.Nodes.Add(new TreeNode { Name = o.MenuOpcionesId.ToString(), Text = o.NombreOpcion,ToolTipText = "opcion" });
+                    n.Nodes.Add(new TreeNode { Name = $"{o.MenuId}{o.MenuOpcionesId}", Text = o.NombreOpcion, Tag = o, ToolTipText = "opcion" });
                 }
                 trwMenus.Nodes.Add(n);
             }
@@ -87,21 +88,34 @@ namespace MD
 
         private void TrwMenus_BeforeCheck(object? sender, TreeViewCancelEventArgs e)
         {
-            if (isLoad)
-                return;
-
-            if (this.lvwRoles.SelectedItems.Count == 0)
-                return;
-
-            if (e.Node.ToolTipText == "Menu")
+            try
             {
-                Menu m = (Menu)e.Node.Tag;
-                RolMenu rm = new RolMenu { MenuId = m.MenuId, RolId = int.Parse(this.lvwRoles.SelectedItems[0].Text),IsActivo = !e.Node.Checked,RolMenuId = 0};
-                rSeguridad.MenusAddOrUpdate(rm);
+                if (isLoad)
+                    return;
+
+                if (this.lvwRoles.SelectedItems.Count == 0)
+                    return;
+
+                if (e.Node.ToolTipText == "Menu")
+                {
+                    Menu m = (Menu)e.Node.Tag;
+                    RolMenu rm = new RolMenu { MenuId = m.MenuId, RolId = int.Parse(this.lvwRoles.SelectedItems[0].Text), IsActivo = !e.Node.Checked, RolMenuId = 0 };
+                    rSeguridad.MenusAddOrUpdate(rm);
+                }
+                else
+                {
+                    MenusOpciones m = (MenusOpciones)e.Node.Tag;
+                    RolMenuOpciones rmo = new RolMenuOpciones { MenuOpcionesId = m.MenuOpcionesId, RolId = int.Parse(this.lvwRoles.SelectedItems[0].Text), IsActivo = !e.Node.Checked };
+                    rSeguridad.MenusOptionAddOrUpdate(rmo);
+                }
+
+
             }
-            else {
-                MenusOpciones m = (MenusOpciones)e.Node.Tag;
+            catch (Exception err)
+            {
+                MessageBox.Show("Ocurrio un error " + err.Message);
             }
+
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -111,31 +125,59 @@ namespace MD
 
         private void lvwRoles_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            isLoad = true;
-
-            if (this.lvwRoles.SelectedItems.Count == 0)
-                return;
-
-            int rollId = int.Parse(this.lvwRoles.SelectedItems[0].Text);
-
-            List<RolMenu> rolMenu = new List<RolMenu>();
-            rolMenu = rSeguridad.RollMenuByRolId(rollId);
-
-
-            foreach (TreeNode n in trwMenus.Nodes)
+            try
             {
-                n.Checked = false;
-            }
+                isLoad = true;
 
-            foreach (RolMenu rol in rolMenu)
-            {
-                TreeNode[] n = trwMenus.Nodes.Find(rol.MenuId.ToString(), false);
-                if (n.Count() > 0) {
-                    n[0].Checked = true;
+                if (this.lvwRoles.SelectedItems.Count == 0)
+                    return;
+
+                int rollId = int.Parse(this.lvwRoles.SelectedItems[0].Text);
+
+                List<RolMenu> rolMenu = new List<RolMenu>();
+                rolMenu = rSeguridad.RollMenuByRolId(rollId);
+
+
+                foreach (TreeNode n in trwMenus.Nodes)
+                {
+                    n.Checked = false;
+                    foreach (TreeNode c in n.Nodes)
+                    {
+                        c.Checked = false;
+                    }
                 }
+
+                foreach (RolMenu rol in rolMenu)
+                {
+                    TreeNode[] n = trwMenus.Nodes.Find(rol.MenuId.ToString(), false);
+                    if (n.Count() > 0)
+                    {
+                        n[0].Checked = rol.IsActivo;
+                    }
+
+                    foreach (RolMenuOpciones o in rol.RolMenuOpciones)
+                    {
+                        TreeNode[] no = trwMenus.Nodes.Find($"{rol.MenuId}{o.MenuOpcionesId}", true);
+                        if (no.Count() > 0)
+                        {
+                            no[0].Checked = o.IsActivo;
+                        }
+                    }
+
+                }
+
+
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Ocurrio un error: " + err.Message);
+
+            }
+            finally
+            {
+                isLoad = false;
             }
 
-            isLoad = false;
 
         }
     }

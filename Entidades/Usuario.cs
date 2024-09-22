@@ -17,8 +17,26 @@ namespace MD.Entidades
         public string Nombre { get; set; }
         public string CorreoElectronico { get; set; }
         public string Contrasena { get; set; }
-        public int RollId { get; set; }
-        public virtual Rol Roll { get; set; }
+        public int RolId { get; set; }
+        public virtual Rol Rol { get; set; }
+        public bool TienePermisoMenu(Menu menu) { 
+                
+            RolMenu rolmenu = Rol.RolMenus.Where(x=>x.MenuId == menu.MenuId).FirstOrDefault();
+            return rolmenu != null ? rolmenu.IsActivo : false;
+
+        }
+        public bool TienePermisoOpcion(MenusOpciones menu)
+        {
+            RolMenu rolmenu = Rol.RolMenus.Where(x => x.MenuId == menu.MenuId).FirstOrDefault();
+            if(rolmenu == null)
+                return false;
+            if (!rolmenu.IsActivo)
+                return false;
+
+            RolMenuOpciones rolOpciones = rolmenu.RolMenuOpciones.Where(x => x.MenuOpcionesId == menu.MenuOpcionesId).FirstOrDefault();
+            return rolOpciones != null ? rolOpciones.IsActivo : false;
+        }
+
     }
 
     public class Menu {
@@ -72,6 +90,8 @@ namespace MD.Entidades
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int RolMenuOpcionesid { get; set; }
+        public int MenuOpcionesId { get; set; }
+        public int RolId { get; set; }
         public int  RolMenuId { get; set; }
         public RolMenu RolMenu { get; set; }
         public bool IsActivo { get; set; }

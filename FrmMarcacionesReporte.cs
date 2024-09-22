@@ -73,6 +73,10 @@ namespace MD
             this.lswDatosMarcaciones.Columns.Add("Total_Horas", 100);
 
             CargarSucursales();
+
+            dtpFechaInicio.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+            dtpFechaFin.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, 1, 0, 0, 0).AddDays(-1);
+
         }
 
 
@@ -183,40 +187,10 @@ namespace MD
 
         private void btnExportar_Click(object sender, EventArgs e)
         {
-            CopyListBox(this.lswDatosMarcaciones);
+            Tools.Tool.CopyListBox(this.lswDatosMarcaciones);
         }
 
-        public void CopyListBox(ListView list)
-        {
-            try
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (ColumnHeader columns in list.Columns)
-                {
-                    sb.Append(columns.Text + "\t");
-                }
-                sb.AppendLine();
-                foreach (var item in list.Items)
-                {
-
-
-                    ListViewItem l = item as ListViewItem;
-                    if (l != null)
-                        foreach (ListViewItem.ListViewSubItem sub in l.SubItems)
-                            sb.Append(sub.Text + "\t");
-                    sb.AppendLine();
-                }
-                Clipboard.SetDataObject(sb.ToString());
-                MessageBox.Show("Se copiaron los datos al portapapeles", "Portapapeles de TH", MessageBoxButtons.OK);
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
-            }
-
-
-        }
+        
 
         private void lswDatosMarcaciones_SelectedIndexChanged(object sender, EventArgs e)
         {
