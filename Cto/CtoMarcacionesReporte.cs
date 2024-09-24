@@ -31,6 +31,7 @@ namespace MD.Cto
         public decimal TiempoAFavor { get; set; }
         public decimal HorasJustificadas { get; set; }
         public decimal CantidadHorasFinal { get; set; }
+        public decimal HorasExtras { get; set; }
 
 
     }

@@ -31,7 +31,6 @@
             groupBox1 = new GroupBox();
             cboSucursales = new ComboBox();
             label4 = new Label();
-            btnBuscar = new Button();
             label2 = new Label();
             label1 = new Label();
             dtpFechaFin = new DateTimePicker();
@@ -39,7 +38,6 @@
             btnImportar = new Button();
             btnExportar = new Button();
             groupBox2 = new GroupBox();
-            chkEmpleados = new CheckBox();
             chkJustificaciones = new CheckBox();
             chkMarcaciones = new CheckBox();
             lvwDocumentos = new ListView();
@@ -54,64 +52,52 @@
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBox1.Controls.Add(cboSucursales);
             groupBox1.Controls.Add(label4);
-            groupBox1.Controls.Add(btnBuscar);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(label1);
             groupBox1.Controls.Add(dtpFechaFin);
             groupBox1.Controls.Add(dtpFechaInicio);
-            groupBox1.Location = new Point(22, 12);
+            groupBox1.Location = new Point(25, 16);
+            groupBox1.Margin = new Padding(3, 4, 3, 4);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(351, 135);
+            groupBox1.Padding = new Padding(3, 4, 3, 4);
+            groupBox1.Size = new Size(401, 180);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Filtro";
+            groupBox1.Text = "Filtro Fechas Exportacion";
             // 
             // cboSucursales
             // 
             cboSucursales.FormattingEnabled = true;
-            cboSucursales.Location = new Point(122, 86);
+            cboSucursales.Location = new Point(139, 115);
+            cboSucursales.Margin = new Padding(3, 4, 3, 4);
             cboSucursales.Name = "cboSucursales";
-            cboSucursales.Size = new Size(210, 23);
+            cboSucursales.Size = new Size(239, 28);
             cboSucursales.TabIndex = 9;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(24, 89);
+            label4.Location = new Point(27, 119);
             label4.Name = "label4";
-            label4.Size = new Size(54, 15);
+            label4.Size = new Size(66, 20);
             label4.TabIndex = 8;
             label4.Text = "Sucursal:";
-            // 
-            // btnBuscar
-            // 
-            btnBuscar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnBuscar.Image = Properties.Resources.search2_more_48;
-            btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscar.Location = new Point(1042, 61);
-            btnBuscar.Name = "btnBuscar";
-            btnBuscar.Padding = new Padding(0, 0, 10, 0);
-            btnBuscar.Size = new Size(105, 40);
-            btnBuscar.TabIndex = 5;
-            btnBuscar.Text = "Buscar";
-            btnBuscar.TextAlign = ContentAlignment.MiddleRight;
-            btnBuscar.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(24, 56);
+            label2.Location = new Point(27, 75);
             label2.Name = "label2";
-            label2.Size = new Size(69, 15);
+            label2.Size = new Size(85, 20);
             label2.TabIndex = 3;
             label2.Text = "Fecha Final:";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(24, 25);
+            label1.Location = new Point(27, 33);
             label1.Name = "label1";
-            label1.Size = new Size(75, 15);
+            label1.Size = new Size(93, 20);
             label1.TabIndex = 2;
             label1.Text = "Fecha Inicial:";
             // 
@@ -120,27 +106,30 @@
             dtpFechaFin.CustomFormat = "yyyy/MM/dd";
             dtpFechaFin.Format = DateTimePickerFormat.Custom;
             dtpFechaFin.ImeMode = ImeMode.NoControl;
-            dtpFechaFin.Location = new Point(122, 54);
+            dtpFechaFin.Location = new Point(139, 72);
+            dtpFechaFin.Margin = new Padding(3, 4, 3, 4);
             dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(138, 23);
+            dtpFechaFin.Size = new Size(157, 27);
             dtpFechaFin.TabIndex = 1;
             // 
             // dtpFechaInicio
             // 
             dtpFechaInicio.CustomFormat = "yyyy/MM/dd";
             dtpFechaInicio.Format = DateTimePickerFormat.Custom;
-            dtpFechaInicio.Location = new Point(122, 22);
+            dtpFechaInicio.Location = new Point(139, 29);
+            dtpFechaInicio.Margin = new Padding(3, 4, 3, 4);
             dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.Size = new Size(138, 23);
+            dtpFechaInicio.Size = new Size(157, 27);
             dtpFechaInicio.TabIndex = 0;
             // 
             // btnImportar
             // 
             btnImportar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnImportar.Image = Properties.Resources.import;
-            btnImportar.Location = new Point(22, 434);
+            btnImportar.Location = new Point(25, 578);
+            btnImportar.Margin = new Padding(3, 4, 3, 4);
             btnImportar.Name = "btnImportar";
-            btnImportar.Size = new Size(164, 63);
+            btnImportar.Size = new Size(187, 84);
             btnImportar.TabIndex = 7;
             btnImportar.Text = "Importar";
             btnImportar.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -151,10 +140,11 @@
             // 
             btnExportar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnExportar.Image = Properties.Resources.export;
-            btnExportar.Location = new Point(192, 434);
+            btnExportar.Location = new Point(219, 578);
+            btnExportar.Margin = new Padding(3, 4, 3, 4);
             btnExportar.Name = "btnExportar";
-            btnExportar.Padding = new Padding(0, 0, 10, 0);
-            btnExportar.Size = new Size(181, 63);
+            btnExportar.Padding = new Padding(0, 0, 11, 0);
+            btnExportar.Size = new Size(207, 84);
             btnExportar.TabIndex = 8;
             btnExportar.Text = "Exportar";
             btnExportar.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -163,32 +153,24 @@
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(chkEmpleados);
             groupBox2.Controls.Add(chkJustificaciones);
             groupBox2.Controls.Add(chkMarcaciones);
-            groupBox2.Location = new Point(22, 153);
+            groupBox2.Location = new Point(25, 204);
+            groupBox2.Margin = new Padding(3, 4, 3, 4);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(351, 60);
+            groupBox2.Padding = new Padding(3, 4, 3, 4);
+            groupBox2.Size = new Size(401, 80);
             groupBox2.TabIndex = 9;
             groupBox2.TabStop = false;
-            groupBox2.Text = "TipoDatos";
-            // 
-            // chkEmpleados
-            // 
-            chkEmpleados.AutoSize = true;
-            chkEmpleados.Location = new Point(237, 21);
-            chkEmpleados.Name = "chkEmpleados";
-            chkEmpleados.Size = new Size(102, 19);
-            chkEmpleados.TabIndex = 2;
-            chkEmpleados.Text = "Justificaciones";
-            chkEmpleados.UseVisualStyleBackColor = true;
+            groupBox2.Text = "Tipo Datos Exportar";
             // 
             // chkJustificaciones
             // 
             chkJustificaciones.AutoSize = true;
-            chkJustificaciones.Location = new Point(129, 21);
+            chkJustificaciones.Location = new Point(209, 28);
+            chkJustificaciones.Margin = new Padding(3, 4, 3, 4);
             chkJustificaciones.Name = "chkJustificaciones";
-            chkJustificaciones.Size = new Size(102, 19);
+            chkJustificaciones.Size = new Size(125, 24);
             chkJustificaciones.TabIndex = 1;
             chkJustificaciones.Text = "Justificaciones";
             chkJustificaciones.UseVisualStyleBackColor = true;
@@ -196,9 +178,10 @@
             // chkMarcaciones
             // 
             chkMarcaciones.AutoSize = true;
-            chkMarcaciones.Location = new Point(16, 22);
+            chkMarcaciones.Location = new Point(80, 29);
+            chkMarcaciones.Margin = new Padding(3, 4, 3, 4);
             chkMarcaciones.Name = "chkMarcaciones";
-            chkMarcaciones.Size = new Size(93, 19);
+            chkMarcaciones.Size = new Size(114, 24);
             chkMarcaciones.TabIndex = 0;
             chkMarcaciones.Text = "Marcaciones";
             chkMarcaciones.UseVisualStyleBackColor = true;
@@ -207,9 +190,10 @@
             // 
             lvwDocumentos.FullRowSelect = true;
             lvwDocumentos.GridLines = true;
-            lvwDocumentos.Location = new Point(22, 219);
+            lvwDocumentos.Location = new Point(25, 292);
+            lvwDocumentos.Margin = new Padding(3, 4, 3, 4);
             lvwDocumentos.Name = "lvwDocumentos";
-            lvwDocumentos.Size = new Size(351, 208);
+            lvwDocumentos.Size = new Size(401, 276);
             lvwDocumentos.TabIndex = 10;
             lvwDocumentos.UseCompatibleStateImageBehavior = false;
             lvwDocumentos.View = View.Details;
@@ -218,9 +202,11 @@
             // 
             btnCerrar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnCerrar.Image = Properties.Resources.icons8_close_48;
-            btnCerrar.Location = new Point(268, 503);
+            btnCerrar.ImageAlign = ContentAlignment.MiddleRight;
+            btnCerrar.Location = new Point(306, 670);
+            btnCerrar.Margin = new Padding(0);
             btnCerrar.Name = "btnCerrar";
-            btnCerrar.Size = new Size(105, 40);
+            btnCerrar.Size = new Size(120, 53);
             btnCerrar.TabIndex = 11;
             btnCerrar.Text = "Cerrar";
             btnCerrar.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -229,17 +215,18 @@
             // 
             // FrmGestionDatos
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(385, 555);
+            ClientSize = new Size(440, 739);
             Controls.Add(btnCerrar);
             Controls.Add(lvwDocumentos);
             Controls.Add(groupBox2);
             Controls.Add(btnExportar);
             Controls.Add(btnImportar);
             Controls.Add(groupBox1);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FrmGestionDatos";
-            Text = "FrmGestionDatos";
+            Text = "Gestion de Datos";
             Load += FrmGestionDatos_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -253,7 +240,6 @@
         private GroupBox groupBox1;
         private ComboBox cboSucursales;
         private Label label4;
-        private Button btnBuscar;
         private Label label2;
         private Label label1;
         private DateTimePicker dtpFechaFin;
@@ -266,6 +252,5 @@
         private ListView lvwDocumentos;
         private FolderBrowserDialog folderBrowserDialog1;
         private Button btnCerrar;
-        private CheckBox chkEmpleados;
     }
 }

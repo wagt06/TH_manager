@@ -31,8 +31,8 @@
             btnGuardar = new Button();
             btnCerrar = new Button();
             label1 = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
+            txtUsuario = new TextBox();
+            txtContrasena = new TextBox();
             label2 = new Label();
             label3 = new Label();
             pictureBox1 = new PictureBox();
@@ -80,29 +80,28 @@
             label1.TabIndex = 22;
             label1.Text = "Usuario ";
             // 
-            // textBox1
+            // txtUsuario
             // 
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Location = new Point(22, 253);
-            textBox1.Margin = new Padding(3, 4, 3, 4);
-            textBox1.MaxLength = 50;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(365, 27);
-            textBox1.TabIndex = 23;
-            textBox1.TextChanged += textBox1_TextChanged;
-            textBox1.KeyPress += textBox1_KeyPress;
+            txtUsuario.BorderStyle = BorderStyle.FixedSingle;
+            txtUsuario.Location = new Point(22, 253);
+            txtUsuario.Margin = new Padding(3, 4, 3, 4);
+            txtUsuario.MaxLength = 50;
+            txtUsuario.Name = "txtUsuario";
+            txtUsuario.Size = new Size(365, 27);
+            txtUsuario.TabIndex = 23;
+            txtUsuario.KeyPress += txtUsuario_KeyPress;
             // 
-            // textBox2
+            // txtContrasena
             // 
-            textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Location = new Point(22, 328);
-            textBox2.Margin = new Padding(3, 4, 3, 4);
-            textBox2.MaxLength = 50;
-            textBox2.Name = "textBox2";
-            textBox2.PasswordChar = '*';
-            textBox2.Size = new Size(365, 27);
-            textBox2.TabIndex = 25;
-            textBox2.KeyPress += textBox2_KeyPress;
+            txtContrasena.BorderStyle = BorderStyle.FixedSingle;
+            txtContrasena.Location = new Point(22, 328);
+            txtContrasena.Margin = new Padding(3, 4, 3, 4);
+            txtContrasena.MaxLength = 50;
+            txtContrasena.Name = "txtContrasena";
+            txtContrasena.PasswordChar = '*';
+            txtContrasena.Size = new Size(365, 27);
+            txtContrasena.TabIndex = 25;
+            txtContrasena.KeyPress += txtContrasena_KeyPress;
             // 
             // label2
             // 
@@ -181,9 +180,9 @@
             Controls.Add(label4);
             Controls.Add(pictureBox1);
             Controls.Add(label3);
-            Controls.Add(textBox2);
+            Controls.Add(txtContrasena);
             Controls.Add(label2);
-            Controls.Add(textBox1);
+            Controls.Add(txtUsuario);
             Controls.Add(label1);
             Controls.Add(btnGuardar);
             Controls.Add(btnCerrar);
@@ -193,6 +192,7 @@
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Inicio de sesion";
+            TopMost = true;
             Load += FrmLogin_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
@@ -204,8 +204,8 @@
         private Button btnGuardar;
         private Button btnCerrar;
         private Label label1;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox txtUsuario;
+        private TextBox txtContrasena;
         private Label label2;
         private Label label3;
         private PictureBox pictureBox1;

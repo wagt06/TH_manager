@@ -57,7 +57,8 @@ namespace MD.Repositorios
                                             .Include(x => x.Sucursal)
                                             .Where(x => x.CodigoEmpleado == m.CodigoEmpleado).FirstOrDefault();
 
-                        if (empleado != null) {
+                        if (empleado != null)
+                        {
 
                             Marcacion marcacionExistente = bd.Marcaciones.Where(x => x.CodigoEmpleado == m.CodigoEmpleado && x.Fecha == m.Fecha).FirstOrDefault();
                             if (marcacionExistente == null)
@@ -66,6 +67,9 @@ namespace MD.Repositorios
                                 bd.SaveChanges();
                                 cantidadGuardadas += 1;
                             }
+                        }
+                        else {
+                            throw new Exception($"el empleado No. {m.CodigoEmpleado} No existe");
                         }
                             
 

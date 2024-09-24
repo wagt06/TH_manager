@@ -132,10 +132,11 @@ namespace MD
                         numJustImportada = repoJustificaciones.ImportarJustificacion(listJustificaciones);
 
                     }
+                    this.lvwDocumentos.Items.Clear();
                     InsertarLvw("Marcaciones", numMarcasImportada.ToString());
                     InsertarLvw("Justificaciones", numJustImportada.ToString());
 
-                    MessageBox.Show("La informacion se importo correctamente");
+                    /* MessageBox.Show("La informacion se importo correctamente");*/
                 }
             }
             catch (SecurityException ex)
@@ -204,6 +205,7 @@ namespace MD
 
         private void InsertarLvw(string nombre, string valor)
         {
+
             ListViewItem lista = new ListViewItem(nombre);
             lista.SubItems.Add(valor);
             this.lvwDocumentos.Items.Add(lista);
@@ -211,7 +213,7 @@ namespace MD
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
-           this.Close();
+            this.Close();
         }
 
         private void SaveToCsv<T>(List<T> reportData, string path)

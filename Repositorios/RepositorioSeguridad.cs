@@ -148,5 +148,61 @@ namespace MD.Repositorios
 
             }
         }
+
+        public List<Usuario> ListaUsuarios(string nombreBusqueda) {
+            try
+            {
+                List <Usuario> usuarios = new List<Usuario>();
+
+                using (DbContext db = new DbContext())
+                {
+                    usuarios =  db.Usuarios
+                        .Include(x=>x.Rol)
+                        .Where(x=>x.Nombre.Contains(nombreBusqueda)).ToList();
+                }
+                return usuarios;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public Usuario UsuarioAddorUpdate(Usuario usuario)
+        {
+            try
+            {
+                Usuario usuarioEncontrado;
+                using (DbContext db = new DbContext())
+                {
+                    usuarioEncontrado = db.Usuarios.Where(x => x.UsuarioId == usuario.UsuarioId).FirstOrDefault();
+                    if (usuarioEncontrado == null)
+                    {
+                        db.Usuarios.Add(usuario);
+                    }
+                    else {
+                        usuarioEncontrado.Contrasena = usuario.Contrasena;
+                        usuarioEncontrado.RolId = usuario.RolId;
+                        usuarioEncontrado.Nombre = usuario.Nombre;
+                        usuarioEncontrado.IsEliminado = usuario.IsEliminado;
+                        usuarioEncontrado.CorreoElectronico = usuario.CorreoElectronico;
+                        if (usuario.IsEliminado.Value) {
+                            usuarioEncontrado.FechaEliminacion = DateTime.Now;
+                        }
+
+                        db.Usuarios.Update(usuarioEncontrado);
+                    }
+
+                    db.SaveChanges();
+                }
+                return usuario;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace MD
 
         async private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (!(this.textBox1.Text.Length > 0 && this.textBox2.Text.Length > 0))
+            if (!(this.txtUsuario.Text.Length > 0 && this.txtContrasena.Text.Length > 0))
                 return;
 
             bool isLogin = await Login();
@@ -60,7 +60,7 @@ namespace MD
 
                     empleado = db.Usuarios
                         .Include(x => x.Rol)
-                        .Where(x => x.Nombre == this.textBox1.Text && x.Contrasena == this.textBox2.Text)
+                        .Where(x => x.Nombre == this.txtUsuario.Text && x.Contrasena == this.txtContrasena.Text)
                         .FirstOrDefault();
 
                 }
@@ -111,22 +111,21 @@ namespace MD
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
-
-        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtUsuario_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
                 btnGuardar_Click(null, null);
             }
         }
+
+        private void txtContrasena_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                btnGuardar_Click(null, null);
+            }
+        }
+
     }
 }

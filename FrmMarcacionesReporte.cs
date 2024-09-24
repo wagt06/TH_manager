@@ -51,9 +51,12 @@ namespace MD
                 sucursales = db.Sucursales.Where(x => x.IsActivo).ToList();
             }
 
-            cboSucursales.ValueMember = "CodigoSucursal";
-            cboSucursales.DisplayMember = "Nombre";
-            cboSucursales.DataSource = sucursales;
+            List<SelectCombo> selectSucursales = sucursales.Select(x => new SelectCombo { Codigo = x.CodigoSucursal, Descripcion = x.Nombre }).ToList();
+            selectSucursales.Add(new SelectCombo { Codigo = -1, Descripcion = "--Todas--" });
+
+            cboSucursales.ValueMember = "Codigo";
+            cboSucursales.DisplayMember = "Descripcion";
+            cboSucursales.DataSource = selectSucursales;
         }
 
         private void FrmMarcacionesReporte_Load(object sender, EventArgs e)
@@ -63,14 +66,15 @@ namespace MD
             this.lswDatosMarcaciones.Columns.Add("CodigoSucursal", 100);
             this.lswDatosMarcaciones.Columns.Add("Sucursal", 100);
             this.lswDatosMarcaciones.Columns.Add("Fecha", 100);
-            this.lswDatosMarcaciones.Columns.Add("Entrada", 150);
-            this.lswDatosMarcaciones.Columns.Add("Salida", 150);
-            this.lswDatosMarcaciones.Columns.Add("Horas_Reglamentarias", 100);
-            this.lswDatosMarcaciones.Columns.Add("Horas_Marcadas", 100);
-            this.lswDatosMarcaciones.Columns.Add("Horas_En_Contra", 100);
-            this.lswDatosMarcaciones.Columns.Add("Horas_En_Favor", 100);
-            this.lswDatosMarcaciones.Columns.Add("Horas_Justificadas", 100);
+            this.lswDatosMarcaciones.Columns.Add("Entrada", 200);
+            this.lswDatosMarcaciones.Columns.Add("Salida", 200);
+            this.lswDatosMarcaciones.Columns.Add("H_Reglamen", 100);
+            this.lswDatosMarcaciones.Columns.Add("H_Marcadas", 100);
+            this.lswDatosMarcaciones.Columns.Add("H_Contra", 100);
+            this.lswDatosMarcaciones.Columns.Add("H_aFavor", 100);
+            this.lswDatosMarcaciones.Columns.Add("H_Justifi", 100);
             this.lswDatosMarcaciones.Columns.Add("Total_Horas", 100);
+            this.lswDatosMarcaciones.Columns.Add("H_Extras", 100);
 
             CargarSucursales();
 
@@ -88,10 +92,12 @@ namespace MD
 
                 IEnumerable<CtoMarcacionesReporte> marcaciones;
 
+                string codSucursal = ((SelectCombo)this.cboSucursales.SelectedItem).Codigo.ToString();
+
                 SqlParameter fechaInicial = new SqlParameter("@FechaIni", this.dtpFechaInicio.Value.ToString("yyyy/MM/dd"));
                 SqlParameter fechaFinal = new SqlParameter("@FechaFin", this.dtpFechaFin.Value.ToString("yyyy/MM/dd"));
                 SqlParameter slike = new SqlParameter("@sLike", this.txtBusqueda.Text);
-                SqlParameter codigoSucursal = new SqlParameter("@codigoSucursal", ((Sucursal)this.cboSucursales.SelectedItem).CodigoSucursal);
+                SqlParameter codigoSucursal = new SqlParameter("@codigoSucursal", codSucursal == "-1"?"": codSucursal);
 
 
                 using (DbContext db = new DbContext())
@@ -108,8 +114,8 @@ namespace MD
                     lista.SubItems.Add(e.CodigoSucursal.ToString());
                     lista.SubItems.Add(e.Sucursal);
                     lista.SubItems.Add(e.Fecha.ToString("yyyy/MM/dd"));
-                    lista.SubItems.Add(e.Entrada == null ? "" : e.Entrada.Value.ToString("yyyy/MM/dd hh:mm:ss"));
-                    lista.SubItems.Add(e.Salida == null ? "" : e.Salida.Value.ToString("yyyy/MM/dd hh:mm:ss"));
+                    lista.SubItems.Add(e.Entrada == null ? "" : e.Entrada.Value.ToString("hh:mm:ss"));
+                    lista.SubItems.Add(e.Salida == null ? "" : e.Salida.Value.ToString("hh:mm:ss"));
 
                     lista.SubItems.Add(e.HorasReglamentarias.ToString());
                     lista.SubItems.Add(e.HorasMarcadas.ToString());
@@ -117,7 +123,7 @@ namespace MD
                     lista.SubItems.Add(e.TiempoAFavor.ToString());
                     lista.SubItems.Add(e.HorasJustificadas.ToString());
                     lista.SubItems.Add(e.CantidadHorasFinal.ToString());
-
+                    lista.SubItems.Add(e.HorasExtras.ToString());
 
 
                     this.lswDatosMarcaciones.Items.Add(lista);

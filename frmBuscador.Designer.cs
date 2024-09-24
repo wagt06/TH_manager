@@ -48,11 +48,11 @@
             lwsDatos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lwsDatos.FullRowSelect = true;
             lwsDatos.GridLines = true;
-            lwsDatos.Location = new Point(21, 149);
+            lwsDatos.Location = new Point(21, 140);
             lwsDatos.Margin = new Padding(3, 4, 3, 4);
             lwsDatos.MultiSelect = false;
             lwsDatos.Name = "lwsDatos";
-            lwsDatos.Size = new Size(1011, 584);
+            lwsDatos.Size = new Size(1011, 553);
             lwsDatos.TabIndex = 13;
             lwsDatos.UseCompatibleStateImageBehavior = false;
             lwsDatos.View = View.Details;
@@ -64,11 +64,11 @@
             btnCerrar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnCerrar.Image = Properties.Resources.icons8_close_48;
             btnCerrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCerrar.Location = new Point(882, 751);
+            btnCerrar.Location = new Point(882, 701);
             btnCerrar.Margin = new Padding(3, 4, 3, 4);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Padding = new Padding(0, 0, 11, 0);
-            btnCerrar.Size = new Size(150, 53);
+            btnCerrar.Size = new Size(150, 40);
             btnCerrar.TabIndex = 20;
             btnCerrar.Text = "Cancelar";
             btnCerrar.TextAlign = ContentAlignment.MiddleRight;
@@ -150,15 +150,15 @@
             // 
             cmdBuscar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             cmdBuscar.Image = Properties.Resources.search2_more_48;
-            cmdBuscar.ImageAlign = ContentAlignment.MiddleLeft;
-            cmdBuscar.Location = new Point(832, 42);
+            cmdBuscar.Location = new Point(845, 44);
             cmdBuscar.Margin = new Padding(3, 4, 3, 4);
             cmdBuscar.Name = "cmdBuscar";
             cmdBuscar.Padding = new Padding(0, 0, 11, 0);
-            cmdBuscar.Size = new Size(116, 53);
+            cmdBuscar.Size = new Size(144, 53);
             cmdBuscar.TabIndex = 23;
             cmdBuscar.Text = "Buscar";
             cmdBuscar.TextAlign = ContentAlignment.MiddleRight;
+            cmdBuscar.TextImageRelation = TextImageRelation.ImageBeforeText;
             cmdBuscar.UseVisualStyleBackColor = true;
             cmdBuscar.Click += cmdBuscar_Click;
             // 
@@ -173,12 +173,13 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1048, 817);
+            ClientSize = new Size(1048, 754);
             Controls.Add(groupBox1);
             Controls.Add(btnCerrar);
             Controls.Add(lwsDatos);
             Name = "frmBuscador";
-            Text = "frmBuscador";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Buscador";
             Load += frmBuscador_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

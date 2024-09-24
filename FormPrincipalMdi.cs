@@ -181,9 +181,14 @@ namespace MD
             RibbonTab tbSeguridad = new RibbonTab { Text = "Seguridad" };
             RibbonPanel panelSeguridad = new RibbonPanel { Text = "Mantenimiento" };
 
+            RibbonButton btnUsuarios = new RibbonButton { Text = "Usuarios", Image = Properties.Resources.icons8_manager_96 };
             RibbonButton btnPermisos = new RibbonButton { Text = "Roles", Image = Properties.Resources.icons8_permanent_job_96 };
+            
             btnPermisos.Click += cmdSeguridad_Click;
+            btnUsuarios.Click += BtnUsuarios_Click;
 
+
+            panelSeguridad.Items.Add(btnUsuarios);
             panelSeguridad.Items.Add(btnPermisos);
             tbSeguridad.Panels.Add(panelSeguridad);
 
@@ -207,6 +212,18 @@ namespace MD
 
             this.Controls.Add(r);
 
+
+        }
+
+        private void BtnUsuarios_Click(object? sender, EventArgs e)
+        {
+            if (!TienPermisoParaElMenu(2))
+            {
+                return;
+            }
+
+
+            AbrirForm(new FrmUsuarios());
 
         }
 
