@@ -49,6 +49,8 @@
             label4 = new Label();
             btnCerrar = new Button();
             btnGuardar = new Button();
+            txtBusqueda = new TextBox();
+            label5 = new Label();
             gbEmpleado.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -63,7 +65,7 @@
             lwsEmpleados.Margin = new Padding(3, 4, 3, 4);
             lwsEmpleados.Name = "lwsEmpleados";
             lwsEmpleados.Size = new Size(603, 632);
-            lwsEmpleados.TabIndex = 11;
+            lwsEmpleados.TabIndex = 2;
             lwsEmpleados.TabStop = false;
             lwsEmpleados.UseCompatibleStateImageBehavior = false;
             lwsEmpleados.View = View.Details;
@@ -72,11 +74,11 @@
             // btnNuevo
             // 
             btnNuevo.Image = Properties.Resources.icons8_add_48;
-            btnNuevo.Location = new Point(11, 13);
+            btnNuevo.Location = new Point(491, 13);
             btnNuevo.Margin = new Padding(3, 4, 3, 4);
             btnNuevo.Name = "btnNuevo";
             btnNuevo.Size = new Size(124, 39);
-            btnNuevo.TabIndex = 10;
+            btnNuevo.TabIndex = 3;
             btnNuevo.Text = "Nuevo";
             btnNuevo.TextAlign = ContentAlignment.MiddleRight;
             btnNuevo.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -94,7 +96,7 @@
             gbEmpleado.Name = "gbEmpleado";
             gbEmpleado.Padding = new Padding(3, 4, 3, 4);
             gbEmpleado.Size = new Size(705, 679);
-            gbEmpleado.TabIndex = 1;
+            gbEmpleado.TabIndex = 4;
             gbEmpleado.TabStop = false;
             gbEmpleado.Text = "Datos del Empleado";
             // 
@@ -119,7 +121,7 @@
             panel1.Location = new Point(19, 36);
             panel1.Name = "panel1";
             panel1.Size = new Size(671, 577);
-            panel1.TabIndex = 32;
+            panel1.TabIndex = 0;
             // 
             // txtContraseña
             // 
@@ -129,7 +131,7 @@
             txtContraseña.Name = "txtContraseña";
             txtContraseña.PasswordChar = '*';
             txtContraseña.Size = new Size(305, 27);
-            txtContraseña.TabIndex = 29;
+            txtContraseña.TabIndex = 11;
             // 
             // txtCedula
             // 
@@ -138,7 +140,7 @@
             txtCedula.MaxLength = 20;
             txtCedula.Name = "txtCedula";
             txtCedula.Size = new Size(307, 27);
-            txtCedula.TabIndex = 4;
+            txtCedula.TabIndex = 5;
             // 
             // txtNombre
             // 
@@ -158,7 +160,7 @@
             TxtId.Margin = new Padding(3, 4, 3, 4);
             TxtId.Name = "TxtId";
             TxtId.Size = new Size(117, 27);
-            TxtId.TabIndex = 2;
+            TxtId.TabIndex = 1;
             TxtId.KeyPress += TxtId_KeyPress;
             // 
             // label6
@@ -167,7 +169,7 @@
             label6.Location = new Point(29, 385);
             label6.Name = "label6";
             label6.Size = new Size(165, 20);
-            label6.TabIndex = 30;
+            label6.TabIndex = 10;
             label6.Text = "Constraseña marcacion:";
             // 
             // label2
@@ -176,7 +178,7 @@
             label2.Location = new Point(30, 187);
             label2.Name = "label2";
             label2.Size = new Size(58, 20);
-            label2.TabIndex = 13;
+            label2.TabIndex = 4;
             label2.Text = "Cedula:";
             // 
             // label7
@@ -185,7 +187,7 @@
             label7.Location = new Point(30, 320);
             label7.Name = "label7";
             label7.Size = new Size(63, 20);
-            label7.TabIndex = 27;
+            label7.TabIndex = 8;
             label7.Text = "Horario:";
             // 
             // label3
@@ -194,7 +196,7 @@
             label3.Location = new Point(30, 19);
             label3.Name = "label3";
             label3.Size = new Size(61, 20);
-            label3.TabIndex = 15;
+            label3.TabIndex = 0;
             label3.Text = "Codigo:";
             // 
             // cboHorarios
@@ -206,7 +208,7 @@
             cboHorarios.Margin = new Padding(3, 4, 3, 4);
             cboHorarios.Name = "cboHorarios";
             cboHorarios.Size = new Size(307, 28);
-            cboHorarios.TabIndex = 26;
+            cboHorarios.TabIndex = 9;
             // 
             // label1
             // 
@@ -214,7 +216,7 @@
             label1.Location = new Point(30, 89);
             label1.Name = "label1";
             label1.Size = new Size(77, 20);
-            label1.TabIndex = 11;
+            label1.TabIndex = 2;
             label1.Text = "Nombres: ";
             // 
             // pictureBox1
@@ -237,7 +239,7 @@
             cboSucursal.Margin = new Padding(3, 4, 3, 4);
             cboSucursal.Name = "cboSucursal";
             cboSucursal.Size = new Size(307, 28);
-            cboSucursal.TabIndex = 17;
+            cboSucursal.TabIndex = 7;
             // 
             // chkActivo
             // 
@@ -246,7 +248,7 @@
             chkActivo.Margin = new Padding(3, 4, 3, 4);
             chkActivo.Name = "chkActivo";
             chkActivo.Size = new Size(73, 24);
-            chkActivo.TabIndex = 8;
+            chkActivo.TabIndex = 12;
             chkActivo.Text = "Activo";
             chkActivo.UseVisualStyleBackColor = true;
             // 
@@ -256,7 +258,7 @@
             label4.Location = new Point(30, 252);
             label4.Name = "label4";
             label4.Size = new Size(66, 20);
-            label4.TabIndex = 18;
+            label4.TabIndex = 6;
             label4.Text = "Sucursal:";
             // 
             // btnCerrar
@@ -269,7 +271,7 @@
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Padding = new Padding(0, 0, 11, 0);
             btnCerrar.Size = new Size(120, 51);
-            btnCerrar.TabIndex = 31;
+            btnCerrar.TabIndex = 2;
             btnCerrar.Text = "Cerrar";
             btnCerrar.TextAlign = ContentAlignment.MiddleRight;
             btnCerrar.UseVisualStyleBackColor = true;
@@ -284,17 +286,39 @@
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Padding = new Padding(0, 0, 11, 0);
             btnGuardar.Size = new Size(120, 51);
-            btnGuardar.TabIndex = 9;
+            btnGuardar.TabIndex = 1;
             btnGuardar.Text = "Guardar";
             btnGuardar.TextAlign = ContentAlignment.MiddleRight;
             btnGuardar.UseVisualStyleBackColor = true;
             btnGuardar.Click += btnGuardar_Click;
+            // 
+            // txtBusqueda
+            // 
+            txtBusqueda.Location = new Point(96, 19);
+            txtBusqueda.Margin = new Padding(3, 4, 3, 4);
+            txtBusqueda.MaxLength = 20;
+            txtBusqueda.Name = "txtBusqueda";
+            txtBusqueda.PlaceholderText = "Busqueda de empleado";
+            txtBusqueda.Size = new Size(342, 27);
+            txtBusqueda.TabIndex = 1;
+            txtBusqueda.TextChanged += textBox1_TextChanged;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(12, 22);
+            label5.Name = "label5";
+            label5.Size = new Size(77, 20);
+            label5.TabIndex = 0;
+            label5.Text = "Busqueda:";
             // 
             // FrmEmpleado
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1350, 717);
+            Controls.Add(label5);
+            Controls.Add(txtBusqueda);
             Controls.Add(gbEmpleado);
             Controls.Add(btnNuevo);
             Controls.Add(lwsEmpleados);
@@ -306,6 +330,7 @@
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -329,5 +354,7 @@
         private Label label6;
         private Button btnCerrar;
         private Panel panel1;
+        private TextBox txtBusqueda;
+        private Label label5;
     }
 }

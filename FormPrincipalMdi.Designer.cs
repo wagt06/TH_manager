@@ -176,14 +176,15 @@
             // 
             // tabControl1
             // 
+            tabControl1.AllowDrop = true;
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            tabControl1.Location = new Point(881, 58);
+            tabControl1.Location = new Point(734, 344);
             tabControl1.Margin = new Padding(3, 4, 3, 4);
             tabControl1.Multiline = true;
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(42, 39);
+            tabControl1.Size = new Size(121, 213);
             tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.TabIndex = 16;
             tabControl1.Visible = false;
@@ -191,10 +192,9 @@
             // tabPage1
             // 
             tabPage1.Location = new Point(4, 32);
-            tabPage1.Margin = new Padding(3, 4, 3, 4);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3, 4, 3, 4);
-            tabPage1.Size = new Size(34, 3);
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(113, 177);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "tabPage1";
             tabPage1.UseVisualStyleBackColor = true;
@@ -211,7 +211,7 @@
             IsMdiContainer = true;
             Margin = new Padding(5);
             Name = "FormPrincipalMdi";
-            Text = "Principal";
+            Text = "Principal (DEMO)";
             WindowState = FormWindowState.Maximized;
             FormClosing += FormPrincipalMdi_FormClosing;
             Load += FormPrincipalMdi_Load;

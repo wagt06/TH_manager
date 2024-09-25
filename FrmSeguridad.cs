@@ -70,6 +70,7 @@ namespace MD
             trwMenus.ShowLines = true;
             trwMenus.BeforeCheck += TrwMenus_BeforeCheck;
 
+            this.trwMenus.Nodes.Clear();
             foreach (Menu menu in menus)
             {
                 TreeNode n = new TreeNode { Name = menu.MenuId.ToString(), Text = menu.NombreMenu, Tag = menu, ToolTipText = "Menu" };

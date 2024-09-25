@@ -32,6 +32,10 @@ namespace MD.Repositorios
                         if (existeEmpleado != null)
                             throw new Exception("No se puede agregar el empleado: " + empleado.NombreEmpleado + Environment.NewLine  + "Ya existe un empleado con ese numero de cedula" );
 
+                        existeEmpleado = db.Empleados.Where(x => x.Contraseña == empleado.Contraseña).FirstOrDefault();
+                        if (existeEmpleado != null)
+                            throw new Exception("No se puede agregar el empleado: " + empleado.NombreEmpleado + Environment.NewLine + "Ya existe un empleado con esa contrasena de marcacion.");
+
                         if (empleado.CodigoEmpleado == 0) {
                             int codigoEmpleado = db.Empleados.Count() + 1;
                             empleado.CodigoEmpleado = codigoEmpleado;
@@ -43,9 +47,19 @@ namespace MD.Repositorios
                     }
                     else
                     {
-                        empleado.CodigoUsuarioMod = 1;
-                        empleado.FechaMod = DateTime.Now;
-                        db.Empleados.Update(empleado);
+
+                        existeEmpleado.NombreEmpleado = empleado.NombreEmpleado;
+                        existeEmpleado.CodigoHorario = empleado.CodigoHorario;
+                        existeEmpleado.Cedula = empleado.Cedula;
+                        existeEmpleado.CodigoSucursal = empleado.CodigoSucursal;
+                        existeEmpleado.IsEliminado = empleado.IsEliminado;
+                        existeEmpleado.Contraseña = empleado.Contraseña;
+                        existeEmpleado.IsActivo = empleado.IsActivo;
+
+
+                        existeEmpleado.CodigoUsuarioMod = 1;
+                        existeEmpleado.FechaMod = DateTime.Now;
+                        db.Empleados.Update(existeEmpleado);
                     }
                     db.SaveChanges();
                 }

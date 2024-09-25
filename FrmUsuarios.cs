@@ -33,30 +33,37 @@ namespace MD
             try
             {
 
-
                 if (string.IsNullOrEmpty(txtNombre.Text))
                 {
-                    MessageBox.Show("Escribe el nombre del usuario");
+                    MessageBox.Show("Escribe el nombre del usuario.");
                     return;
                 }
 
 
                 if (string.IsNullOrEmpty(txtContraseña.Text))
                 {
-                    MessageBox.Show("Escribe la contrasena");
+                    MessageBox.Show("Escribe la contrasena.");
                     return;
                 }
 
                 if (string.IsNullOrEmpty(txtContraseña.Text))
                 {
-                    MessageBox.Show("Escribe el correo");
+                    MessageBox.Show("Escribe el correo.");
+                    return;
+                }
+
+
+                if (!string.Equals(txtContraseña.Text, txtConfirmarContrasena.Text))
+                {
+
+                    MessageBox.Show("Las contrasenas no coinciden.");
                     return;
                 }
 
 
                 if (this.cboRol.SelectedIndex < 0)
                 {
-                    MessageBox.Show("Selecciona el rol del usuario");
+                    MessageBox.Show("Selecciona el rol del usuario.");
                     return;
                 }
 
@@ -70,9 +77,10 @@ namespace MD
                 };
 
                 //if (!string.IsNullOrEmpty(TxtId.Text))
-                usuario.UsuarioId = !string.IsNullOrEmpty(TxtId.Text)?int.Parse(TxtId.Text):0;
+                usuario.UsuarioId = !string.IsNullOrEmpty(TxtId.Text) ? int.Parse(TxtId.Text) : 0;
 
                 rSeguridad.UsuarioAddorUpdate(usuario);
+                MessageBox.Show("La informacion se guardo correctamente!", "Usuario", buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Information);
                 mostrarDatos();
 
 
@@ -88,6 +96,7 @@ namespace MD
             List<Usuario> usuarios = new List<Usuario>();
             usuarios = rSeguridad.ListaUsuarios(txtBusqueda.Text);
 
+            this.lwsEmpleados.Items.Clear();
             foreach (var usuario in usuarios)
             {
                 ListViewItem item = new ListViewItem(usuario.UsuarioId.ToString());
@@ -102,7 +111,7 @@ namespace MD
 
         private void FrmUsuarios_Load(object sender, EventArgs e)
         {
-            this.lwsEmpleados.Columns.Add("Codigo", 200);
+            this.lwsEmpleados.Columns.Add("Codigo", 100);
             this.lwsEmpleados.Columns.Add("Nombre", 200);
             this.lwsEmpleados.Columns.Add("Correo", 200);
             this.lwsEmpleados.Columns.Add("Rol", 200);
@@ -136,7 +145,7 @@ namespace MD
 
         void llenarUsuario(Usuario usuario)
         {
-
+            this.TxtId.Text = usuario.UsuarioId.ToString();
             txtNombre.Text = usuario.Nombre;
             txtCorreo.Text = usuario.CorreoElectronico;
             txtContraseña.Text = usuario.Contrasena;
@@ -146,11 +155,17 @@ namespace MD
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
+            TxtId.Text = "";
             txtNombre.Text = "";
             txtCorreo.Text = "";
             txtContraseña.Text = "";
             this.cboRol.SelectedValue = -1;
             chkActivo.Checked = true;
+        }
+
+        private void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            mostrarDatos();
         }
     }
 }

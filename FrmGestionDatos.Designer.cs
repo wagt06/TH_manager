@@ -61,7 +61,7 @@
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(3, 4, 3, 4);
             groupBox1.Size = new Size(401, 180);
-            groupBox1.TabIndex = 1;
+            groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Filtro Fechas Exportacion";
             // 
@@ -72,7 +72,7 @@
             cboSucursales.Margin = new Padding(3, 4, 3, 4);
             cboSucursales.Name = "cboSucursales";
             cboSucursales.Size = new Size(239, 28);
-            cboSucursales.TabIndex = 9;
+            cboSucursales.TabIndex = 2;
             // 
             // label4
             // 
@@ -130,7 +130,7 @@
             btnImportar.Margin = new Padding(3, 4, 3, 4);
             btnImportar.Name = "btnImportar";
             btnImportar.Size = new Size(187, 84);
-            btnImportar.TabIndex = 7;
+            btnImportar.TabIndex = 3;
             btnImportar.Text = "Importar";
             btnImportar.TextImageRelation = TextImageRelation.ImageAboveText;
             btnImportar.UseVisualStyleBackColor = true;
@@ -145,7 +145,7 @@
             btnExportar.Name = "btnExportar";
             btnExportar.Padding = new Padding(0, 0, 11, 0);
             btnExportar.Size = new Size(207, 84);
-            btnExportar.TabIndex = 8;
+            btnExportar.TabIndex = 4;
             btnExportar.Text = "Exportar";
             btnExportar.TextImageRelation = TextImageRelation.ImageAboveText;
             btnExportar.UseVisualStyleBackColor = true;
@@ -160,7 +160,7 @@
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(3, 4, 3, 4);
             groupBox2.Size = new Size(401, 80);
-            groupBox2.TabIndex = 9;
+            groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             groupBox2.Text = "Tipo Datos Exportar";
             // 
@@ -194,7 +194,7 @@
             lvwDocumentos.Margin = new Padding(3, 4, 3, 4);
             lvwDocumentos.Name = "lvwDocumentos";
             lvwDocumentos.Size = new Size(401, 276);
-            lvwDocumentos.TabIndex = 10;
+            lvwDocumentos.TabIndex = 2;
             lvwDocumentos.UseCompatibleStateImageBehavior = false;
             lvwDocumentos.View = View.Details;
             // 
@@ -207,7 +207,7 @@
             btnCerrar.Margin = new Padding(0);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Size = new Size(120, 53);
-            btnCerrar.TabIndex = 11;
+            btnCerrar.TabIndex = 5;
             btnCerrar.Text = "Cerrar";
             btnCerrar.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCerrar.UseVisualStyleBackColor = true;

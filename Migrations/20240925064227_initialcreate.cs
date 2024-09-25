@@ -8,33 +8,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MD.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class initialcreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "CtoMarcacionesReporte",
-                columns: table => new
-                {
-                    CodigoEmpleado = table.Column<int>(type: "int", nullable: false),
-                    NombreEmpleado = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CodigoSucursal = table.Column<int>(type: "int", nullable: false),
-                    Sucursal = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Entrada = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Salida = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    HorasReglamentarias = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    HorasMarcadas = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TiempoEnContra = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TiempoAFavor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    HorasJustificadas = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CantidadHorasFinal = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                });
-
             migrationBuilder.CreateTable(
                 name: "Horario",
                 columns: table => new
@@ -161,7 +139,8 @@ namespace MD.Migrations
                 name: "Usuario",
                 columns: table => new
                 {
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CorreoElectronico = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Contrasena = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -178,8 +157,8 @@ namespace MD.Migrations
                 {
                     table.PrimaryKey("PK_Usuario", x => x.UsuarioId);
                     table.ForeignKey(
-                        name: "FK_Usuario_Rol_UsuarioId",
-                        column: x => x.UsuarioId,
+                        name: "FK_Usuario_Rol_RolId",
+                        column: x => x.RolId,
                         principalTable: "Rol",
                         principalColumn: "RolId",
                         onDelete: ReferentialAction.Restrict);
@@ -342,8 +321,8 @@ namespace MD.Migrations
                 columns: new[] { "CodigoSucursal", "CodigoUsuarioCreacion", "CodigoUsuarioElimina", "CodigoUsuarioMod", "FechaCreacion", "FechaEliminacion", "FechaMod", "IsActivo", "IsEliminado", "Nombre" },
                 values: new object[,]
                 {
-                    { 1, 1, null, null, new DateTime(2024, 9, 21, 15, 7, 52, 557, DateTimeKind.Local).AddTicks(528), null, null, true, false, "Linda Vista" },
-                    { 2, 1, null, null, new DateTime(2024, 9, 21, 15, 7, 52, 557, DateTimeKind.Local).AddTicks(541), null, null, true, false, "Metrocentro" }
+                    { 1, 1, null, null, new DateTime(2024, 9, 25, 0, 42, 27, 757, DateTimeKind.Local).AddTicks(5318), null, null, true, false, "Linda Vista" },
+                    { 2, 1, null, null, new DateTime(2024, 9, 25, 0, 42, 27, 757, DateTimeKind.Local).AddTicks(5333), null, null, true, false, "Metrocentro" }
                 });
 
             migrationBuilder.InsertData(
@@ -387,7 +366,7 @@ namespace MD.Migrations
             migrationBuilder.InsertData(
                 table: "Usuario",
                 columns: new[] { "UsuarioId", "CodigoUsuarioCreacion", "CodigoUsuarioElimina", "CodigoUsuarioMod", "Contrasena", "CorreoElectronico", "FechaCreacion", "FechaEliminacion", "FechaMod", "IsEliminado", "Nombre", "RolId" },
-                values: new object[] { 1, 1, null, null, "123", "", new DateTime(2024, 9, 21, 15, 7, 52, 557, DateTimeKind.Local).AddTicks(653), null, null, false, "admin", 1 });
+                values: new object[] { 1, 1, null, null, "123", "", new DateTime(2024, 9, 25, 0, 42, 27, 757, DateTimeKind.Local).AddTicks(5439), null, null, false, "admin", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Empleado_CodigoHorario",
@@ -433,14 +412,16 @@ namespace MD.Migrations
                 name: "IX_RolMenuOpciones_RolMenuId",
                 table: "RolMenuOpciones",
                 column: "RolMenuId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuario_RolId",
+                table: "Usuario",
+                column: "RolId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "CtoMarcacionesReporte");
-
             migrationBuilder.DropTable(
                 name: "Justificacion");
 

@@ -53,7 +53,7 @@
             lwsDatos.MultiSelect = false;
             lwsDatos.Name = "lwsDatos";
             lwsDatos.Size = new Size(1011, 553);
-            lwsDatos.TabIndex = 13;
+            lwsDatos.TabIndex = 0;
             lwsDatos.UseCompatibleStateImageBehavior = false;
             lwsDatos.View = View.Details;
             lwsDatos.SelectedIndexChanged += lwsDatos_SelectedIndexChanged;
@@ -69,7 +69,7 @@
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Padding = new Padding(0, 0, 11, 0);
             btnCerrar.Size = new Size(150, 40);
-            btnCerrar.TabIndex = 20;
+            btnCerrar.TabIndex = 1;
             btnCerrar.Text = "Cancelar";
             btnCerrar.TextAlign = ContentAlignment.MiddleRight;
             btnCerrar.UseVisualStyleBackColor = true;
@@ -125,7 +125,7 @@
             dateTimePicker1.Location = new Point(86, 23);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(193, 27);
-            dateTimePicker1.TabIndex = 25;
+            dateTimePicker1.TabIndex = 0;
             // 
             // dateTimePicker2
             // 
@@ -135,7 +135,7 @@
             dateTimePicker2.Location = new Point(86, 58);
             dateTimePicker2.Name = "dateTimePicker2";
             dateTimePicker2.Size = new Size(193, 27);
-            dateTimePicker2.TabIndex = 26;
+            dateTimePicker2.TabIndex = 1;
             // 
             // label1
             // 
@@ -155,7 +155,7 @@
             cmdBuscar.Name = "cmdBuscar";
             cmdBuscar.Padding = new Padding(0, 0, 11, 0);
             cmdBuscar.Size = new Size(144, 53);
-            cmdBuscar.TabIndex = 23;
+            cmdBuscar.TabIndex = 1;
             cmdBuscar.Text = "Buscar";
             cmdBuscar.TextAlign = ContentAlignment.MiddleRight;
             cmdBuscar.TextImageRelation = TextImageRelation.ImageBeforeText;

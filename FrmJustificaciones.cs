@@ -236,7 +236,8 @@ namespace MD
                     cmdAprobar.Visible = justificacion.CodigoEstado == 2;
                     cmdRechazar.Visible = justificacion.CodigoEstado == 3;
                     btnGuardarJust.Enabled = false;
-                    if (justificacion.CodigoEstado == 1) {
+                    if (justificacion.CodigoEstado == 1)
+                    {
                         cmdAprobar.Visible = true;
                         cmdRechazar.Visible = true;
                     }
@@ -247,7 +248,7 @@ namespace MD
                     cmdRechazar.Enabled = true;
                     cmdAprobar.Visible = true;
                     cmdRechazar.Visible = true;
-                  
+
                 }
                 btnGuardarJust.Enabled = justificacion.CodigoEstado == 1;
             }
@@ -324,18 +325,19 @@ namespace MD
                 int dias = 0;
                 while (fecha <= CalendarDias.SelectionEnd)
                 {
-                    if (GuardarJustficaciones(fecha)) {
+                    if (GuardarJustficaciones(fecha))
+                    {
                         dias += 1;
                     }
                     fecha = fecha.Date.AddDays(1);
                 }
 
-                
+
                 if (dias == 1)
                     MessageBox.Show($"Las Justificaciones se guardaron correctamente");
                 if (dias > 1)
                     MessageBox.Show($"Las Justificaciones se guardaron correctamente");
-                if(dias>=1)
+                if (dias >= 1)
                     Limpiar();
             }
             catch (Exception ex)
@@ -352,6 +354,9 @@ namespace MD
             frmBuscador b = new frmBuscador();
             b.tipoBusqueda = "Empleado";
             b.ShowDialog();
+
+            if (b.codigoBusqueda == null)
+                return;
 
 
             Empleado empleado = repositorioEmpleados.BuscarEmpleadoPorCodigo(int.Parse(b.codigoBusqueda));

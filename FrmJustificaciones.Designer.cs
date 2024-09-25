@@ -96,7 +96,7 @@
             cboTipoJustificaciones.Margin = new Padding(3, 4, 3, 4);
             cboTipoJustificaciones.Name = "cboTipoJustificaciones";
             cboTipoJustificaciones.Size = new Size(361, 28);
-            cboTipoJustificaciones.TabIndex = 28;
+            cboTipoJustificaciones.TabIndex = 6;
             // 
             // lblObservaciones
             // 
@@ -133,7 +133,7 @@
             txtObservaciones.Multiline = true;
             txtObservaciones.Name = "txtObservaciones";
             txtObservaciones.Size = new Size(438, 63);
-            txtObservaciones.TabIndex = 23;
+            txtObservaciones.TabIndex = 5;
             // 
             // btnNuevo
             // 
@@ -144,7 +144,7 @@
             btnNuevo.Name = "btnNuevo";
             btnNuevo.Padding = new Padding(0, 0, 11, 0);
             btnNuevo.Size = new Size(126, 32);
-            btnNuevo.TabIndex = 39;
+            btnNuevo.TabIndex = 1;
             btnNuevo.Text = "Nuevo";
             btnNuevo.TextAlign = ContentAlignment.MiddleRight;
             btnNuevo.UseVisualStyleBackColor = true;
@@ -160,7 +160,7 @@
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Padding = new Padding(0, 0, 11, 0);
             btnCerrar.Size = new Size(120, 33);
-            btnCerrar.TabIndex = 38;
+            btnCerrar.TabIndex = 6;
             btnCerrar.Text = "Cerrar";
             btnCerrar.TextAlign = ContentAlignment.MiddleRight;
             btnCerrar.UseVisualStyleBackColor = true;
@@ -176,7 +176,7 @@
             lwsJustificaciones.MultiSelect = false;
             lwsJustificaciones.Name = "lwsJustificaciones";
             lwsJustificaciones.Size = new Size(1184, 528);
-            lwsJustificaciones.TabIndex = 37;
+            lwsJustificaciones.TabIndex = 4;
             lwsJustificaciones.UseCompatibleStateImageBehavior = false;
             lwsJustificaciones.View = View.Details;
             lwsJustificaciones.ItemChecked += lwsJustificaciones_ItemChecked;
@@ -207,7 +207,7 @@
             gbEmpleado.Name = "gbEmpleado";
             gbEmpleado.Padding = new Padding(3, 4, 10, 4);
             gbEmpleado.Size = new Size(483, 700);
-            gbEmpleado.TabIndex = 40;
+            gbEmpleado.TabIndex = 0;
             gbEmpleado.TabStop = false;
             gbEmpleado.Text = "Justificacion Empleado";
             // 
@@ -244,7 +244,7 @@
             cmdRechazar.Name = "cmdRechazar";
             cmdRechazar.Padding = new Padding(0, 0, 11, 0);
             cmdRechazar.Size = new Size(130, 36);
-            cmdRechazar.TabIndex = 51;
+            cmdRechazar.TabIndex = 0;
             cmdRechazar.Text = "Rechazar";
             cmdRechazar.TextAlign = ContentAlignment.MiddleRight;
             cmdRechazar.UseVisualStyleBackColor = true;
@@ -260,7 +260,7 @@
             cmdAprobar.Name = "cmdAprobar";
             cmdAprobar.Padding = new Padding(0, 0, 11, 0);
             cmdAprobar.Size = new Size(130, 36);
-            cmdAprobar.TabIndex = 51;
+            cmdAprobar.TabIndex = 1;
             cmdAprobar.Text = "Aprobar";
             cmdAprobar.TextAlign = ContentAlignment.MiddleRight;
             cmdAprobar.UseVisualStyleBackColor = true;
@@ -285,7 +285,7 @@
             rdHoraExtra.Location = new Point(340, 48);
             rdHoraExtra.Name = "rdHoraExtra";
             rdHoraExtra.Size = new Size(113, 45);
-            rdHoraExtra.TabIndex = 49;
+            rdHoraExtra.TabIndex = 2;
             rdHoraExtra.TabStop = true;
             rdHoraExtra.Text = "Horas Extras";
             rdHoraExtra.TextAlign = ContentAlignment.MiddleCenter;
@@ -301,7 +301,7 @@
             rdPermiso.Location = new Point(205, 48);
             rdPermiso.Name = "rdPermiso";
             rdPermiso.Size = new Size(117, 45);
-            rdPermiso.TabIndex = 48;
+            rdPermiso.TabIndex = 1;
             rdPermiso.Text = "Permiso";
             rdPermiso.TextAlign = ContentAlignment.MiddleCenter;
             rdPermiso.UseVisualStyleBackColor = true;
@@ -315,7 +315,7 @@
             txtCodigoJustificacion.Margin = new Padding(3, 4, 3, 4);
             txtCodigoJustificacion.Name = "txtCodigoJustificacion";
             txtCodigoJustificacion.Size = new Size(73, 27);
-            txtCodigoJustificacion.TabIndex = 47;
+            txtCodigoJustificacion.TabIndex = 0;
             // 
             // txtNombre
             // 
@@ -325,7 +325,7 @@
             txtNombre.Margin = new Padding(3, 4, 3, 4);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(275, 27);
-            txtNombre.TabIndex = 44;
+            txtNombre.TabIndex = 4;
             // 
             // label9
             // 
@@ -362,13 +362,13 @@
             txtHoras.Name = "txtHoras";
             txtHoras.ReadOnly = true;
             txtHoras.Size = new Size(82, 31);
-            txtHoras.TabIndex = 47;
+            txtHoras.TabIndex = 3;
             // 
             // CalendarDias
             // 
             CalendarDias.Location = new Point(11, 32);
             CalendarDias.Name = "CalendarDias";
-            CalendarDias.TabIndex = 41;
+            CalendarDias.TabIndex = 0;
             // 
             // label10
             // 
@@ -389,7 +389,7 @@
             dtpFin.RightToLeft = RightToLeft.Yes;
             dtpFin.ShowUpDown = true;
             dtpFin.Size = new Size(111, 27);
-            dtpFin.TabIndex = 39;
+            dtpFin.TabIndex = 2;
             dtpFin.Value = new DateTime(2024, 8, 16, 23, 28, 0, 0);
             dtpFin.ValueChanged += dtpFin_ValueChanged;
             dtpFin.KeyPress += dtpFin_KeyPress;
@@ -413,7 +413,7 @@
             dtpInicio.Name = "dtpInicio";
             dtpInicio.ShowUpDown = true;
             dtpInicio.Size = new Size(115, 27);
-            dtpInicio.TabIndex = 38;
+            dtpInicio.TabIndex = 1;
             dtpInicio.ValueChanged += dtpInicio_ValueChanged;
             dtpInicio.KeyPress += dtpInicio_KeyPress;
             dtpInicio.KeyUp += dtpInicio_KeyUp;
@@ -438,7 +438,7 @@
             btnGuardarJust.Name = "btnGuardarJust";
             btnGuardarJust.Padding = new Padding(0, 0, 11, 0);
             btnGuardarJust.Size = new Size(141, 36);
-            btnGuardarJust.TabIndex = 37;
+            btnGuardarJust.TabIndex = 7;
             btnGuardarJust.Text = "Guardar";
             btnGuardarJust.TextAlign = ContentAlignment.MiddleRight;
             btnGuardarJust.UseVisualStyleBackColor = true;
@@ -452,7 +452,7 @@
             TxtIdEmpleado.Margin = new Padding(3, 4, 3, 4);
             TxtIdEmpleado.Name = "TxtIdEmpleado";
             TxtIdEmpleado.Size = new Size(73, 27);
-            TxtIdEmpleado.TabIndex = 22;
+            TxtIdEmpleado.TabIndex = 3;
             // 
             // groupBox2
             // 
@@ -481,7 +481,7 @@
             txtEmpleadoFiltro.Margin = new Padding(3, 4, 3, 4);
             txtEmpleadoFiltro.Name = "txtEmpleadoFiltro";
             txtEmpleadoFiltro.Size = new Size(275, 27);
-            txtEmpleadoFiltro.TabIndex = 48;
+            txtEmpleadoFiltro.TabIndex = 3;
             // 
             // label1
             // 
@@ -497,7 +497,7 @@
             btnBuscarEmpleados.Location = new Point(845, 27);
             btnBuscarEmpleados.Name = "btnBuscarEmpleados";
             btnBuscarEmpleados.Size = new Size(39, 29);
-            btnBuscarEmpleados.TabIndex = 50;
+            btnBuscarEmpleados.TabIndex = 4;
             btnBuscarEmpleados.Text = "...";
             btnBuscarEmpleados.UseVisualStyleBackColor = true;
             btnBuscarEmpleados.Click += btnBuscarEmpleados_Click;
@@ -510,7 +510,7 @@
             txtCodigoEmpleadoFiltro.Margin = new Padding(3, 4, 3, 4);
             txtCodigoEmpleadoFiltro.Name = "txtCodigoEmpleadoFiltro";
             txtCodigoEmpleadoFiltro.Size = new Size(73, 27);
-            txtCodigoEmpleadoFiltro.TabIndex = 47;
+            txtCodigoEmpleadoFiltro.TabIndex = 2;
             // 
             // btnFiltroBuscar
             // 
@@ -522,7 +522,7 @@
             btnFiltroBuscar.Name = "btnFiltroBuscar";
             btnFiltroBuscar.Padding = new Padding(0, 0, 11, 0);
             btnFiltroBuscar.Size = new Size(93, 40);
-            btnFiltroBuscar.TabIndex = 43;
+            btnFiltroBuscar.TabIndex = 6;
             btnFiltroBuscar.Text = "Buscar";
             btnFiltroBuscar.TextAlign = ContentAlignment.MiddleRight;
             btnFiltroBuscar.UseVisualStyleBackColor = true;
@@ -534,7 +534,7 @@
             ChkPendientes.Location = new Point(912, 30);
             ChkPendientes.Name = "ChkPendientes";
             ChkPendientes.Size = new Size(96, 24);
-            ChkPendientes.TabIndex = 41;
+            ChkPendientes.TabIndex = 5;
             ChkPendientes.Text = "Pendiente";
             ChkPendientes.UseVisualStyleBackColor = true;
             // 
@@ -545,7 +545,7 @@
             dtpFechaFinal.Location = new Point(279, 30);
             dtpFechaFinal.Name = "dtpFechaFinal";
             dtpFechaFinal.Size = new Size(130, 27);
-            dtpFechaFinal.TabIndex = 39;
+            dtpFechaFinal.TabIndex = 1;
             // 
             // label7
             // 
@@ -572,7 +572,7 @@
             dtpFechaInicial.Location = new Point(73, 29);
             dtpFechaInicial.Name = "dtpFechaInicial";
             dtpFechaInicial.Size = new Size(132, 27);
-            dtpFechaInicial.TabIndex = 38;
+            dtpFechaInicial.TabIndex = 0;
             // 
             // btnAprobarMasivo
             // 
@@ -583,7 +583,7 @@
             btnAprobarMasivo.Name = "btnAprobarMasivo";
             btnAprobarMasivo.Padding = new Padding(0, 0, 11, 0);
             btnAprobarMasivo.Size = new Size(216, 32);
-            btnAprobarMasivo.TabIndex = 43;
+            btnAprobarMasivo.TabIndex = 2;
             btnAprobarMasivo.Text = "Aprobar Seleccionadas";
             btnAprobarMasivo.TextAlign = ContentAlignment.MiddleRight;
             btnAprobarMasivo.UseVisualStyleBackColor = true;
@@ -598,7 +598,7 @@
             btnRechazarMasivo.Name = "btnRechazarMasivo";
             btnRechazarMasivo.Padding = new Padding(0, 0, 11, 0);
             btnRechazarMasivo.Size = new Size(210, 32);
-            btnRechazarMasivo.TabIndex = 44;
+            btnRechazarMasivo.TabIndex = 3;
             btnRechazarMasivo.Text = "Rechazar Seleccionadas";
             btnRechazarMasivo.TextAlign = ContentAlignment.MiddleRight;
             btnRechazarMasivo.UseVisualStyleBackColor = true;
@@ -614,7 +614,7 @@
             btnExportar.Name = "btnExportar";
             btnExportar.Padding = new Padding(0, 0, 11, 0);
             btnExportar.Size = new Size(207, 36);
-            btnExportar.TabIndex = 45;
+            btnExportar.TabIndex = 5;
             btnExportar.Text = "Copiar en Portapapeles";
             btnExportar.TextAlign = ContentAlignment.MiddleRight;
             btnExportar.UseVisualStyleBackColor = true;

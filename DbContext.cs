@@ -37,9 +37,9 @@ namespace MD
 
 
         /*SP REPORTES*/
-        public virtual DbSet<CtoMarcacionesReporte> CtoMarcacionesReporte { get; set; }
+        public  DbSet<CtoMarcacionesReporte> CtoMarcacionesReporte { get; set; }
 
-        public virtual DbSet<CtoJustificacion> CtoJustificaciones { get; set; }
+        public  DbSet<CtoJustificacion> CtoJustificaciones { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -58,6 +58,10 @@ namespace MD
                     .ToList()
                     .ForEach(fk => fk.DeleteBehavior = DeleteBehavior.Restrict);
             }
+
+
+            modelBuilder.Entity<CtoMarcacionesReporte>().HasNoKey().ToView(null);
+            modelBuilder.Entity<CtoJustificacion>().HasNoKey().ToView(null);
 
 
             modelBuilder.Entity<Empleado>()
@@ -95,7 +99,7 @@ namespace MD
             modelBuilder.Entity<Usuario>()
            .HasOne<Rol>(s => s.Rol)
            .WithMany(e => e.Usuarios)
-           .HasForeignKey(s => s.UsuarioId);
+           .HasForeignKey(s => s.RolId);
 
             modelBuilder.Entity<Rol>()
               .HasMany<RolMenu>(s => s.RolMenus)
@@ -122,9 +126,9 @@ namespace MD
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            //optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TM-Manager;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TM-Manager;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
-            optionsBuilder.UseSqlServer(@"Data Source=DELL\SOFIAMSSQ;Initial Catalog=TM-Manager;User Id=Sa;Password=1027061986 ;TrustServerCertificate=true;MultipleActiveResultSets=true");
+            //optionsBuilder.UseSqlServer(@"Data Source=DELL\SOFIAMSSQ;Initial Catalog=TM-Manager;User Id=Sa;Password=1027061986 ;TrustServerCertificate=true;MultipleActiveResultSets=true");
 
             base.OnConfiguring(optionsBuilder);
 

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace MD.Cto
 {
     [Keyless]
+    [NotMapped]
     public class CtoMarcacionesReporte
     {
         public int CodigoEmpleado { get; set; }

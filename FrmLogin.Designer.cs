@@ -39,6 +39,8 @@
             label4 = new Label();
             btnAbrirMarcaciones = new Button();
             lblMensaje = new Label();
+            label5 = new Label();
+            label6 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -50,7 +52,7 @@
             btnGuardar.Margin = new Padding(3, 4, 3, 4);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(365, 47);
-            btnGuardar.TabIndex = 21;
+            btnGuardar.TabIndex = 4;
             btnGuardar.Text = "Entrar";
             btnGuardar.UseVisualStyleBackColor = true;
             btnGuardar.Click += btnGuardar_Click;
@@ -66,7 +68,7 @@
             btnCerrar.Margin = new Padding(3, 4, 3, 4);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Size = new Size(37, 31);
-            btnCerrar.TabIndex = 20;
+            btnCerrar.TabIndex = 6;
             btnCerrar.UseVisualStyleBackColor = true;
             btnCerrar.Click += btnCerrar_Click;
             // 
@@ -88,7 +90,7 @@
             txtUsuario.MaxLength = 50;
             txtUsuario.Name = "txtUsuario";
             txtUsuario.Size = new Size(365, 27);
-            txtUsuario.TabIndex = 23;
+            txtUsuario.TabIndex = 2;
             txtUsuario.KeyPress += txtUsuario_KeyPress;
             // 
             // txtContrasena
@@ -100,7 +102,7 @@
             txtContrasena.Name = "txtContrasena";
             txtContrasena.PasswordChar = '*';
             txtContrasena.Size = new Size(365, 27);
-            txtContrasena.TabIndex = 25;
+            txtContrasena.TabIndex = 3;
             txtContrasena.KeyPress += txtContrasena_KeyPress;
             // 
             // label2
@@ -120,7 +122,7 @@
             label3.Location = new Point(46, 87);
             label3.Name = "label3";
             label3.Size = new Size(306, 62);
-            label3.TabIndex = 26;
+            label3.TabIndex = 0;
             label3.Text = "TH-Manager";
             // 
             // pictureBox1
@@ -141,7 +143,7 @@
             label4.Location = new Point(91, 150);
             label4.Name = "label4";
             label4.Size = new Size(205, 23);
-            label4.TabIndex = 28;
+            label4.TabIndex = 1;
             label4.Text = "Gestion de colaboradores";
             // 
             // btnAbrirMarcaciones
@@ -152,7 +154,7 @@
             btnAbrirMarcaciones.Margin = new Padding(3, 4, 3, 4);
             btnAbrirMarcaciones.Name = "btnAbrirMarcaciones";
             btnAbrirMarcaciones.Size = new Size(366, 53);
-            btnAbrirMarcaciones.TabIndex = 29;
+            btnAbrirMarcaciones.TabIndex = 5;
             btnAbrirMarcaciones.Text = " Marcaciones";
             btnAbrirMarcaciones.TextImageRelation = TextImageRelation.ImageAboveText;
             btnAbrirMarcaciones.UseVisualStyleBackColor = true;
@@ -168,6 +170,28 @@
             lblMensaje.TabIndex = 30;
             lblMensaje.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.ForeColor = SystemColors.ControlDarkDark;
+            label5.Location = new Point(-37, 184);
+            label5.Name = "label5";
+            label5.Size = new Size(507, 23);
+            label5.TabIndex = 31;
+            label5.Text = "DEMO -DEMO - DEMO - DEMO DEMO -DEMO - DEMO - DEMO";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label6.ForeColor = SystemColors.ControlDarkDark;
+            label6.Location = new Point(-48, 53);
+            label6.Name = "label6";
+            label6.Size = new Size(507, 23);
+            label6.TabIndex = 31;
+            label6.Text = "DEMO -DEMO - DEMO - DEMO DEMO -DEMO - DEMO - DEMO";
+            // 
             // FrmLogin
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -175,6 +199,8 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(409, 549);
             ControlBox = false;
+            Controls.Add(label6);
+            Controls.Add(label5);
             Controls.Add(lblMensaje);
             Controls.Add(btnAbrirMarcaciones);
             Controls.Add(label4);
@@ -212,5 +238,7 @@
         private Label label4;
         private Button btnAbrirMarcaciones;
         private Label lblMensaje;
+        private Label label5;
+        private Label label6;
     }
 }

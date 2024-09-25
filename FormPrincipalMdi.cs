@@ -93,6 +93,14 @@ namespace MD
         private void AbrirForm(Form form)
         {
 
+            Form form2 = (Form)this.Controls.Find(form.Name, true).FirstOrDefault();
+
+            if (form2 != null)
+            {
+                form2.Focus();
+                return;
+            }
+
 
             form.MdiParent = this;
             form.WindowState = FormWindowState.Maximized;
@@ -183,7 +191,7 @@ namespace MD
 
             RibbonButton btnUsuarios = new RibbonButton { Text = "Usuarios", Image = Properties.Resources.icons8_manager_96 };
             RibbonButton btnPermisos = new RibbonButton { Text = "Roles", Image = Properties.Resources.icons8_permanent_job_96 };
-            
+
             btnPermisos.Click += cmdSeguridad_Click;
             btnUsuarios.Click += BtnUsuarios_Click;
 

@@ -8,6 +8,8 @@ namespace MD
         [STAThread]
         static void Main()
         {
+            try
+            {
 
             ApplicationConfiguration.Initialize();
             string directorio = Directory.GetCurrentDirectory();
@@ -16,6 +18,8 @@ namespace MD
 
             using (DbContext db = new DbContext())
             {
+                //db.Database.EnsureDeleted();
+
                 db.Database.Migrate();
 
                 db.Database.ExecuteSqlRaw($"IF object_id('dbo.SP_Marcaciones') IS NOT NULL BEGIN " +
@@ -26,6 +30,12 @@ namespace MD
             }
 
             Application.Run(new FrmLogin());
+            }
+            catch (Exception err)
+            {
+
+                MessageBox.Show(err.Message);
+            }
         }
     }
 }

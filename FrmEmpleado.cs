@@ -30,7 +30,7 @@ namespace MD
             this.lwsEmpleados.Columns.Add("Activo", 100);
 
             CargarSucursales();
-            CargarEmpleados();
+            CargarEmpleados("");
             CargarHorarios();
             TxtId.Enabled = true;
         }
@@ -56,12 +56,12 @@ namespace MD
             Tools.Tool.LlenarCombo(this.cboHorarios, horarios);
         }
 
-        private void CargarEmpleados()
+        private void CargarEmpleados(string busqueda)
         {
             try
             {
                 this.lwsEmpleados.Items.Clear();
-                ctoEmpleados = repositorioEmpleado.ListCtoEmpleados();
+                ctoEmpleados = repositorioEmpleado.ListCtoEmpleados().Where(x => x.Nombre.ToUpper().Contains(busqueda.ToUpper()) || x.Cedula.ToUpper().Contains(busqueda.ToUpper()));
 
                 foreach (CtoEmpleados e in ctoEmpleados)
                 {
@@ -144,6 +144,14 @@ namespace MD
                     return;
                 }
 
+                ctoEmpleados = repositorioEmpleado.ListCtoEmpleados();
+
+                if (ctoEmpleados.Count() > 5)
+                {
+                    MessageBox.Show("La version demo solo puede guardar 5 empleados, favor contactese con el desarrollador. ", "Version DEMO ", buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Warning);
+                    return;
+                }
+
                 Empleado empleado = new Empleado
                 {
                     CodigoEmpleado = this.TxtId.Text.Length > 0 ? int.Parse(this.TxtId.Text) : 0,
@@ -158,8 +166,9 @@ namespace MD
 
                 repositorioEmpleado.GuardarEmpleado(empleado);
 
-
-                CargarEmpleados();
+                MessageBox.Show("La informacion se guardo correctamente!", "empleados", buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Information);
+                txtBusqueda.Text = "";
+                CargarEmpleados("");
                 Limpiar();
 
             }
@@ -175,6 +184,11 @@ namespace MD
             {
                 e.Handled = true;
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            CargarEmpleados(this.txtBusqueda.Text);
         }
     }
 }

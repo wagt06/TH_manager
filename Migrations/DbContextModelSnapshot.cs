@@ -22,6 +22,56 @@ namespace MD.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("MD.Cto.CtoJustificacion", b =>
+                {
+                    b.Property<int>("CodigoEmpleado")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodigoEstado")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodigoJustificacion")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodigoTipoJustificacion")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("HoraFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("HoraInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Horas")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsPermiso")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("NombreEmpleado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Observaciones")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoJustificacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable((string)null);
+
+                    b.ToView(null, (string)null);
+                });
+
             modelBuilder.Entity("MD.Cto.CtoMarcacionesReporte", b =>
                 {
                     b.Property<decimal>("CantidadHorasFinal")
@@ -38,6 +88,9 @@ namespace MD.Migrations
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("HorasExtras")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("HorasJustificadas")
                         .HasColumnType("decimal(18,2)");
@@ -65,7 +118,9 @@ namespace MD.Migrations
                     b.Property<decimal>("TiempoEnContra")
                         .HasColumnType("decimal(18,2)");
 
-                    b.ToTable("CtoMarcacionesReporte");
+                    b.ToTable((string)null);
+
+                    b.ToView(null, (string)null);
                 });
 
             modelBuilder.Entity("MD.Entidades.Empleado", b =>
@@ -553,7 +608,7 @@ namespace MD.Migrations
                         {
                             CodigoSucursal = 1,
                             CodigoUsuarioCreacion = 1,
-                            FechaCreacion = new DateTime(2024, 9, 21, 15, 7, 52, 557, DateTimeKind.Local).AddTicks(528),
+                            FechaCreacion = new DateTime(2024, 9, 25, 0, 42, 27, 757, DateTimeKind.Local).AddTicks(5318),
                             IsActivo = true,
                             IsEliminado = false,
                             Nombre = "Linda Vista"
@@ -562,7 +617,7 @@ namespace MD.Migrations
                         {
                             CodigoSucursal = 2,
                             CodigoUsuarioCreacion = 1,
-                            FechaCreacion = new DateTime(2024, 9, 21, 15, 7, 52, 557, DateTimeKind.Local).AddTicks(541),
+                            FechaCreacion = new DateTime(2024, 9, 25, 0, 42, 27, 757, DateTimeKind.Local).AddTicks(5333),
                             IsActivo = true,
                             IsEliminado = false,
                             Nombre = "Metrocentro"
@@ -635,6 +690,8 @@ namespace MD.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuarioId"));
+
                     b.Property<int>("CodigoUsuarioCreacion")
                         .HasColumnType("int");
 
@@ -673,6 +730,8 @@ namespace MD.Migrations
 
                     b.HasKey("UsuarioId");
 
+                    b.HasIndex("RolId");
+
                     b.ToTable("Usuario");
 
                     b.HasData(
@@ -682,7 +741,7 @@ namespace MD.Migrations
                             CodigoUsuarioCreacion = 1,
                             Contrasena = "123",
                             CorreoElectronico = "",
-                            FechaCreacion = new DateTime(2024, 9, 21, 15, 7, 52, 557, DateTimeKind.Local).AddTicks(653),
+                            FechaCreacion = new DateTime(2024, 9, 25, 0, 42, 27, 757, DateTimeKind.Local).AddTicks(5439),
                             IsEliminado = false,
                             Nombre = "admin",
                             RolId = 1
@@ -783,7 +842,7 @@ namespace MD.Migrations
                 {
                     b.HasOne("MD.Entidades.Rol", "Rol")
                         .WithMany("Usuarios")
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("RolId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
